@@ -1,0 +1,89 @@
+body {
+    font-family: LatoWebMedium, Helvetica, Arial;
+}
+
+h1 { font-size: 3rem; }
+h2 { font-size: 2.5rem; }
+h3 { font-size: 2rem; }
+h4 { font-size: 1.6rem; }
+h5 { font-size: 1.4rem; }
+
+b {
+    font-family: LatoWebBold, Helvetica, Arial;
+}
+
+iframe {
+	width: 100%;
+	border-radius: 10px;
+	border-style: solid;
+	border-width: 5px;
+	border-color: black;
+	
+}
+
+select, input {
+    border-radius: 10px;
+    padding:5px;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 10%;
+    padding-right: 10%;
+    text-align: center;
+}
+
+a {
+    color: inherit;
+    text-decoration: underline;
+    font-family: LatoWebBold, Helvetica, Arial;
+}
+
+.button {
+    font-family: inherit;
+    font-size: inherit;
+    text-decoration: underline;
+    margin: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+}
+.lockbutton {
+    margin: 5px;
+    padding: 20px;
+    border-radius: 5px;
+    border: none;
+    background: #770000;
+}
+
+.navbar {
+    width: 100%;
+    text-align: left;
+}
+
+.display {
+    margin-top: 50px;
+}
+
+.logo {
+    height: 5rem;
+    width: 150px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.buffer {
+    margin-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    padding-left: 5%;
+    padding-right: 5%;
+    border-radius: 15px;
+}
+.compactinput {
+    width: 50px;
+}
+.error {
+    color: #ff0000;
+}

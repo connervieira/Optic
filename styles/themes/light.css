@@ -1,0 +1,22 @@
+body {
+    background: #ffffff;
+    color: #000000;
+}
+
+iframe {
+    border-color: #000000;
+}
+
+input, select {
+    background: #ffffff;
+    color: #000000;
+}
+
+.button {
+    background: #222222;
+    color: #ffffff;
+}
+
+.buffer {
+    background:rgba(0,0,0,0.07);
+}
