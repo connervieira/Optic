@@ -22,10 +22,26 @@ While the initial installation and setup process requires some technical knowled
 
 ## Features
 
-### Easy
+### Simple
 
-Optic is intended to be simple and easy to user, just like a commercially available dashcam would be.
+After the initial setup is complete, Optic is intended to be simple and easy to use, just like a commercially available dashcam would be. As such, any driver comfortable using a traditional dashcam should have no problem using Optic.
+
+### Reliable
+
+Optic is designed to be reliable, in the sense that it can detect and notify the user when problems are encountered. Optic can display errors and warnings directly from Predator, and has its own diagnostic capabilities built in.
 
 ### Compatible
 
 Optic works through nearly any web browser, and doesn't even require JavaScript for its core functionality. Whether you're using a modern fully-featured browser, or a minimalist lightweight one, Optic should work great.
+
+### Lightweight
+
+Optic is designed to be extremely lightweight, both in terms of network resources and processing power. While low latency is very beneficial, Optic doesn't need high bandwidth to function well.
+
+### Adaptive
+
+The Optic interface is designed to make the most of the available screen space, regardless of whether it is used from a large desktop monitor or a small smartphone display.
+
+### Customizable
+
+Optic allows the user to customize both the Optic interface itself, as well as certain Predator configuration values to match their needs, all from the web interface.
