@@ -57,9 +57,9 @@ $instance_config = load_instance_config($config);
 
 
         $disk_usage = disk_usage($config);
-        echo "<p style='margin-bottom:-15px;'>Saved/Total Video</p>";
+        echo "<p style='margin-bottom:-18px;'>Saved/Total Video</p>";
         echo "<p id='diskusagedashcam'>" . $disk_usage["saved"] . "/" . $disk_usage["working"] . "</p>";
-        echo "<p style='margin-bottom:-15px;'>Available/Total Space</p>";
+        echo "<p style='margin-bottom:-18px;'>Available/Total Space</p>";
         echo "<p id='diskusagefull'>" . $disk_usage["free"] . "/" . $disk_usage["total"] . "</p>";
         ?>
         <main>
