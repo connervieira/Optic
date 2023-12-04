@@ -123,6 +123,27 @@ After the initial setup and configuration, controlling the linked Predator insta
 5. To stop the instance, simply press the "Stop" button.
     - This button will stop all Python processes, even if multiple instances of Predator were inadvertently launched.
 
-### Alerts
+
+## Interface
+
+This section briefly describes the elements of the main Optic dashboard interface.
+
+### Disk Usage
+
+Just below the page header are two lines that indicate disk usage. These lines take the following format:
+
+[saved dashcam video] / [total working directory size]
+[total disk free] / [total disk size]
+
+### Controls
+
+Below the disk usage section are the control buttons. These buttons are explained in the "Controlling" section above.
+
+### Status
+
+The status frame is located at the bottom of the page. This frame indicates whether or not Predator is running, and will show any errors or warnings issued by the instance. Recent errors and warnings are displayed in red and yellow font respectively. Older alerts are displayed in gray.
+
+
+## Audio
 
 If Predator encounters an error, Optic can play an alert sound. However, for this feature to work, client side refresh must be enabled in the Optic settings. Additionally, both JavaScript and auto-play need to be permitted in your browser settings.

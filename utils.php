@@ -5,21 +5,12 @@ include "./config.php";
 
 function load_instance_config($config) {
     $instance_configuration_file = $config["instance_directory"] . "/config.json";
-    if (is_dir($config["instance_directory"]) == false) { // Check to see if the instance directory exists.
-        echo "<p class='error'>The instance directory doesn't appear to exist. Please adjust the controller configuration.</p>";
-        exit();
+    if (file_exists($instance_configuration_file)) {
+        $raw_instance_configuration = file_get_contents($instance_configuration_file);
+        $instance_config = json_decode($raw_instance_configuration, true);
+    } else {
+        $instance_config = array();
     }
-    if (file_exists($instance_configuration_file) == false) { // Check to see if the Predator configuration file exists.
-        echo "<p class='error'>The instance configuration couldn't be located. Please verify that the interface configuration points to the correct instance directory.</p>";
-        exit();
-    }
-    if (is_writable($instance_configuration_file) == false) {
-        echo "<p class='error'>Please make sure the instance configuration file is writable to make configuration modifications.</p>";
-        exit();
-    }
-
-    $raw_instance_configuration = file_get_contents($instance_configuration_file);
-    $instance_config = json_decode($raw_instance_configuration, true);
 
     return $instance_config;
 }
@@ -73,6 +64,9 @@ function is_alive($config) {
 
 // The `verify_permissions` function checks to see if all permissions are set correctly, and that all files are in their expected locations.
 function verify_permissions($config) {
+
+    $valid = true; // This will be switched to false in an issue is discovered.
+
     $instance_config = load_instance_config($config);
     $verify_command = "sudo -u " . $config["exec_user"] . " echo verify"; // Prepare the command to verify permissions.
     $command_output = shell_exec($verify_command); // Execute the command, and record its output.
@@ -82,33 +76,43 @@ function verify_permissions($config) {
 
     if ($command_output !== "verify") { // Check to see if the command output differs from the expected output.
         echo "<p class=\"error\">PHP does not have the necessary permissions to manage this system as '" . $config["exec_user"] . "' using the '" . shell_exec("whoami") . "' user.</p>"; // Display an error briefly explaining the problem.
-        exit(); // Terminate the script.
+        $valid = false;
     }
 
 
     if (is_writable("./") == false) { // Check to se if the controller interface's root directory is writable.
         echo "<p class=\"error\">The controller interface's root directory is not writable. Please verify the permissions of the " . getcwd() . " directory.</p>";
+        $valid = false;
     } else if (is_writable("./start.sh") == false) { // Check to see if the controller interface's start script is writable.
         echo "<p class=\"error\">The start.sh script in the " . getcwd() . " directory is not writable.</p>";
+        $valid = false;
     }
 
     if (is_dir($config["instance_directory"]) == false) { // Check to see if the root Predator instance directory exists.
         echo "<p class=\"error\">The instance directory doesn't appear to exist. Please adjust the controller configuration.</p>";
-        echo "<a class=\"button\" href=\"./settingscontroller.php\">Controller Settings</a>";
+        $valid = false;
     } else if (file_exists($instance_configuration_file) == false) { // Check to see if the instance configuration file exists.
         echo "<p class=\"error\">The instance configuration couldn't be located at " . $instance_configuration_file . ". Please verify that the interface configuration points to the correct instance root directory.</p>";
+        $valid = false;
     } else if (is_writable($instance_configuration_file) == false) { // Check to see if the instance configuration file is writable.
         echo "<p class=\"error\">The instance configuration isn't writable. Please verify that the instance configuration file at " . $instance_configuration_file . " has the correct permissions to be modified by external programs.</p>";
+        $valid = false;
     } else if (!json_decode(file_get_contents($instance_configuration_file))) {
         echo "<p class=\"error\">The instance configuration doesn't appear to be valid JSON. Please verify that the instance configuration file at " . $instance_configuration_file . " is valid.</p>";
+        $valid = false;
     }
 
     if (is_dir($instance_config["general"]["interface_directory"]) == false) { // Check to make sure the specified interface directory exists.
         echo "<p class=\"error\">The interface directory doesn't exist. Please verify that the correct interface directory is configured in the settings.</p>";
+        $valid = false;
     } else if (is_writable($instance_config["general"]["interface_directory"]) == false) { // Check to see if the interface directory is writable.
         echo "<p class=\"error\">The interface directory isn't writable. Please verify that the interface directory at " . $instance_config["general"]["interface_directory"] . " has the correct permissions.</p>";
+        $valid = false;
     }
 
+    if ($valid == false) {
+        exit();
+    }
 }
 
 
