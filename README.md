@@ -15,7 +15,9 @@ To learn more about installing, configuring, and using Optic, see the [DOCUMENTA
 
 ## Description
 
-Optic is a graphical interface for controlling Predator's dashcam functionality. Optic is designed to run on an low-powered computer, alongside Predator, and provides a simple interface for controlling dashcam recording over the network. Users can connect to Optic from a phone, tablet, or other network-enabled device with a web browser. Full installations can even include a dedicated control interface.
+Optic is a graphical interface for controlling Predator's dashcam functionality. Optic is designed to run on a low-powered computer, alongside Predator, and provides a simple interface for controlling dashcam recording over a network. Users can connect to Optic from a phone, tablet, or other network-enabled device with a web browser. Full installations can even include a dedicated control interface.
+
+While the initial installation and setup process requires some technical knowledge, Optic is designed to be extremely easy to use after the configuration process is completed. As such, users who want to take advantage of Predator's dashcam functionality can have their installer setup Predator and Optic on their behalf.
 
 
 ## Features
