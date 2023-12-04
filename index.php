@@ -56,18 +56,20 @@ $instance_config = load_instance_config($config);
 
 
         $disk_usage = disk_usage($config);
+        echo "<p style='margin-bottom:-15px;'>Saved/Total Video</p>";
         echo "<p id='diskusagedashcam'>" . $disk_usage["saved"] . "/" . $disk_usage["working"] . "</p>";
+        echo "<p style='margin-bottom:-15px;'>Available/Total Space</p>";
         echo "<p id='diskusagefull'>" . $disk_usage["free"] . "/" . $disk_usage["total"] . "</p>";
         ?>
         <main>
             <div class="display">
                 <?php
                 if (is_alive($config) == true) {
-                    $lock_button = '<a class="lockbutton" role="button" id="lockbutton" style="color:#ffffff" role="button" href="?action=lock">Lock</a><br><br><br>';
+                    $lock_button = '<a class="lockbutton" role="button" id="lockbutton" style="color:#ffffff" role="button" href="?action=lock">Lock</a><br><br><br><br>';
                     $start_button = '<a class="button" role="button" id="startbutton" style="color:#ffffff" role="button" href="?action=start">Restart</a>';
                     $stop_button = '<a class="button" role="button" id="stopbutton" style="color:#ffffff" role="button" href="?action=stop">Stop</a>';
                 } else {
-                    $lock_button = '<a class="lockbutton" role="button" id="lockbutton" style="color:#aaaaaa" role="button" href="?action=lock">Lock</a><br><br><br>';
+                    $lock_button = '<a class="lockbutton" role="button" id="lockbutton" style="color:#aaaaaa" role="button" href="?action=lock">Lock</a><br><br><br><br>';
                     $start_button = '<a class="button" role="button" id="startbutton" style="color:#ffffff" role="button" href="?action=start">Start</a>';
                     $stop_button = '<a class="button" role="button" id="stopbutton" style="color:#aaaaaa" role="button" href="#">Stop</a>';
                 }
