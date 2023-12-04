@@ -25,24 +25,7 @@ include "./utils.php";
             <?php
             verify_permissions($config);
 
-            $instance_configuration_file = $config["instance_directory"] . "/config.json";
-
-            if (is_dir($config["instance_directory"]) == false) { // Check to see if the instance directory exists.
-                echo "<p class='error'>The instance directory doesn't appear to exist. Please adjust the controller configuration.</p>";
-                exit();
-            }
-            if (file_exists($instance_configuration_file) == false) { // Check to see if the Predator configuration file exists.
-                echo "<p class='error'>The instance configuration couldn't be located. Please verify that the interface configuration points to the correct instance directory.</p>";
-                exit();
-            }
-            if (is_writable($instance_configuration_file) == false) {
-                echo "<p class='error'>Please make sure the instance configuration file is writable to make configuration modifications.</p>";
-                exit();
-            }
-
-            $raw_instance_configuration = file_get_contents($instance_configuration_file);
-            $instance_config = json_decode($raw_instance_configuration, true);
-
+            $instance_config = load_instance_config($config);
 
 
             if (isset($instance_config["general"]) and isset($instance_config["management"]) and isset($instance_config["prerecorded"]) and isset($instance_config["realtime"]) and isset($instance_config["dashcam"]) and isset($instance_config["developer"])) { // If this statement is true, then the configuration is likely vanilla Predator.

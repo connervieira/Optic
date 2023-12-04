@@ -6,6 +6,7 @@ include "./authentication.php";
 
 include "./utils.php";
 
+$instance_config = load_instance_config($config);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,7 +29,7 @@ include "./utils.php";
 
         $action = $_GET["action"];
         if ($action == "lock") {
-            touch($config["interface_directory"] . "/dashcam_lock_trigger"); // Create the dashcam lock trigger file in the interface directory.
+            touch($config["interface_directory"] . "/" . $instance_config["dashcam"]["saving"]["trigger"]); // Create the dashcam lock trigger file in the interface directory.
         } else if ($action == "start") {
             shell_exec("sudo killall python3"); // Kill all existing Python3 processes.
             if (!file_exists("./start.sh")) {
@@ -52,6 +53,11 @@ include "./utils.php";
             shell_exec("sudo killall python3"); // Kill all Python executables.
             header("Location: ."); // Reload the page to remove any arguments from the URL.
         }
+
+
+        $disk_usage = disk_usage($config);
+        echo "<p id='diskusagedashcam'>" . $disk_usage["saved"] . "/" . $disk_usage["working"] . "</p>";
+        echo "<p id='diskusagefull'>" . $disk_usage["free"] . "/" . $disk_usage["total"] . "</p>";
         ?>
         <main>
             <div class="display">
@@ -89,7 +95,7 @@ include "./utils.php";
     }
     ?>
     <script>
-        var previous_latest_error = [0, ""];
+        var previous_latest_error = 0;
         const fetch_info = async () => {
             //console.log("Fetching instance status");
             const response = await fetch('./jsrelay.php'); // Fetch the status information using the JavaScript relay page.
@@ -101,6 +107,7 @@ include "./utils.php";
                 document.getElementById("lockbutton").href = "?action=lock";
                 document.getElementById("startbutton").style.color = "#ffffff";
                 document.getElementById("startbutton").href = "?action=start";
+                document.getElementById("startbutton").innerHTML = "Restart";
                 document.getElementById("stopbutton").style.color = "#ffffff";
                 document.getElementById("stopbutton").href = "?action=stop";
             } else {
@@ -108,17 +115,12 @@ include "./utils.php";
                 document.getElementById("lockbutton").href = "#";
                 document.getElementById("startbutton").style.color = "#ffffff";
                 document.getElementById("startbutton").href = "?action=start";
+                document.getElementById("startbutton").innerHTML = "Start";
                 document.getElementById("stopbutton").style.color = "#aaaaaa";
-                document.getElementById("stopbutton").href = "#";
+                document.getElementById("stopbutton").href = "?action=stop";
             }
             if (result.latest_error !== null) {
-                if (previous_latest_error == null) {
-                    if (result.latest_error[1] == "warn") {
-                        document.getElementById('notice_sound').play();
-                    } else if (result.latest_error[1] == "error") {
-                        document.getElementById('alert_sound').play();
-                    }
-                } else if (result.latest_error[0] !== previous_latest_error[0]) {
+                if (result.latest_error[0] !== previous_latest_error) {
                     if (result.latest_error[1] == "warn") {
                         document.getElementById('notice_sound').play();
                     } else if (result.latest_error[1] == "error") {
@@ -126,7 +128,7 @@ include "./utils.php";
                     }
                 }
             }
-            previous_latest_error = result.latest_error;
+            previous_latest_error = result.latest_error[0];
         }
 
         setInterval(() => { fetch_info(); }, 500); // Execute the instance fetch script every 500 milliseconds.
