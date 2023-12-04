@@ -21,6 +21,7 @@ include "./utils.php";
         </div>
         <h1><?php echo $config["product_name"]; ?></h1>
         <h2>Instance Settings</h2>
+        <br>
         <main>
             <?php
             verify_permissions($config);

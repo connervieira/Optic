@@ -25,7 +25,8 @@ if ($_POST["theme"] == "dark"  or $_POST["theme"] == "light") { // Make sure the
             <a class="button" role="button" href="./settings.php">Back</a>
         </div>
         <h1><?php echo $config["product_name"]; ?></h1>
-        <h2>Settings</h2>
+        <h2>Controller Settings</h2>
+        <br>
         <main>
             <?php
             $valid = true;
@@ -78,7 +79,7 @@ if ($_POST["theme"] == "dark"  or $_POST["theme"] == "light") { // Make sure the
                 if (is_dir($_POST["instance_directory"])) { // Make sure the root directory input is actually a directory.
                     $config["instance_directory"] = $_POST["instance_directory"]; // Save the submitted root directory option to the configuration array.
                 } else {
-                    echo "<p class='error'>The specified root directory does not exist.</p>";
+                    echo "<p class='error'>The specified instance root directory does not exist.</p>";
                     $valid = false; // Indicate that the configuration is not valid, and shouldn't be saved.
                 }
 
