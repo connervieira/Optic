@@ -23,7 +23,6 @@ $instance_config = load_instance_config($config);
             <a class="button" role="button" href="./settings.php">Settings</a><br>
         </div>
         <h1><?php echo $config["product_name"]; ?></h1>
-        <h2>Dashboard</h2>
         <?php
         verify_permissions($config); // Verify that PHP has all of the appropriate permissions.
         $instance_config = load_instance_config($config);
@@ -104,6 +103,10 @@ $instance_config = load_instance_config($config);
             const response = await fetch('./jsrelay.php'); // Fetch the status information using the JavaScript relay page.
             const result = await response.json(); // Parse the JSON data from the response.
 
+            document.getElementById("diskusagedashcam").innerHTML = result.disk_usage["saved"] + "/" + result.disk_usage["working"] 
+            document.getElementById("diskusagefull").innerHTML = result.disk_usage["free"] + "/" + result.disk_usage["total"] 
+
+
             // Update the control buttons based on the instance status.
             if (result.is_alive) {
                 document.getElementById("lockbutton").style.color = "#ffffff";
@@ -132,8 +135,8 @@ $instance_config = load_instance_config($config);
                         document.getElementById('alert_sound').play();
                     }
                 }
+                previous_latest_error = result.latest_error[0];
             }
-            previous_latest_error = result.latest_error[0];
         }
 
         setInterval(() => { fetch_info(); }, 500); // Execute the instance fetch script every 500 milliseconds.
