@@ -4,6 +4,9 @@
 include "./config.php";
 include "./utils.php";
 
+$force_login_redirect = true;
+include "./authentication.php";
+
 $info["is_alive"] = is_alive($config);
 $info["latest_error"] = latest_error($config);
 $info["disk_usage"] = disk_usage($config);
