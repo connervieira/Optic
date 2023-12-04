@@ -20,7 +20,7 @@ function load_instance_config($config) {
 function latest_error($config) {
     $instance_config = load_instance_config($config);
     $error_file_path = $instance_config["general"]["interface_directory"] . "/errors.json";
-    if (is_dir($config["interface_directory"]) == true) { // Check to make sure the specified interface directory exists.
+    if (is_dir($instance_config["general"]["interface_directory"]) == true) { // Check to make sure the specified interface directory exists.
         if (file_exists($error_file_path) == true) { // Check to see if the error file exists.
             $error_log = json_decode(file_get_contents($error_file_path), true); // Load the error file from JSON data.
         } else { // If the error file doesn't exist, then load a blank placeholder instead.

@@ -26,10 +26,11 @@ $instance_config = load_instance_config($config);
         <h2>Dashboard</h2>
         <?php
         verify_permissions($config); // Verify that PHP has all of the appropriate permissions.
+        $instance_config = load_instance_config($config);
 
         $action = $_GET["action"];
         if ($action == "lock") {
-            touch($config["interface_directory"] . "/" . $instance_config["dashcam"]["saving"]["trigger"]); // Create the dashcam lock trigger file in the interface directory.
+            touch($instance_config["general"]["interface_directory"] . "/" . $instance_config["dashcam"]["saving"]["trigger"]); // Create the dashcam lock trigger file in the interface directory.
         } else if ($action == "start") {
             shell_exec("sudo killall python3"); // Kill all existing Python3 processes.
             if (!file_exists("./start.sh")) {
@@ -65,11 +66,11 @@ $instance_config = load_instance_config($config);
             <div class="display">
                 <?php
                 if (is_alive($config) == true) {
-                    $lock_button = '<a class="lockbutton" role="button" id="lockbutton" style="color:#ffffff" role="button" href="?action=lock">Lock</a><br><br><br><br>';
+                    $lock_button = '<a class="lockbutton" role="button" id="lockbutton" style="color:#ffffff;background:#770000;" role="button" href="?action=lock">Lock</a><br><br><br><br>';
                     $start_button = '<a class="button" role="button" id="startbutton" style="color:#ffffff" role="button" href="?action=start">Restart</a>';
                     $stop_button = '<a class="button" role="button" id="stopbutton" style="color:#ffffff" role="button" href="?action=stop">Stop</a>';
                 } else {
-                    $lock_button = '<a class="lockbutton" role="button" id="lockbutton" style="color:#aaaaaa" role="button" href="?action=lock">Lock</a><br><br><br><br>';
+                    $lock_button = '<a class="lockbutton" role="button" id="lockbutton" style="color:#aaaaaa;background:#773333;" role="button" href="#">Lock</a><br><br><br><br>';
                     $start_button = '<a class="button" role="button" id="startbutton" style="color:#ffffff" role="button" href="?action=start">Start</a>';
                     $stop_button = '<a class="button" role="button" id="stopbutton" style="color:#aaaaaa" role="button" href="#">Stop</a>';
                 }
@@ -106,6 +107,7 @@ $instance_config = load_instance_config($config);
             // Update the control buttons based on the instance status.
             if (result.is_alive) {
                 document.getElementById("lockbutton").style.color = "#ffffff";
+                document.getElementById("lockbutton").style.background = "#770000";
                 document.getElementById("lockbutton").href = "?action=lock";
                 document.getElementById("startbutton").style.color = "#ffffff";
                 document.getElementById("startbutton").href = "?action=start";
@@ -114,6 +116,7 @@ $instance_config = load_instance_config($config);
                 document.getElementById("stopbutton").href = "?action=stop";
             } else {
                 document.getElementById("lockbutton").style.color = "#aaaaaa";
+                document.getElementById("lockbutton").style.background = "#773333";
                 document.getElementById("lockbutton").href = "#";
                 document.getElementById("startbutton").style.color = "#ffffff";
                 document.getElementById("startbutton").href = "?action=start";

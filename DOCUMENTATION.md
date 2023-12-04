@@ -103,7 +103,6 @@ The "Interface Settings" section contains settings relating to the graphical Opt
 The "Connection Settings" section contains settings relating to the connection between Optic and the Predator instance.
 
 - The "Instance Directory" setting should be used to specify the absolute directory path of the Predator instance directory.
-- The "Interface Directory" setting should be used to specify the absolute directory path of the Predator interface directory.
 
 
 ## Usage
