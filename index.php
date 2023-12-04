@@ -17,7 +17,7 @@ $instance_config = load_instance_config($config);
         <?php include "./loadtheme.php"; ?>
         <link rel="stylesheet" href="./fonts/lato/latofonts.css">
     </head>
-    <body>
+    <body id="body">
         <div class="navbar" role="navigation">
             <a class="button" role="button" href="./logout.php">Logout</a>
             <a class="button" role="button" href="./settings.php">Settings</a><br>
@@ -79,7 +79,7 @@ $instance_config = load_instance_config($config);
                 echo $stop_button;
                 ?>
                 <br><br>
-                <iframe id="statusframe" title="Status Frame" src="./status.php"></iframe>
+                <div class="iframeholder" id="statusview"><iframe id="statusframe" title="Status Frame" src="./status.php"></iframe></div>
             </div>
         </main>
         <audio id="notice_sound" src="./assets/audio/notice.mp3" preload="auto"></audio>
@@ -89,15 +89,27 @@ $instance_config = load_instance_config($config);
     if ($config["auto_refresh"] == "client") {
         echo "
         <script>
-            setInterval(() => {
-                document.getElementById('statusframe').contentWindow.location.reload(true);
-            }, 1000);
+            const refresh_status_view = async () => {
+                const response = await fetch('./status.php'); // Fetch the content from the status page.
+                const result = await response.text(); // Parse the JSON data from the response.
+                document.getElementById('statusview').innerHTML = result;
+            }
+
+            setInterval(() => { refresh_status_view(); }, 1000); // Execute the status refresh script every 500 milliseconds.
         </script>
         ";
     }
     ?>
     <script>
-        var previous_latest_error = 0;
+        var previous_latest_error = 0; // This holds the Unix timestamp of when the most recent error of the last cycle occured.
+        var last_alarm_time = 0; // This holds the Unix timestamp of the last time an alarm was played.
+
+        function sleep(milliseconds) {
+            return new Promise(resolve => {
+                setTimeout(resolve, milliseconds);
+            });
+        }
+
         const fetch_info = async () => {
             //console.log("Fetching instance status");
             const response = await fetch('./jsrelay.php'); // Fetch the status information using the JavaScript relay page.
@@ -127,12 +139,36 @@ $instance_config = load_instance_config($config);
                 document.getElementById("stopbutton").style.color = "#aaaaaa";
                 document.getElementById("stopbutton").href = "?action=stop";
             }
-            if (result.latest_error !== null) {
-                if (result.latest_error[0] !== previous_latest_error) {
-                    if (result.latest_error[1] == "warn") {
-                        document.getElementById('notice_sound').play();
-                    } else if (result.latest_error[1] == "error") {
-                        document.getElementById('alert_sound').play();
+
+            if (result.latest_error !== null) { // Check to see if there is a recent error.
+                if (result.latest_error[0] != previous_latest_error) { // Check to see if this error is new.
+                    if (Math.floor(Date.now()/1000) - last_alarm_time > 1) { // Check to make sure it has been at least 1 second since the last alarm was played.
+                        last_alarm_time = Math.floor(Date.now()/1000) // Update the last alarm time.
+
+                        // Play the appropriate warning sound.
+                        if (result.latest_error[1] == "warn") {
+                            document.getElementById('notice_sound').play();
+                        } else if (result.latest_error[1] == "error") {
+                            document.getElementById('alert_sound').play();
+                        }
+
+                        // Flash the screen several times as part of the alert, if configured to do so.
+                        <?php
+                        if ($config["photosensitive"] == false) { // Check to see if photosensitivity mode is disabled before loading this part of the script.
+                            echo '
+                            var original_body_color = document.getElementById("body").style.background
+                            for (let i = 0; i < 5; i++) { 
+                                if (result.latest_error[1] == "warn") {
+                                    document.getElementById("body").style.background = "#ffff00";
+                                } else if (result.latest_error[1] == "error") {
+                                    document.getElementById("body").style.background = "#ff0000";
+                                }
+                                await sleep(50);
+                                document.getElementById("body").style.background = original_body_color;
+                                await sleep(50);
+                            }';
+                        }
+                        ?>
                     }
                 }
                 previous_latest_error = result.latest_error[0];

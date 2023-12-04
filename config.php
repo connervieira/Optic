@@ -15,10 +15,11 @@ if (file_exists($optic_config_database_name) == false) { // Check to see if the 
     $config["interface_password"] = "predator";
     $config["product_name"] = "Optic";
     $config["instance_directory"] = "/home/pi/Software/Predator/"; // This defines where the Predator Fabric directory can be found.
-    $config["heartbeat_threshold"] = 5; // This is the number of seconds old the last heartbeat has to be before the system is considered to be offline.
+    $config["heartbeat_threshold"] = 2; // This is the number of seconds old the last heartbeat has to be before the system is considered to be offline.
     $config["auto_refresh"] = "client"; // This determines whether displays will automatically refresh.
     $config["theme"] = "light"; // This determines the supplmentary CSS file that will be used across the interface.
     $config["exec_user"] = "pi"; // This is the user on the system that will be used to control executables.
+    $config["photosensitive"] = false; // This value disables effects that could harm people with photosensitivity problems.
 
     fwrite($optic_configuration_database_file, serialize($config)); // Set the contents of the database file to the placeholder configuration.
     fclose($optic_configuration_database_file); // Close the database file.

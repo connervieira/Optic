@@ -15,14 +15,17 @@ b {
     font-family: LatoWebBold, Helvetica, Arial;
 }
 
-iframe {
+.iframeholder {
+    text-align: left;
+    padding: 10px;
 	width: 100%;
+    height: 200px;
 	border-radius: 10px;
 	border-style: solid;
 	border-width: 5px;
-	border-color: black;
 	
 }
+iframe { width:100%; border: none}
 
 select, input {
     border-radius: 10px;

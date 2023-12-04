@@ -50,6 +50,12 @@ if ($_POST["theme"] == "dark"  or $_POST["theme"] == "light") { // Make sure the
                     $valid = false; // Indicate that the configuration is not valid, and shouldn't be saved.
                 }
 
+                if (strtolower($_POST["photosensitive"]) == "on") {
+                    $config["photosensitive"] = true;
+                } else {
+                    $config["photosensitive"] = false;
+                }
+
                 if ($_POST["heartbeat_threshold"] >= 1 and $_POST["heartbeat_threshold"] <= 60) { // Make sure the heartbeat threshold input is within reasonably expected bounds.
                     $config["heartbeat_threshold"] = intval($_POST["heartbeat_threshold"]); // Save the submitted heartbeat threshold option to the configuration array.
                 } else {
@@ -106,6 +112,7 @@ if ($_POST["theme"] == "dark"  or $_POST["theme"] == "light") { // Make sure the
                     <option value="client" <?php if ($config["auto_refresh"] == "client") { echo "selected"; } ?>>Client</option>
                     <option value="off" <?php if ($config["auto_refresh"] == "off") { echo "selected"; } ?>>Off</option>
                 </select><br><br>
+                <label for="photosensitive">Photosensitive Mode:</label> <input type="checkbox" id="photosensitive" name="photosensitive" <?php if ($config["photosensitive"]) { echo "checked"; }; ?>><br><br>
                 <label for="heartbeat_threshold">Heartbeat Threshold:</label> <input type="number" id="heartbeat_threshold" name="heartbeat_threshold" placeholder="5" min="1" max="20" value="<?php echo $config["heartbeat_threshold"]; ?>"> <span>seconds</span><br><br>
                 <label for="theme">Theme:</label>
                 <select id="theme" name="theme">

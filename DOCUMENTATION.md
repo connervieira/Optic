@@ -89,10 +89,15 @@ The "Interface Settings" section contains settings relating to the graphical Opt
     - This password is not encrypted, nor does it protect the security of the physical device running Optic.
 - The "Auto Refresh" setting determines how the main dashboard will automatically refresh with information from Predator.
     - The "Server" option will cause refreshes to be triggered at a regular interval by an automatic refresh tag attached to relevant pages on the server side.
+        - If your browser doesn't use JavaScript, you can select this option to allow Optic to continue to function.
     - The "Client" option will cause refreshes to be triggered at a regular interval by a client-side refresh script.
+        - For the smoothest experience, you should select this option.
         - This option depends on JavaScript being supported and enabled by your browser.
     - The "Off" option disables the auto-refresh altogether.
         - This option may cause unexpected behavior, since Optic is likely to show outdated information unless manually refreshed regularly.
+- The "Photosensitive Mode" toggle allows the user to disable visual effects that could be harmful to individuals with photosensitivity problems.
+    - When photosensitivity mode is enabled, rapid flashing effects are disabled.
+    - When photosensitive mode is disabled, rapid flashing effects are enabled.
 - The "Heartbeat Threshold" setting determines how many seconds the Predator instance needs to stop responding for before Optic considers it to be inactive.
     - On slower devices, this value should be raised to prevent long processing times from causing Optic to mistakenly believe the instance isn't running.
     - On faster devices, this value can be lowered to make the control interface more responsive.
