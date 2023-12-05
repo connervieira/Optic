@@ -18,7 +18,7 @@ December 4th, 2023
 
 ## Version 1.1
 
-*Release date to be determined*
+December 5th, 2023
 
 - Added basic dashcam file management.
     - Dashcam videos can now be viewed, downloaded, and erased from the Optic interface.

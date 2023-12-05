@@ -23,7 +23,7 @@ Optic is primarily intended to be installed on a system dedicated to the usage o
 
 Additionally, Optic is not designed to be exposed to the internet. While the interface does support authentication, someone with direct network access to Optic may be able to do things you wouldn't want them to do. As with all other services, you should take care to avoid unnecessary risk. If you plan to expose Optic to the internet regardless, here are some things to consider:
 - The 'config.txt' file is a plain text file that contains important configuration values including the interface password, and full directory paths. You should configure your webserver to deny access to this file over the network. The Optic directory contains a '.htaccess' file that restricts access to this file when using Apache, but this will only work if overrides are enabled in your Apache configuration.
-- The 'download.php' page allows authenticated users to copy a selected video file to a directory accessible over the network. While the ability to select a file to copy requires that a user be authenticated, viewing a file that has already been copied does not. As such, you should be aware that someone with direct network access to Optic can download the last viewed file by manually entering the URL.
+- The 'downloadnormal.php' and 'downloadsaved.php' pages allows authenticated users to copy a desired video file to a directory accessible over the network. While the ability to select a file to copy requires that a user be authenticated, viewing a file that has already been copied does not. As such, you should be aware that someone with direct network access to Optic can download the last viewed file by manually entering the URL.
 
 
 ### Methodology
@@ -66,7 +66,7 @@ For Optic to function properly, Apache and PHP must be granted administrative ri
 1. Open the sudo configuration file with the command `visudo`
 2. Add the line `www-data ALL=(ALL) NOPASSWD: ALL`
 3. Save the document and exit.
-4. You should also make sure that the controller directory, interface directory, and instant directory are all writable to PHP.
+4. You should also make sure that the controller directory, interface directory, and instance directory are all writable to PHP.
 
 
 ### Connecting
