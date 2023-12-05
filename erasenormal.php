@@ -24,10 +24,10 @@ $working_directory_files = $instance_config["general"]["working_directory"]; // 
     </head>
     <body>
         <div class="navbar" role="navigation">
-            <a class="button" role="button" href="./storage.php">Back</a>
+            <a class="button" role="button" href="./storagenormal.php">Back</a>
         </div>
         <h1><?php echo $config["product_name"]; ?></h1>
-        <h2>Erase</h2>
+        <h2>Erase - Normal</h2>
         <br>
         <main>
             <?php
@@ -39,9 +39,9 @@ $working_directory_files = $instance_config["general"]["working_directory"]; // 
                 $erase_path = str_replace("'", "\\'", $erase_path);
                 $erase_path = str_replace('"', '\\"', $erase_path);
                 shell_exec("sudo -u " . $config["exec_user"] . " rm " . $erase_path);
-                echo "<p>Successfully erased all unlocked dashcam video.</p>";
+                echo "<p>Erased all unlocked dashcam video.</p>";
             } else {
-                echo "<p>Are you sure you would like to permanently delete all unlocked dashcam videos?</p>";
+                echo "<p>Are you sure you would like to permanently delete all unsaved dashcam videos?</p>";
                 echo "<a class='button' href='?confirmation=" . time() . "'>Confirm</a>";
             }
             ?>

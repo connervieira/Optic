@@ -23,7 +23,7 @@ $instance_config = load_instance_config($config);
             <a class="button" role="button" href="./settings.php">Settings</a><br>
         </div>
         <div class="navbarright" role="navigation">
-            <a class="button" role="button" href="./storage.php">Storage</a><br>
+            <a class="button" role="button" href="./storagenormal.php">Storage</a><br>
         </div>
         <h1><?php echo $config["product_name"]; ?></h1>
         <?php

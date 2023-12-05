@@ -1,19 +1,17 @@
 <?php
 include "./config.php";
+include "./utils.php";
 
 $force_login_redirect = true;
 include "./authentication.php";
 
-include "./utils.php";
-
-
 
 $instance_config = load_instance_config($config);
-$working_directory_files = scandir($instance_config["general"]["working_directory"]); // Scan all files in the Predator working directory.
+$directory_files = scandir($instance_config["general"]["working_directory"]); // Scan all files in the Predator working directory.
 
 $processed_videos = array(); // This array will hold each video and its processed information.
 $current_video = 0; // This is a placeholder that will hold the starting time of the first video segment from each continuous video.
-foreach ($working_directory_files as $file) { // Iterate through each file in the working directory.
+foreach ($directory_files as $file) { // Iterate through each file in the working directory.
     if (strpos($file, "predator_dashcam") !== false) { // Check to see if this file is a dashcam video.
         $processed_videos[$file]["size"] = filesize($instance_config["general"]["working_directory"] . "/" . $file);
         $processed_videos[$file]["time"] = explode("_", $file)[2];
@@ -45,11 +43,17 @@ foreach ($processed_videos as $filename => $video) {
     </head>
     <body>
         <div class="navbar" role="navigation">
-            <a class="button" role="button" href="./index.php">Back</a>
+            <div class="navbarleft" role="navigation">
+                <a class="button" role="button" href="./index.php">Back</a>
+            </div>
+            <div class="navbarright" role="navigation">
+                <a class="button" role="button" href="./storagesaved.php">Saved</a>
+            </div>
         </div>
         <h1><?php echo $config["product_name"]; ?></h1>
-        <h2>Storage</h2>
-        <br><a class="button" role="button" style="background:#ff4444;color:black;" href="./erase.php">Erase</a><br>
+        <h2>Storage - Normal</h2>
+        <p>This page allows you to manage all normally captured dashcam video.</p>
+        <br><a class="button" role="button" style="background:#ff4444;color:black;" href="./erasenormal.php">Erase</a><br>
         <br>
         <main>
             <div class="list">
@@ -60,7 +64,7 @@ foreach ($processed_videos as $filename => $video) {
                         echo "<h4>" . date("Y-m-d H:i:s", $timestamp) . "</h4>";
                         echo "<ul>";
                         foreach ($video as $number => $segment) {
-                            echo "<li><a href='./download.php?video=" . $segment["file"] . "'>" . date("H:i:s", $segment["time"]) . "</a></li>";
+                            echo "<li><a href='./downloadnormal.php?video=" . $segment["file"] . "'>" . date("H:i:s", $segment["time"]) . "</a></li>";
                         }
                         echo "</ul>";
                     }
