@@ -18,9 +18,12 @@ $instance_config = load_instance_config($config);
         <link rel="stylesheet" href="./fonts/lato/latofonts.css">
     </head>
     <body id="body">
-        <div class="navbar" role="navigation">
+        <div class="navbarleft" role="navigation">
             <a class="button" role="button" href="./logout.php">Logout</a>
             <a class="button" role="button" href="./settings.php">Settings</a><br>
+        </div>
+        <div class="navbarright" role="navigation">
+            <a class="button" role="button" href="./storage.php">Storage</a><br>
         </div>
         <h1><?php echo $config["product_name"]; ?></h1>
         <?php

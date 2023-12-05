@@ -117,15 +117,7 @@ function verify_permissions($config) {
 
 
 
-function disk_size() {
-    $bytes = disk_total_space("."); 
-    $si_prefix = array('B', 'K', 'M', 'G', 'T', 'P', 'E', 'Y', 'Z');
-    $base = 1024;
-    $class = min(intval(log($bytes , $base)), count($si_prefix) - 1);
-    return round(($bytes/pow($base,$class))*10)/10 . $si_prefix[$class];
-}
-function disk_free() {
-    $bytes = disk_free_space("."); 
+function bytes_to_human_readable($bytes) {
     $si_prefix = array('B', 'K', 'M', 'G', 'T', 'P', 'E', 'Y', 'Z');
     $base = 1024;
     $class = min(intval(log($bytes , $base)), count($si_prefix) - 1);
@@ -143,6 +135,6 @@ function disk_usage($config) {
     }
     $working_directory_disk_usage = explode("\t", trim(shell_exec("du -sh '" . $instance_config["general"]["working_directory"] . "'")))[0]; // Execute the command, and record its output.
 
-    return array("saved" => $saved_dashcam_disk_usage, "working" => $working_directory_disk_usage, "free" => disk_free(), "total" => disk_size());
+    return array("saved" => $saved_dashcam_disk_usage, "working" => $working_directory_disk_usage, "free" => bytes_to_human_readable(disk_free_space(".")), "total" => bytes_to_human_readable(disk_total_space(".")));
 }
 ?>

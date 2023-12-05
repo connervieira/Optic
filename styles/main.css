@@ -2,8 +2,7 @@ body {
     font-family: LatoWebMedium, Helvetica, Arial;
 }
 
-h1 { margin-top: -3px; margin-bottom: -3px; }
-h2, h3, h4, h5, h6 { margin-top: 5px; margin-bottom: 5px; }
+h1, h2, h3, h4, h5, h6 { margin-top: 5px; margin-bottom: 5px; }
 
 h1 { font-size: 3rem; }
 h2 { font-size: 2.5rem; }
@@ -66,6 +65,16 @@ a {
     width: 100%;
     text-align: left;
 }
+.navbarleft {
+    width: 70%;
+    text-align: left;
+    float: left;
+}
+.navbarright {
+    width: 30%;
+    text-align: right;
+    float: right;
+}
 
 .display {
     margin-top: 50px;
@@ -91,4 +100,7 @@ a {
 }
 .error {
     color: #ff0000;
+}
+.list {
+    text-align: left;
 }

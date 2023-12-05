@@ -18,6 +18,8 @@ Optic and Predator form a somewhat complex link, and it's important to understan
 
 ### Security
 
+Optic is not designed to be exposed to the internet. While the interface does support authentication, someone with direct network access to Optic may be able to do things you wouldn't want them to do. As with all other services, you should take care to avoid unnecessary risk.
+
 Optic is primarily intended to be installed on a system dedicated to the usage of Predator. As such, the following instructions often involve granting permissions without regard for the security of other applications. If you plan to install Optic on a system running multiple services, use caution when granting very relaxed permissions.
 
 ### Methodology
