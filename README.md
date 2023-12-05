@@ -8,7 +8,9 @@ A graphical dashcam interface for [Predator](https://v0lttech.com/predator.php).
 Optic is dependent on [Predator](https://v0lttech.com/predator.php) to function, and does not provide any useful functionality alone. Before installing Optic, Predator needs to be installed and configured.
 
 
-## Documentation
+## Installation
+
+Downloads can be found <https://v0lttech.com/optic.php>
 
 To learn more about installing, configuring, and using Optic, see the [DOCUMENTATION.md](DOCUMENTATION.md) file.
 
