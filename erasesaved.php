@@ -33,10 +33,10 @@ $working_directory_files = $instance_config["general"]["working_directory"]; // 
             <?php
             if (time() - $_GET["confirmation1"] < 0) {
                 echo "<p>The confirmation timestamp is in the future. If you clicked an external link to get here, it is possible someone is attempt to manipulate you into erasing your dashcam video. No videos were deleted.</p>";
-            } else if (time() - $_GET["confirmation1"] < 10) {
+            } else if (time() - $_GET["confirmation1"] < 30) {
                 if (time() - $_GET["confirmation2"] < 0) {
                     echo "<p>The confirmation timestamp is in the future. If you clicked an external link to get here, it is possible someone is attempt to manipulate you into erasing your dashcam video. No videos were deleted.</p>";
-                } else if (time() - $_GET["confirmation2"] < 10) {
+                } else if (time() - $_GET["confirmation2"] < 20) {
                     $erase_path = $instance_config["general"]["working_directory"] . "/" . $instance_config["dashcam"]["saving"]["directory"] . "/" . "predator_dashcam*";
                     $erase_path = str_replace(" ", "\\ ", $erase_path);
                     $erase_path = str_replace("'", "\\'", $erase_path);
