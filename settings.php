@@ -24,7 +24,7 @@ include "./utils.php";
         <h2>Settings</h2>
         <br>
         <main>
-            <a class="button" role="button" href="settingscontroller.php">Controller Settings</a>
+            <a class="button" role="button" href="settingscontroller.php">Controller Settings</a><br><br><br>
             <a class="button" role="button" href="settingsinstance.php">Instance Settings</a>
         </main>
     </body>
