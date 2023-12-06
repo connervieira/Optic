@@ -28,6 +28,6 @@ December 5th, 2023
 
 *Release date to be determined*
 
-- Increased the precision of the storage usage display.
+- Increased the precision of the disk usage display.
 - The root settings page now shows the 'Controller' and 'Instance' buttons on separate lines.
 - Improved support for managing recordings when multiple capture devices are used simultaneously.
