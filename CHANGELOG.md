@@ -30,3 +30,4 @@ December 5th, 2023
 
 - Increased the precision of the storage usage display.
 - The root settings page now shows the 'Controller' and 'Instance' buttons on separate lines.
+- Improved support for managing recordings when multiple capture devices are used simultaneously.

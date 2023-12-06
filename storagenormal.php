@@ -16,12 +16,19 @@ foreach ($directory_files as $file) { // Iterate through each file in the workin
         $processed_videos[$file]["size"] = filesize($instance_config["general"]["working_directory"] . "/" . $file);
         $processed_videos[$file]["time"] = explode("_", $file)[2];
         $processed_videos[$file]["device"] = explode("_", $file)[3];
-        if (intval(explode("_", $file)[4]) == 0) { // Check to see if this segment is at the start of a new video.
-            $current_video = $processed_videos[$file]["time"]; // Update the current video.
+        $processed_videos[$file]["video"] = $processed_videos[$file]["time"];
+        $processed_videos[$file]["segment"] = intval(explode("_", $file)[4]);
+
+        $time_since_previous = $processed_videos[$file]["time"] - $last_video_time; // Calculate the time difference between this segment's timestamp and the last segment's timestamp.
+        if ($time_since_previous > $instance_config["dashcam"]["capture"]["opencv"]["segment_length"] + 5) { // Check to see if this segment is immediately after the previous segment, plus a 5 second margin of error.
+            $current_video = $processed_videos[$file]["time"]; // Make this segment the start of a new video set.
         }
-        $processed_videos[$file]["video"] = $current_video;
+        $processed_videos[$file]["video"] = $current_video; // Set this segment to be part of the current video set.
+
+        $last_video_time = $processed_videos[$file]["time"];
     }
 }
+
 
 $indexed_videos = array(); // This array will hold each continuous video and its individual segments.
 foreach ($processed_videos as $filename => $video) {
@@ -29,7 +36,10 @@ foreach ($processed_videos as $filename => $video) {
     if (!isset($indexed_videos[$video["video"]])) {
         $indexed_videos[$video["video"]] = array();
     }
-    array_push($indexed_videos[$video["video"]], $video);
+    if (!isset($indexed_videos[$video["video"]][$video["time"]])) {
+        $indexed_videos[$video["video"]][$video["time"]] = array();
+    }
+    $indexed_videos[$video["video"]][$video["time"]][$video["device"]] = $video;
 }
 ?>
 <!DOCTYPE html>
@@ -63,8 +73,12 @@ foreach ($processed_videos as $filename => $video) {
                         echo "<hr>";
                         echo "<h4>" . date("Y-m-d H:i:s", $timestamp) . "</h4>";
                         echo "<ul>";
-                        foreach ($video as $number => $segment) {
-                            echo "<li><a href='./downloadnormal.php?video=" . $segment["file"] . "'>" . date("H:i:s", $segment["time"]) . "</a></li>";
+                        foreach ($video as $time => $segment) {
+                            echo "<li>" . date("H:i:s", $time) . " -";
+                            foreach ($segment as $device) {
+                                echo " <a href='./downloadnormal.php?video=" . $device["file"] . "'>" . $device["device"] .  "</a>";
+                            }
+                            echo "</li>";
                         }
                         echo "</ul>";
                     }

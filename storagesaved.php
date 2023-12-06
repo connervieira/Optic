@@ -35,7 +35,10 @@ foreach ($processed_videos as $filename => $video) {
     if (!isset($indexed_videos[$video["video"]])) {
         $indexed_videos[$video["video"]] = array();
     }
-    array_push($indexed_videos[$video["video"]], $video);
+    if (!isset($indexed_videos[$video["video"]][$video["time"]])) {
+        $indexed_videos[$video["video"]][$video["time"]] = array();
+    }
+    $indexed_videos[$video["video"]][$video["time"]][$video["device"]] = $video;
 }
 ?>
 <!DOCTYPE html>
@@ -64,13 +67,17 @@ foreach ($processed_videos as $filename => $video) {
                         echo "<hr>";
                         echo "<h4>" . date("Y-m-d H:i:s", $timestamp) . "</h4>";
                         echo "<ul>";
-                        foreach ($video as $number => $segment) {
-                            echo "<li><a href='./downloadsaved.php?video=" . $segment["file"] . "'>" . date("H:i:s", $segment["time"]) . "</a></li>";
+                        foreach ($video as $time => $segment) {
+                            echo "<li>" . date("H:i:s", $time) . " -";
+                            foreach ($segment as $device) {
+                                echo " <a href='./downloadnormal.php?video=" . $device["file"] . "'>" . $device["device"] .  "</a>";
+                            }
+                            echo "</li>";
                         }
                         echo "</ul>";
                     }
                 } else {
-                    echo "<p><i>No dashcam video segments have been saved.</i></p>";
+                    echo "<p><i>No dashcam video has been recorded.</i></p>";
                 }
                 ?>
             </div>
