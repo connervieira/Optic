@@ -22,3 +22,10 @@ December 5th, 2023
 
 - Added basic dashcam file management.
     - Dashcam videos can now be viewed, downloaded, and erased from the Optic interface.
+
+
+## Version 1.2
+
+*Release date to be determined*
+
+- Increased the precision of the storage usage display.

@@ -121,7 +121,7 @@ function bytes_to_human_readable($bytes) {
     $si_prefix = array('B', 'K', 'M', 'G', 'T', 'P', 'E', 'Y', 'Z');
     $base = 1024;
     $class = min(intval(log($bytes , $base)), count($si_prefix) - 1);
-    return round(($bytes/pow($base,$class))*10)/10 . $si_prefix[$class];
+    return number_format($bytes/pow($base,$class), 2) . $si_prefix[$class];
 }
 
 
@@ -129,11 +129,11 @@ function bytes_to_human_readable($bytes) {
 function disk_usage($config) {
     $instance_config = load_instance_config($config);
     if (is_dir($instance_config["general"]["working_directory"] . "/" . $instance_config["dashcam"]["saving"]["directory"])) {
-        $saved_dashcam_disk_usage = explode("\t", trim(shell_exec("du -sh '" . $instance_config["general"]["working_directory"] . "/" . $instance_config["dashcam"]["saving"]["directory"] .  "'")))[0]; // Execute the command, and record its output.
+        $saved_dashcam_disk_usage = bytes_to_human_readable(1024 * floatval(explode("\t", trim(shell_exec("du -s '" . $instance_config["general"]["working_directory"] . "/" . $instance_config["dashcam"]["saving"]["directory"] .  "'")))[0])); // Execute the command, and record its output.
     } else {
         $saved_dashcam_disk_usage = "0B";
     }
-    $working_directory_disk_usage = explode("\t", trim(shell_exec("du -sh '" . $instance_config["general"]["working_directory"] . "'")))[0]; // Execute the command, and record its output.
+    $working_directory_disk_usage = bytes_to_human_readable(1024 * floatval(explode("\t", trim(shell_exec("du -s '" . $instance_config["general"]["working_directory"] . "'")))[0])); // Execute the command, and record its output.
 
     return array("saved" => $saved_dashcam_disk_usage, "working" => $working_directory_disk_usage, "free" => bytes_to_human_readable(disk_free_space(".")), "total" => bytes_to_human_readable(disk_total_space(".")));
 }
