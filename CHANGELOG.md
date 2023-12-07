@@ -31,3 +31,5 @@ December 5th, 2023
 - Increased the precision of the disk usage display.
 - The root settings page now shows the 'Controller' and 'Instance' buttons on separate lines.
 - Improved support for managing recordings when multiple capture devices are used simultaneously.
+- Updated permission verification check.
+    - Not fatal errors have been turned into warnings that don't prevent the rest of the page from loading.
