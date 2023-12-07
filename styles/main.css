@@ -98,9 +98,8 @@ a {
 .compactinput {
     width: 50px;
 }
-.error {
-    color: #ff0000;
-}
 .list {
     text-align: left;
 }
+.error { color: #ff0000; }
+.warning { color: #ddbb00; }

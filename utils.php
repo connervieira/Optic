@@ -26,6 +26,8 @@ function latest_error($config) {
         } else { // If the error file doesn't exist, then load a blank placeholder instead.
             $error_log = array(); // Set the error log to an empty array.
         }
+    } else { 
+        $error_log = array(); // Set the error log to an empty array.
     }
 
     $error_log = array_reverse($error_log, true); // Reverse the error log, so that more recent errors are at the top.
@@ -47,8 +49,10 @@ function is_alive($config) {
         if (file_exists($heartbeat_file_path)) { // Check to see if the heartbeat file exists.
             $heartbeat_log = json_decode(file_get_contents($heartbeat_file_path), true); // Load the heartbeat file from JSON data.
         } else { // If the heartbeat file doesn't exist, then load a blank placeholder instead.
-            $heartbeat_log = array(); // Set the heartbeat log to an empty array.
+            $heartbeat_log = array(0); // Set the heartbeat log to an empty array.
         }
+    } else { // If the heartbeat file doesn't exist, then load a blank placeholder instead.
+        $heartbeat_log = array(0); // Set the heartbeat log to an empty array.
     }
 
     $last_heartbeat = time() - floatval(end($heartbeat_log)); // Calculate how many seconds ago the last heartbeat was.
@@ -103,11 +107,9 @@ function verify_permissions($config) {
     }
 
     if (is_dir($instance_config["general"]["interface_directory"]) == false) { // Check to make sure the specified interface directory exists.
-        echo "<p class=\"error\">The interface directory doesn't exist. Please verify that the correct interface directory is configured in the settings.</p>";
-        $valid = false;
+        echo "<p class=\"warning\">The interface directory doesn't exist. Please verify that the correct interface directory is configured in the settings.</p>";
     } else if (is_writable($instance_config["general"]["interface_directory"]) == false) { // Check to see if the interface directory is writable.
-        echo "<p class=\"error\">The interface directory isn't writable. Please verify that the interface directory at " . $instance_config["general"]["interface_directory"] . " has the correct permissions.</p>";
-        $valid = false;
+        echo "<p class=\"warning\">The interface directory isn't writable. Please verify that the interface directory at " . $instance_config["general"]["interface_directory"] . " has the correct permissions.</p>";
     }
 
     if ($valid == false) {
