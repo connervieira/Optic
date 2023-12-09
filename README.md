@@ -37,8 +37,8 @@ In addition to all the features offered by Optic, these are the features availab
 
 ## Screenshots
 
-![Main interface in light mode](/assets/img/screenshots/main/light.png)
-![Storage interface in dark mode](/assets/img/screenshots/storage/dark.png)
+![Main interface in light mode](/assets/image/screenshots/main/light.png)
+![Storage interface in dark mode](/assets/image/screenshots/storage/dark.png)
 
 
 
