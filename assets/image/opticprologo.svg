@@ -27,12 +27,12 @@
      inkscape:pagecheckerboard="0"
      showgrid="false"
      inkscape:zoom="0.34877642"
-     inkscape:cx="280.9823"
+     inkscape:cx="412.87195"
      inkscape:cy="533.29293"
-     inkscape:window-width="1720"
-     inkscape:window-height="1371"
-     inkscape:window-x="1720"
-     inkscape:window-y="32"
+     inkscape:window-width="1358"
+     inkscape:window-height="691"
+     inkscape:window-x="4"
+     inkscape:window-y="36"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1" />
   <defs
@@ -48,7 +48,7 @@
          offset="0.36824334" />
       <stop
          id="stop1470"
-         style="stop-color:#333333;stop-opacity:1"
+         style="stop-color:#ba0000;stop-opacity:0.82638049"
          offset="0.97208786" />
     </linearGradient>
     <inkscape:path-effect
