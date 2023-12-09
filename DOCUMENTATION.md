@@ -1,6 +1,11 @@
 # Documentation
 
-This document exlains how to install, setup, and use Optic.
+This document exlains how to install, setup, and use Optic and Optic Pro.
+
+
+## Support
+
+If you run into problems during the installation process, you can contact support using the information found at <https://v0lttech.com/contact.php>. [Optic Pro](https://v0lttech.com/opticpro.php) customers get complementary support from start to finish through the installation, configuration, setup, and usage process.
 
 
 ## Introduction
@@ -23,7 +28,7 @@ Optic is primarily intended to be installed on a system dedicated to the usage o
 
 Additionally, Optic is not designed to be exposed to the internet. While the interface does support authentication, someone with direct network access to Optic may be able to do things you wouldn't want them to do. As with all other services, you should take care to avoid unnecessary risk. If you plan to expose Optic to the internet regardless, here are some things to consider:
 - The 'config.txt' file is a plain text file that contains important configuration values including the interface password, and full directory paths. You should configure your webserver to deny access to this file over the network. The Optic directory contains a '.htaccess' file that restricts access to this file when using Apache, but this will only work if overrides are enabled in your Apache configuration.
-- The 'downloadnormal.php' and 'downloadsaved.php' pages allows authenticated users to copy a desired video file to a directory accessible over the network. While the ability to select a file to copy requires that a user be authenticated, viewing a file that has already been copied does not. As such, you should be aware that someone with direct network access to Optic can download the last viewed file by manually entering the URL.
+- The 'downloadnormal.php' and 'downloadsaved.php' pages allow [Optic Pro](https://v0lttech.com/opticpro.php) users to copy a desired video file to a directory accessible over the network. While the ability to select a file to copy requires that a user be authenticated, viewing a file that has already been copied does not. As such, you should be aware that someone with direct network access to Optic can download the last viewed file by manually entering the URL.
 
 
 ### Methodology
@@ -114,6 +119,11 @@ The "Interface Settings" section contains settings relating to the graphical Opt
 The "Connection Settings" section contains settings relating to the connection between Optic and the Predator instance.
 
 - The "Instance Directory" setting should be used to specify the absolute directory path of the Predator instance directory.
+
+
+### Unlocking
+
+If you've purchased Optic Pro, now is a good time to make sure it has been unlocked. If you downloaded Optic Pro directly, then it should be automatically unlocked. However, if you're trying to unlock and existing Optic instance, or the automatic unlock failed, you should run the `unlock.php` script by navigating to it in your browser. For example: `http://192.168.0.76/optic/unlock.php`. You should see a message stating that Optic was successfully unlocked.
 
 
 ## Usage

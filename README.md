@@ -10,16 +10,28 @@ Optic is dependent on [Predator](https://v0lttech.com/predator.php) to function,
 
 ## Installation
 
-Downloads can be found <https://v0lttech.com/optic.php>
+Downloads for Optic and Optic Pro can be found at <https://v0lttech.com/optic.php> and <https://v0lttech.com/opticpro.php> respectively.
 
 To learn more about installing, configuring, and using Optic, see the [DOCUMENTATION.md](DOCUMENTATION.md) file.
 
 
 ## Description
 
-Optic is a graphical interface for controlling Predator's dashcam functionality. Optic is designed to run on a low-powered computer, alongside Predator, and provides a simple interface for controlling dashcam recording over a network. Users can connect to Optic from a phone, tablet, or other network-enabled device with a web browser. Full installations can even include a dedicated control interface.
+Optic is a graphical interface for controlling Predator's dashcam functionality. Optic is designed to run on a low-powered computer, alongside Predator, and provides a simple interface for controlling dashcam recording over a network. Users can connect to Optic from a phone, tablet, or other network-enabled device with a web browser. Full installations can even include a dedicated control interface to remove the need for an external device.
 
 While the initial installation and setup process requires some technical knowledge, Optic is designed to be extremely easy to use after the configuration process is completed. As such, users who want to take advantage of Predator's dashcam functionality can have their installer setup Predator and Optic on their behalf.
+
+
+## Optic vs Optic Pro
+
+Optic is a fully functional dashcam control interface for Predator. However, certain features are reserved for [Optic Pro](https://v0lttech.com/opticpro.php), a paid version of the same software. Optic and Optic Pro are nearly identical, except for some code that restricts access to certain features. In fact, it is entirely possible for a determined user to unlock the publically available Optic version into the Pro version by making specific tweaks the source code. Optic users are well within their right to unlock Optic Pro manually by studying and modifying the source code, although this process is not supported.
+
+In addition to all the features offered by Optic, these are the features available exclusively to [Optic Pro](https://v0lttech.com/opticpro.php).
+- Customer support through the complete installation, configuration, and setup process.
+- The ability to view all normal and saved dashcam video segments from the web interface.
+- The ability to download any desired dashcam video segment from the web interface.
+- The ability to erase dashcam video to free disk space.
+
 
 
 ## Features
@@ -47,3 +59,7 @@ The Optic interface is designed to make the most of the available screen space, 
 ### Customizable
 
 Optic allows the user to customize both the Optic interface itself, as well as certain Predator configuration values to match their needs, all from the web interface.
+
+### Reversable
+
+While Optic provides a graphical interface for Predator's dashcam functionality, it does not lock out or otherwise inhibit the ability to use Predator from the command line, as you normally would. In fact, it's even possible to start Predator from the command line for debugging purposes, then control it from the Optic web interface.

@@ -2,7 +2,6 @@
 include "./config.php";
 
 
-
 function load_instance_config($config) {
     $instance_configuration_file = $config["instance_directory"] . "/config.json";
     if (file_exists($instance_configuration_file)) {
@@ -63,6 +62,10 @@ function is_alive($config) {
         return false;
     }
 }
+
+
+
+function pro(){ global $config; if ($config["\141\165\164\x68"] !== true) { echo "\74\160\76\x54\x68\151\x73\x20\146\x65\x61\164\x75\x72\x65\x20\151\163\40\157\156\154\x79\40\x61\166\x61\x69\154\x61\142\154\x65\x20\151\x6e\x20\117\x70\x74\151\143\40\x50\162\x6f\x2e\x3c\x2f\x70\x3e"; die; } }
 
 
 
@@ -131,12 +134,14 @@ function bytes_to_human_readable($bytes) {
 function disk_usage($config) {
     $instance_config = load_instance_config($config);
     if (is_dir($instance_config["general"]["working_directory"] . "/" . $instance_config["dashcam"]["saving"]["directory"])) {
-        $saved_dashcam_disk_usage = bytes_to_human_readable(1024 * floatval(explode("\t", trim(shell_exec("du -s '" . $instance_config["general"]["working_directory"] . "/" . $instance_config["dashcam"]["saving"]["directory"] .  "'")))[0])); // Execute the command, and record its output.
+        $saved_dashcam_disk_usage = bytes_to_human_readable(1024 * floatval(explode("\t", trim(shell_exec("timeout 1 du -s '" . $instance_config["general"]["working_directory"] . "/" . $instance_config["dashcam"]["saving"]["directory"] .  "'")))[0])); // Execute the command, and record its output.
     } else {
         $saved_dashcam_disk_usage = "0B";
     }
-    $working_directory_disk_usage = bytes_to_human_readable(1024 * floatval(explode("\t", trim(shell_exec("du -s '" . $instance_config["general"]["working_directory"] . "'")))[0])); // Execute the command, and record its output.
+    $working_directory_disk_usage = bytes_to_human_readable(1024 * floatval(explode("\t", trim(shell_exec("timeout 1 du -s '" . $instance_config["general"]["working_directory"] . "'")))[0])); // Execute the command, and record its output.
 
     return array("saved" => $saved_dashcam_disk_usage, "working" => $working_directory_disk_usage, "free" => bytes_to_human_readable(disk_free_space(".")), "total" => bytes_to_human_readable(disk_total_space(".")));
 }
+
+
 ?>

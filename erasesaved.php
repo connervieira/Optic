@@ -31,26 +31,29 @@ $working_directory_files = $instance_config["general"]["working_directory"]; // 
         <br>
         <main>
             <?php
-            if (time() - $_GET["confirmation1"] < 0) {
-                echo "<p>The confirmation timestamp is in the future. If you clicked an external link to get here, it is possible someone is attempt to manipulate you into erasing your dashcam video. No videos were deleted.</p>";
-            } else if (time() - $_GET["confirmation1"] < 30) {
-                if (time() - $_GET["confirmation2"] < 0) {
+            pro();
+            if ($config["\160\x72\157\x64\165\143\x74\137\156\141\x6d\145"] == "\117\x70\164\151\143\40\x50\x72\x6f") {
+                if (time() - $_GET["confirmation1"] < 0) {
                     echo "<p>The confirmation timestamp is in the future. If you clicked an external link to get here, it is possible someone is attempt to manipulate you into erasing your dashcam video. No videos were deleted.</p>";
-                } else if (time() - $_GET["confirmation2"] < 20) {
-                    $erase_path = $instance_config["general"]["working_directory"] . "/" . $instance_config["dashcam"]["saving"]["directory"] . "/" . "predator_dashcam*";
-                    $erase_path = str_replace(" ", "\\ ", $erase_path);
-                    $erase_path = str_replace("'", "\\'", $erase_path);
-                    $erase_path = str_replace('"', '\\"', $erase_path);
-                    shell_exec("sudo -u " . $config["exec_user"] . " rm " . $erase_path);
-                    echo "<p>Erased all saved dashcam video.</p>";
+                } else if (time() - $_GET["confirmation1"] < 30) {
+                    if (time() - $_GET["confirmation2"] < 0) {
+                        echo "<p>The confirmation timestamp is in the future. If you clicked an external link to get here, it is possible someone is attempt to manipulate you into erasing your dashcam video. No videos were deleted.</p>";
+                    } else if (time() - $_GET["confirmation2"] < 20) {
+                        $erase_path = $instance_config["general"]["working_directory"] . "/" . $instance_config["dashcam"]["saving"]["directory"] . "/" . "predator_dashcam*";
+                        $erase_path = str_replace(" ", "\\ ", $erase_path);
+                        $erase_path = str_replace("'", "\\'", $erase_path);
+                        $erase_path = str_replace('"', '\\"', $erase_path);
+                        shell_exec("sudo -u " . $config["exec_user"] . " rm " . $erase_path);
+                        echo "<p>Erased all saved dashcam video.</p>";
+                    } else {
+                        echo "<p>Are you sure? This will remove all videos that you've manually saved using the 'Lock' button, not just the normal unlocked dashcam video segments.</p>";
+                        echo "<a class='button' href='?confirmation1=" . $_GET["confirmation1"] . "&confirmation2=" . time() . "'>Confirm</a>";
+                    }
                 } else {
-                    echo "<p>Are you sure? This will remove all videos that you've manually saved using the 'Lock' button, not just the normal unlocked dashcam video segments.</p>";
-                    echo "<a class='button' href='?confirmation1=" . $_GET["confirmation1"] . "&confirmation2=" . time() . "'>Confirm</a>";
+                    echo "<p>Are you sure you would like to permanently delete all saved dashcam videos?</p>";
+                    echo "<p>This operation will erase videos that have been saved using the 'Lock' button.</p>";
+                    echo "<a class='button' href='?confirmation1=" . time() . "'>Confirm</a>";
                 }
-            } else {
-                echo "<p>Are you sure you would like to permanently delete all saved dashcam videos?</p>";
-                echo "<p>This operation will erase videos that have been saved using the 'Lock' button.</p>";
-                echo "<a class='button' href='?confirmation1=" . time() . "'>Confirm</a>";
             }
             ?>
         </main>

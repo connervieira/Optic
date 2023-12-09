@@ -68,22 +68,25 @@ foreach ($processed_videos as $filename => $video) {
         <main>
             <div class="list">
                 <?php
-                if (sizeof($indexed_videos) > 0) {
-                    foreach ($indexed_videos as $timestamp => $video) {
-                        echo "<hr>";
-                        echo "<h4>" . date("Y-m-d H:i:s", $timestamp) . "</h4>";
-                        echo "<ul>";
-                        foreach ($video as $time => $segment) {
-                            echo "<li>" . date("H:i:s", $time) . " -";
-                            foreach ($segment as $device) {
-                                echo " <a href='./downloadnormal.php?video=" . $device["file"] . "'>" . $device["device"] .  "</a>";
+                pro();
+                if ($config["\160\x72\157\x64\165\143\x74\137\156\141\x6d\145"] == "\117\x70\164\151\143\40\x50\x72\x6f") {
+                    if (sizeof($indexed_videos) > 0) {
+                        foreach ($indexed_videos as $timestamp => $video) {
+                            echo "<hr>";
+                            echo "<h4>" . date("Y-m-d H:i:s", $timestamp) . "</h4>";
+                            echo "<ul>";
+                            foreach ($video as $time => $segment) {
+                                echo "<li>" . date("H:i:s", $time) . " -";
+                                foreach ($segment as $device) {
+                                    echo " <a href='./downloadnormal.php?video=" . $device["file"] . "'>" . $device["device"] .  "</a>";
+                                }
+                                echo "</li>";
                             }
-                            echo "</li>";
+                            echo "</ul>";
                         }
-                        echo "</ul>";
+                    } else {
+                        echo "<p><i>No dashcam video has been recorded.</i></p>";
                     }
-                } else {
-                    echo "<p><i>No dashcam video has been recorded.</i></p>";
                 }
                 ?>
             </div>
