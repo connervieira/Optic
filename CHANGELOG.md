@@ -26,7 +26,7 @@ December 5th, 2023
 
 ## Version 1.2
 
-*Release date to be determined*
+December 9th, 2023
 
 - Increased the precision of the disk usage display.
 - The root settings page now shows the 'Controller' and 'Instance' buttons on separate lines.
