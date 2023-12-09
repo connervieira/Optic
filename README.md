@@ -2,6 +2,8 @@
 
 A graphical dashcam interface for [Predator](https://v0lttech.com/predator.php).
 
+![Optic logo](https://v0lttech.com/assets/img/opticlogo.svg)
+
 
 ## Note
 
@@ -31,6 +33,12 @@ In addition to all the features offered by Optic, these are the features availab
 - The ability to view all normal and saved dashcam video segments from the web interface.
 - The ability to download any desired dashcam video segment from the web interface.
 - The ability to erase dashcam video to free disk space.
+
+
+## Screenshots
+
+![Main interface in light mode](/assets/img/screenshots/main/light.png)
+![Storage interface in dark mode](/assets/img/screenshots/storage/dark.png)
 
 
 
