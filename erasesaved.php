@@ -6,12 +6,7 @@ $force_login_redirect = true;
 include "./authentication.php";
 
 
-
-
 $instance_config = load_instance_config($config);
-$working_directory_files = $instance_config["general"]["working_directory"]; // Scan all files in the Predator working directory.
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
