@@ -33,6 +33,12 @@ December 9th, 2023
 - Improved support for managing recordings when multiple capture devices are used simultaneously.
 - Updated permission verification check.
     - Not fatal errors have been turned into warnings that don't prevent the rest of the page from loading.
+
+
+## Version 1.3
+
+*Release date to be determined*
+
 - The following instance configuration values can now be modified from the Optic web interface.
     - `dashcam>saving>unsaved_history_length`
     - `dashcam>capture>opencv>stamps>main>message_1`
