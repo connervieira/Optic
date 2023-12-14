@@ -65,7 +65,8 @@ function is_alive($config) {
 
 
 
-function pro(){ global $config; if ($config["\141\165\164\x68"] !== true) { echo "\74\160\76\x54\x68\151\x73\x20\146\x65\x61\164\x75\x72\x65\x20\151\163\40\157\156\154\x79\40\x61\166\x61\x69\154\x61\142\154\x65\x20\151\x6e\x20\117\x70\x74\151\143\40\x50\162\x6f\x2e\x3c\x2f\x70\x3e"; die; } }
+function pro(){ global $config; if ($config["\141\165\164\x68"]!==true){ echo "\74\160\76\x54\x68\151\x73\x20\146\x65\x61\164\x75\x72\x65\x20\151\163\40\157\156\154\x79\40\x61\166\x61\x69\154\x61\142\154\x65\x20\151\x6e\x20\117\x70\x74\151\143\40\x50\162\x6f\x2e\x3c\x2f\x70\x3e"; die;}}
+function pro_flat(){ global $config; if ($config["\141\165\164\x68"]!==true){return false;}else{return true;}}
 
 
 
@@ -79,7 +80,6 @@ function verify_permissions($config) {
     $command_output = shell_exec($verify_command); // Execute the command, and record its output.
     $command_output = trim($command_output); // Remove whitespaces from the end and beginning of the command output.
 
-    $instance_configuration_file = $config["instance_directory"] . "/config.json";
 
     if ($command_output !== "verify") { // Check to see if the command output differs from the expected output.
         echo "<p class=\"error\">PHP does not have the necessary permissions to manage this system as '" . $config["exec_user"] . "' using the '" . shell_exec("whoami") . "' user.</p>"; // Display an error briefly explaining the problem.
@@ -95,6 +95,7 @@ function verify_permissions($config) {
         $valid = false;
     }
 
+    $instance_configuration_file = $config["instance_directory"] . "/config.json";
     if (is_dir($config["instance_directory"]) == false) { // Check to see if the root Predator instance directory exists.
         echo "<p class=\"error\">The instance directory doesn't appear to exist. Please adjust the controller configuration.</p>";
         $valid = false;
@@ -122,6 +123,7 @@ function verify_permissions($config) {
 
 
 
+// This function converts a value in bytes to a human readable format (MiB, GiB, etc.)
 function bytes_to_human_readable($bytes) {
     $si_prefix = array('B', 'K', 'M', 'G', 'T', 'P', 'E', 'Y', 'Z');
     $base = 1024;
@@ -143,5 +145,22 @@ function disk_usage($config) {
     return array("saved" => $saved_dashcam_disk_usage, "working" => $working_directory_disk_usage, "free" => bytes_to_human_readable(disk_free_space(".")), "total" => bytes_to_human_readable(disk_total_space(".")));
 }
 
+
+// This function returns true if the $input_string contains only characters found in the $whitelist.
+function character_whitelist($input_string, $whitelist) {
+    $output_string = "";
+    $input_string_array = str_split($input_string); // Convert the post text string into an array of characters.
+    foreach ($input_string_array as $input_string_character) {
+        if (strpos($whitelist, $input_string_character) !== false) {
+            $output_string = $output_string . $input_string_character;
+        }
+    }
+
+    if ($input_string == $output_string) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 ?>
