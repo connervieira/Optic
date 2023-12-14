@@ -2,7 +2,7 @@
 
 A graphical dashcam interface for [Predator](https://v0lttech.com/predator.php).
 
-![Optic logo](https://v0lttech.com/assets/img/opticlogopro.svg)
+![Optic logo](https://v0lttech.com/assets/img/opticprologo.svg)
 
 
 ## Note
