@@ -72,19 +72,25 @@ function pro_flat(){ global $config; if ($config["\141\165\164\x68"]!==true){ret
 
 // The `verify_permissions` function checks to see if all permissions are set correctly, and that all files are in their expected locations.
 function verify_permissions($config) {
+    $valid = true; // This will be switched to false in a fatal issue is discovered.
 
-    $valid = true; // This will be switched to false in an issue is discovered.
+    // Verify that PHP can execute commands with 'sudo'.
+    $command_output = trim(shell_exec("sudo echo verify")); // Execute a command with sudo, and record its output.
+    if ($command_output !== "verify") { // Check to see if the command output differs from the expected output.
+        echo "<p class=\"error\">PHP does not have the necessary permissions to execute commands with sudo as the '" . shell_exec("whoami") . "' user.</p>"; // Display an error briefly explaining the problem.
+        $valid = false;
+    }
 
-    $instance_config = load_instance_config($config);
-    $verify_command = "sudo -u " . $config["exec_user"] . " echo verify"; // Prepare the command to verify permissions.
-    $command_output = shell_exec($verify_command); // Execute the command, and record its output.
+
+    // Verify that PHP can execute commands as the configured execution user.
+    $user_verify_command = "sudo -u " . $config["exec_user"] . " echo verify"; // Prepare the command to verify permissions.
+    $command_output = shell_exec($user_verify_command); // Execute the command, and record its output.
     $command_output = trim($command_output); // Remove whitespaces from the end and beginning of the command output.
-
-
     if ($command_output !== "verify") { // Check to see if the command output differs from the expected output.
         echo "<p class=\"error\">PHP does not have the necessary permissions to manage this system as '" . $config["exec_user"] . "' using the '" . shell_exec("whoami") . "' user.</p>"; // Display an error briefly explaining the problem.
         $valid = false;
     }
+
 
 
     if (is_writable("./") == false) { // Check to se if the controller interface's root directory is writable.
@@ -95,7 +101,7 @@ function verify_permissions($config) {
         $valid = false;
     }
 
-    $instance_configuration_file = $config["instance_directory"] . "/config.json";
+    $instance_configuration_file = $config["instance_directory"] . "/config.json"; // This is the path to the instance configuration file.
     if (is_dir($config["instance_directory"]) == false) { // Check to see if the root Predator instance directory exists.
         echo "<p class=\"error\">The instance directory doesn't appear to exist. Please adjust the controller configuration.</p>";
         $valid = false;
@@ -110,6 +116,7 @@ function verify_permissions($config) {
         $valid = false;
     }
 
+    $instance_config = load_instance_config($config);
     if (is_dir($instance_config["general"]["interface_directory"]) == false) { // Check to make sure the specified interface directory exists.
         echo "<p class=\"warning\">The interface directory doesn't exist. Please verify that the correct interface directory is configured in the settings.</p>";
     } else if (is_writable($instance_config["general"]["interface_directory"]) == false) { // Check to see if the interface directory is writable.

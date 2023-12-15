@@ -44,3 +44,6 @@ December 9th, 2023
     - `dashcam>capture>opencv>stamps>main>message_1`
     - `dashcam>capture>opencv>stamps>main>message_2`
 - Added hover text to several configuration values in the instance configuration web interface.
+- Added advanced instance configuration page, which allows for the instance configuration file to be edited directly.
+- Added the ability to manage Predator's dashcam functionality is a SystemD service.
+    - Optic Pro can create, delete, enable, disable, start, and stop Predator as a SystemD service, as well as view log files.

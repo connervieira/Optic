@@ -18,6 +18,7 @@ include "./utils.php";
     <body>
         <div class="navbar">
             <a class="button" role="button" href="./settings.php">Back</a>
+            <a class="button" role="button" href="./settingsinstanceadvanced.php">Advanced</a>
         </div>
         <h1><?php echo $config["product_name"]; ?></h1>
         <h2>Instance Settings</h2>
@@ -99,7 +100,7 @@ include "./utils.php";
                         $instance_configuration_file = $config["instance_directory"] . "/config.json";
                         if (is_writable($instance_configuration_file) == true) { // Verify that the instance configuration file is writable.
                             file_put_contents($instance_configuration_file, json_encode($instance_config, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT)); // Save the modified instance configuration to disk.
-                            echo "<p>The configuration was updated successfully.<p>";
+                            echo "<p class='success'>The configuration was updated successfully.<p>";
                         } else {
                             echo "<p class='error'>The instance configuration file at '" . $instance_configuration_file . "' doesn't appear to be writable. The configuration could not be saved.</p>";
                         }

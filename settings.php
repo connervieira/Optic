@@ -17,8 +17,11 @@ include "./utils.php";
         <link rel="stylesheet" href="./fonts/lato/latofonts.css">
     </head>
     <body>
-        <div class="navbar" role="navigation">
+        <div class="navbarleft" role="navigation">
             <a class="button" role="button" href="./index.php">Back</a>
+        </div>
+        <div class="navbarright" role="navigation">
+            <a class="button" role="button" href="./service.php">Service</a><br>
         </div>
         <h1><?php echo $config["product_name"]; ?></h1>
         <h2>Settings</h2>

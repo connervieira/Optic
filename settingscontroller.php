@@ -94,7 +94,7 @@ if ($_POST["theme"] == "dark"  or $_POST["theme"] == "light") { // Make sure the
                 if ($valid == true) { // Check to see if the entered configuration is completely valid.
                     if (is_writable($optic_config_database_name)) { // Check to make sure the configuration file is writable.
                         file_put_contents($optic_config_database_name, serialize($config)); // Save the modified configuration to disk.
-                        echo "<p>Successfully updated configuration.</p>";
+                        echo "<p class='success'>Successfully updated configuration.</p>";
                     } else {
                         echo "<p class='error'>The configuration file is not writable.</p>";
                     }

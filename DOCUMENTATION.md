@@ -166,6 +166,33 @@ Below the disk usage section are the control buttons. These buttons are explaine
 The status frame is located at the bottom of the page. This frame indicates whether or not Predator is running, and will show any errors or warnings issued by the instance. Recent errors and warnings are displayed in red and yellow font respectively. Older alerts are displayed in gray.
 
 
+## Pages
+
+### Controller Settings Page
+
+The controller settings page allows you to configure Optic. This page can be reached from the main interface by clicking the "Settings" button in the top left, then the "Controller Settings" button in the center of the page.
+
+### Instance Settings Page
+
+The instance settings page allows you to configure Predator from the Optic web interface. This page can be reached from the main interface by clicking the "Settings" button in the top left, then the "Instance Settings" button in the center of the page.
+
+### Advanced Instance Settings Page
+
+The advanced instance settings page allows you to modify the Predator configuration file directly from Optic web interface. This page can be reached from the main interface by clicking the "Settings" button in the top left, then the "Instance Settings" button in the center of the page, then the "Advanced" button in the top left.
+
+### SystemD Service Page
+
+The SystemD page allows you to manage Predator's dashcam recording functionality as a SystemD service so that it starts automatically when the system boots. This page can be reached from the main interface by clicking the "Settings" button in the top left, then the "Service" button in top right.
+
+### Normal Storage Management Page
+
+The normal storage management page allows you to manage unsaved dashcam video segments recorded by Predator. This page can be reached from the main interface by clicking the "Stoage" button in the top right.
+
+### Saved Storage Management Page
+
+The saved storage management page allows you to manage video segments recorded by Predator that have been saved. This page can be reached from the main interface by clicking the "Stoage" button in the top right, then the "Saved" in the top right.
+
+
 ## Audio
 
 If Predator encounters an error, Optic can play an alert sound. However, for this feature to work, client side refresh must be enabled in the Optic settings. Additionally, both JavaScript and auto-play need to be permitted in your browser settings.

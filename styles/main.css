@@ -45,6 +45,16 @@ a {
     font-family: LatoWebBold, Helvetica, Arial;
 }
 
+textarea {
+    border-radius: 15px;
+    padding: 5px;
+}
+
+hr {
+    margin-top:30px;
+    margin-bottom:30px;
+}
+
 .button {
     font-family: inherit;
     font-size: inherit;

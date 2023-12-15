@@ -33,6 +33,8 @@ In addition to all the features offered by Optic, these are the features availab
 - The ability to view all normal and saved dashcam video segments from the web interface.
 - The ability to download any desired dashcam video segment from the web interface.
 - The ability to erase dashcam video to free disk space.
+- The ability to configure a custom message in the Predator dashcam overlay from the web interface, in place of the "PREDATOR" mark.
+- The ability to manage Predator's dashcam recording functionality as a SystemD service, so that it starts automatically when the system boots.
 
 
 ## Screenshots
