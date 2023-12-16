@@ -105,24 +105,24 @@ if ($_POST["theme"] == "dark"  or $_POST["theme"] == "light") { // Make sure the
             ?>
             <form method="post">
                 <h3>Interface Settings</h3>
-                <label for="interface_password">Password:</label> <input type="text" id="interface_password" name="interface_password" placeholder="password" pattern="[a-zA-Z0-9]{0,100}" value="<?php echo $config["interface_password"]; ?>"><br><br>
-                <label for="auto_refresh">Auto Refresh:</label>
+                <label for="interface_password" title="This is the password that needs to be entered to unlock the Optic interface.">Password:</label> <input type="text" id="interface_password" name="interface_password" placeholder="password" pattern="[a-zA-Z0-9]{0,100}" value="<?php echo $config["interface_password"]; ?>"><br><br>
+                <label for="auto_refresh" title="This controls the method by which the interface is refreshed.">Auto Refresh:</label>
                 <select id="auto_refresh" name="auto_refresh">
                     <option value="server" <?php if ($config["auto_refresh"] == "server") { echo "selected"; } ?>>Server</option>
                     <option value="client" <?php if ($config["auto_refresh"] == "client") { echo "selected"; } ?>>Client</option>
-                    <option value="off" <?php if ($config["auto_refresh"] == "off") { echo "selected"; } ?>>Off</option>
+                    <option value="off" <?php if ($config["auto_refresh"] == "off") { echo "selected"; } ?>>Manual</option>
                 </select><br><br>
-                <label for="photosensitive">Photosensitive Mode:</label> <input type="checkbox" id="photosensitive" name="photosensitive" <?php if ($config["photosensitive"]) { echo "checked"; }; ?>><br><br>
+                <label for="photosensitive" title="When enabled, photosensitive mode disables flashing effects in the interface.">Photosensitive Mode:</label> <input type="checkbox" id="photosensitive" name="photosensitive" <?php if ($config["photosensitive"]) { echo "checked"; }; ?>><br><br>
                 <label for="heartbeat_threshold">Heartbeat Threshold:</label> <input type="number" id="heartbeat_threshold" name="heartbeat_threshold" placeholder="5" min="1" max="20" value="<?php echo $config["heartbeat_threshold"]; ?>"> <span>seconds</span><br><br>
-                <label for="theme">Theme:</label>
+                <label for="theme" title="This determines the style that the interface will be displayed in.">Theme:</label>
                 <select id="theme" name="theme">
                     <option value="dark" <?php if ($config["theme"] == "dark") { echo "selected"; } ?>>Dark</option>
                     <option value="light" <?php if ($config["theme"] == "light") { echo "selected"; } ?>>Light</option>
                 </select><br><br>
 
                 <h3>Connection Settings</h3>
-                <label for="exec_user">Execution User:</label> <input type="text" id="exec_user" name="exec_user" placeholder="Username" pattern="[a-zA-Z0-9]{1,100}" value="<?php echo $config["exec_user"]; ?>"><br><br>
-                <label for="instance_directory">Instance Directory:</label> <input type="text" id="instance_directory" name="instance_directory" placeholder="/home/predator/PredatorFabric/" value="<?php echo $config["instance_directory"]; ?>"><br><br>
+                <label for="exec_user" title="This determines the user on the system that will be used to start the Predator process.">Execution User:</label> <input type="text" id="exec_user" name="exec_user" placeholder="Username" pattern="[a-zA-Z0-9]{1,100}" value="<?php echo $config["exec_user"]; ?>"><br><br>
+                <label for="instance_directory" title="This is the Predator directory, containing main.py and the other support files.">Instance Directory:</label> <input type="text" id="instance_directory" name="instance_directory" placeholder="/home/predator/PredatorFabric/" value="<?php echo $config["instance_directory"]; ?>"><br><br>
 
                 <br><br><input type="submit" class="button" value="Submit">
             </form>
