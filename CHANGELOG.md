@@ -37,7 +37,7 @@ December 9th, 2023
 
 ## Version 1.3
 
-*Release date to be determined*
+December 15th, 2023
 
 - The following instance configuration values can now be modified from the Optic web interface.
     - `dashcam>saving>unsaved_history_length`
