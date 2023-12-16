@@ -17,8 +17,8 @@ Optic and Predator form a somewhat complex link, and it's important to understan
 - The **instance** refers to the instance of Predator that is being controlled by Optic.
 - The **controller** refers to Optic, controlling a Predator instance.
 
-- The **interface directory** is a directory used by Predator to feed information that will be read by Optic. Think of this directory as the bridge Predator uses to active share information as it operates. All information in this directory is volatile.
-- The **working directory** is a directory used by Predator to store files as it works. This is where Predator stores logs, video files, images, and other information. This directory is not volatile, and should be stored somewhere secure.
+- The **interface directory** is the directory used by Predator to feed information that will be read by Optic. Think of this directory as the bridge Predator uses to active share information as it operates. All information in this directory is volatile.
+- The **working directory** is the  directory used by Predator to store files as it works. This is where Predator stores logs, video files, images, and other information. This directory is not volatile, and should be stored somewhere secure.
 - The **instance directory** is the main Predator directory, containing all of the scripts and assets used by the back-end.
 - The **controller directory** is the main Optic directory, containing all of the scripts and assets used by the front-end controller interface.
 
@@ -28,7 +28,7 @@ Optic is primarily intended to be installed on a system dedicated to the usage o
 
 Additionally, Optic is not designed to be exposed to the internet. While the interface does support authentication, someone with direct network access to Optic may be able to do things you wouldn't want them to do. As with all other services, you should take care to avoid unnecessary risk. If you plan to expose Optic to the internet regardless, here are some things to consider:
 - The 'config.txt' file is a plain text file that contains important configuration values including the interface password, and full directory paths. You should configure your webserver to deny access to this file over the network. The Optic directory contains a '.htaccess' file that restricts access to this file when using Apache, but this will only work if overrides are enabled in your Apache configuration.
-- The 'downloadnormal.php' and 'downloadsaved.php' pages allow [Optic Pro](https://v0lttech.com/opticpro.php) users to copy a desired video file to a directory accessible over the network. While the ability to select a file to copy requires that a user be authenticated, viewing a file that has already been copied does not. As such, you should be aware that someone with direct network access to Optic can download the last viewed file by manually entering the URL.
+- The 'downloadnormal.php' and 'downloadsaved.php' pages allow [Optic Pro](https://v0lttech.com/opticpro.php) users to copy a desired video file to a directory accessible over the network so it can be downloaded. While the ability to select a file to copy requires that a user be authenticated, viewing a file that has already been copied does not. As such, you should be aware that someone with direct network access to Optic can download the last viewed video file by manually entering the URL.
 
 
 ### Methodology
