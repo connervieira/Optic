@@ -29,7 +29,6 @@ include "./utils.php";
                 pro();
                 if (strtolower(trim(shell_exec("ps -p 1 -o comm="))) !== "systemd") { // Check to see if this system isn't running SystemD.
                     echo "<p class=\"error\">This platform is not running SystemD. This feature is only compatible with systems using SystemD as an init system.</p>";
-                    pro();
                     exit();
                 } else if ($config["\160\x72\157\x64\165\143\x74\137\156\141\x6d\145"] == "\117\x70\164\151\143\40\x50\x72\x6f") {
                     if (isset($_GET["action"])) {
@@ -37,7 +36,7 @@ include "./utils.php";
                         if ($_GET["action"] == "create") {
                             if (pro_flat()) {
                                 if (file_exists("/etc/systemd/system/predatordashcam.service")) { shell_exec('sudo rm -f /etc/systemd/system/predatordashcam.service'); } // Remove the existing Predator dashcam service file, if it exists.
-                                shell_exec('sudo echo -e "[Unit]\nDescription=V0LT Predator Dashcam Daemon\nAfter=multi-user.target\n\n[Service]\nType=simple\nUser=cvieira\nExecStart=python3 /home/cvieira/Software/Programming/Python/Predator/main.py 3\n\n[Install]\nWantedBy=multi-user.target" | sudo tee -a /etc/systemd/system/predatordashcam.service');
+                                shell_exec('sudo echo -e "[Unit]\nDescription=V0LT Predator Dashcam Daemon\nAfter=multi-user.target\n\n[Service]\nType=simple\nUser=' . $config["exec_user"] . '\nExecStart=python3 ' . str_replace("//", "/", $config["instance_directory"] . "/main.py") . ' 3\n\n[Install]\nWantedBy=multi-user.target" | sudo tee -a /etc/systemd/system/predatordashcam.service');
                                 if (file_exists("/etc/systemd/system/predatordashcam.service")) {
                                     echo "<p class='success'>Successfully created Predator dashcam SystemD service file.</p>";
                                 } else {
@@ -78,6 +77,10 @@ include "./utils.php";
                             $log_text = shell_exec('sudo systemctl status predatordashcam.service | tail');
                             echo "<p style='text-align:left;'>" . str_Replace("\n", "<br>", $log_text) . "</p>";
                             echo "<a class=\"button\" role=\"button\" href=\"" . basename($_SERVER['PHP_SELF']) . "\">Clear</a>";
+                        } else if ($_GET["action"] == "view") {
+                            $log_text = shell_exec('cat /etc/systemd/system/predatordashcam.service');
+                            echo "<p style='text-align:left;'>" . str_Replace("\n", "<br>", $log_text) . "</p>";
+                            echo "<a class=\"button\" role=\"button\" href=\"" . basename($_SERVER['PHP_SELF']) . "\">Clear</a>";
                         }
                         echo "<hr>";
                     }
@@ -89,7 +92,8 @@ include "./utils.php";
             <a class="button" role="button" href="?action=disable" title="Disable the Predator dashcam SystemD service so it doesn't start at boot.">Disable</a><br><br><br>
             <a class="button" role="button" href="?action=start" title="Manually start the Predator dashcam SystemD service.">Start</a>
             <a class="button" role="button" href="?action=stop" title="Manually stop the Predator dashcam SystemD service.">Stop</a><br><br><br>
-            <a class="button" role="button" href="?action=log" title="View the logs for the Predator dashcam SystemD service.">Logs</a><br><br><br>
+            <a class="button" role="button" href="?action=log" title="View the logs for the Predator dashcam SystemD service.">Logs</a>
+            <a class="button" role="button" href="?action=view" title="View the contents of the Predator dashcam service file.">View</a><br><br><br>
         </main>
     </body>
 </html>
