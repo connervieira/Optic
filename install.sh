@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 ########## CONFIGURATION START ##########
 
 user_home=(/home/$(ls /home/ | head -n 1)); # Auto-detect the home directory of the first user on the system. If there are multiple users on the system that have home directories in the '/home' folder, then this might need to be manually set (for example, to '/home/pi').
@@ -12,8 +11,6 @@ optic_root="/var/www/html/optic" # This is the path to the root Optic directory 
 ########## CONFIGURATION END ##########
 
 # Under normal circumstances, none of the lines below should need to be modified.
-
-
 
 
 
