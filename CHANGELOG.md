@@ -47,3 +47,14 @@ December 15th, 2023
 - Added advanced instance configuration page, which allows for the instance configuration file to be edited directly.
 - Added the ability to manage Predator's dashcam functionality is a SystemD service.
     - Optic Pro can create, delete, enable, disable, start, and stop Predator as a SystemD service, as well as view log files.
+
+
+## Version 1.4
+
+January 15th, 2024
+
+- Updated dashcam video downloading.
+    - Downloaded dashcam videos are now named after their timestamp, rather than just being called"transfer".
+    - Multiple dashcam videos can now be downloaded concurrently.
+    - Fixed an issue where the "Saved Storage" page would download dashcam videos from the unsaved directory. This would lead to download failures if the original dashcam video file had been deleted.
+- Updated `.htaccess` to disallow listing all files in the Optic directory.

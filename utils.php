@@ -91,6 +91,13 @@ function verify_permissions($config) {
         $valid = false;
     }
 
+    if (!is_dir("./transfers/")) { // Check to see if the dashcam video transfers directory needs to be created.
+        shell_exec("mkdir ./transfers/; chmod 777 ./transfers/"); // Create the directory, and make it writable to all processes.
+    }
+    if (!is_writable("./transfers/")) { // Check to make sure the dashcam video transfers directory is writable.
+        echo "<p class=\"error\">PHP does not have the necessary permissions to write to the './transfers/' directory. These permissions are necessary to copy dashcam videos so they can be downloaded through the web interface.</p>"; // Display an error briefly explaining the problem.
+    }
+
 
 
     if (is_writable("./") == false) { // Check to se if the controller interface's root directory is writable.

@@ -72,7 +72,7 @@ foreach ($processed_videos as $filename => $video) {
                             foreach ($video as $time => $segment) {
                                 echo "<li>" . date("H:i:s", $time) . " -";
                                 foreach ($segment as $device) {
-                                    echo " <a href='./downloadnormal.php?video=" . $device["file"] . "'>" . $device["device"] .  "</a>";
+                                    echo " <a href='./downloadsaved.php?video=" . $device["file"] . "'>" . $device["device"] .  "</a>";
                                 }
                                 echo "</li>";
                             }
