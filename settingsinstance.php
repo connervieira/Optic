@@ -48,7 +48,6 @@ include "./utils.php";
             $input_values = array();
             $input_values["dashcam"]["saving"]["unsaved_history_length"] = intval($_POST["dashcam>saving>unsaved_history_length"]);
             $input_values["dashcam"]["capture"]["opencv"]["resolution"] = $_POST["dashcam>capture>opencv>resolution"];
-            $input_values["dashcam"]["capture"]["opencv"]["framerate"] = floatval($_POST["dashcam>capture>opencv>framerate"]);
             $input_values["dashcam"]["capture"]["opencv"]["segment_length"] = floatval($_POST["dashcam>capture>opencv>segment_length"]);
             $input_values["dashcam"]["capture"]["opencv"]["stamps"]["main"]["date"]["enabled"] = $_POST["dashcam>capture>opencv>stamps>main>date>enabled"];
             $input_values["dashcam"]["capture"]["opencv"]["stamps"]["main"]["time"]["enabled"] = $_POST["dashcam>capture>opencv>stamps>main>time>enabled"];
@@ -66,9 +65,7 @@ include "./utils.php";
 
 
 
-                if ($input_values["dashcam"]["capture"]["opencv"]["resolution"] !== "960x540" and $input_values["dashcam"]["capture"]["opencv"]["resolution"] !== "1280x720" and $input_values["dashcam"]["capture"]["opencv"]["resolution"] !== "1920x1080" and $input_values["dashcam"]["capture"]["opencv"]["resolution"] !== "2560x1440" and $input_values["dashcam"]["capture"]["opencv"]["resolution"] !== "3840x2160") { echo "<p class='error'>The <b>dashcam>capture>opencv>resolution</b> value is not a recognized option.</p>"; $valid = false; } // Validate that the dashcam>capture>opencv>resolution is an expected option.
-
-                if ($input_values["dashcam"]["capture"]["opencv"]["framerate"] < 0 or $input_values["dashcam"]["capture"]["opencv"]["framerate"] > 240) { echo "<p class='error'>The <b>dashcam>capture>opencv>framerate</b> value is invalid.</p>"; $valid = false; } // Validate that the dashcam>capture>opencv>framerate value is within the expected range.
+                if ($input_values["dashcam"]["capture"]["opencv"]["resolution"] !== "426x240" and $input_values["dashcam"]["capture"]["opencv"]["resolution"] !== "640x360" and $input_values["dashcam"]["capture"]["opencv"]["resolution"] !== "640x480" and $input_values["dashcam"]["capture"]["opencv"]["resolution"] !== "960x540" and $input_values["dashcam"]["capture"]["opencv"]["resolution"] !== "1280x720" and $input_values["dashcam"]["capture"]["opencv"]["resolution"] !== "1920x1080" and $input_values["dashcam"]["capture"]["opencv"]["resolution"] !== "2560x1440" and $input_values["dashcam"]["capture"]["opencv"]["resolution"] !== "3840x2160" and $input_values["dashcam"]["capture"]["opencv"]["resolution"] !== "7680x4320") { echo "<p class='error'>The <b>dashcam>capture>opencv>resolution</b> value is not a recognized option.</p>"; $valid = false; } // Validate that the dashcam>capture>opencv>resolution is an expected option.
 
                 if ($input_values["dashcam"]["capture"]["opencv"]["segment_length"] < 0 or $input_values["dashcam"]["capture"]["opencv"]["segment_length"] > 360) { echo "<p class='error'>The <b>dashcam>capture>opencv>segment_length</b> value is invalid.</p>"; $valid = false; } // Validate that the dashcam>capture>opencv>segment_length value is within the expected range.
 
@@ -89,7 +86,6 @@ include "./utils.php";
                     $instance_config["dashcam"]["saving"]["unsaved_history_length"] = intval($input_values["dashcam"]["saving"]["unsaved_history_length"]);
                     $instance_config["dashcam"]["capture"]["opencv"]["resolution"]["width"] = floatval(explode("x", $input_values["dashcam"]["capture"]["opencv"]["resolution"])[0]);
                     $instance_config["dashcam"]["capture"]["opencv"]["resolution"]["height"] = floatval(explode("x", $input_values["dashcam"]["capture"]["opencv"]["resolution"])[1]);
-                    $instance_config["dashcam"]["capture"]["opencv"]["framerate"] = $input_values["dashcam"]["capture"]["opencv"]["framerate"];
                     $instance_config["dashcam"]["capture"]["opencv"]["segment_length"] = $input_values["dashcam"]["capture"]["opencv"]["segment_length"];
                     $instance_config["dashcam"]["capture"]["opencv"]["stamps"]["main"]["date"]["enabled"] = $input_values["dashcam"]["capture"]["opencv"]["stamps"]["main"]["date"]["enabled"];
                     $instance_config["dashcam"]["capture"]["opencv"]["stamps"]["main"]["time"]["enabled"] = $input_values["dashcam"]["capture"]["opencv"]["stamps"]["main"]["time"]["enabled"];
@@ -127,13 +123,16 @@ include "./utils.php";
                         <div class="buffer">
                             <label for="dashcam>capture>opencv>resolution" title="The resolution at which Predator should capture video.">Resolution:</label>
                             <select id="dashcam>capture>opencv>resolution" name="dashcam>capture>opencv>resolution">
+                                <option value="426x240" <?php if (intval($instance_config["dashcam"]["capture"]["opencv"]["resolution"]["height"]) == 240) { echo "selected"; } ?>>240p</option>
+                                <option value="640x360" <?php if (intval($instance_config["dashcam"]["capture"]["opencv"]["resolution"]["height"]) == 360) { echo "selected"; } ?>>360p</option>
+                                <option value="640x480" <?php if (intval($instance_config["dashcam"]["capture"]["opencv"]["resolution"]["height"]) == 480) { echo "selected"; } ?>>480p</option>
                                 <option value="960x540" <?php if (intval($instance_config["dashcam"]["capture"]["opencv"]["resolution"]["height"]) == 540) { echo "selected"; } ?>>540p</option>
                                 <option value="1280x720" <?php if (intval($instance_config["dashcam"]["capture"]["opencv"]["resolution"]["height"]) == 720) { echo "selected"; } ?>>720p</option>
                                 <option value="1920x1080" <?php if (intval($instance_config["dashcam"]["capture"]["opencv"]["resolution"]["height"]) == 1080) { echo "selected"; } ?>>1080p</option>
                                 <option value="2560x1440" <?php if (intval($instance_config["dashcam"]["capture"]["opencv"]["resolution"]["height"]) == 1440) { echo "selected"; } ?>>1440p</option>
                                 <option value="3840x2160" <?php if (intval($instance_config["dashcam"]["capture"]["opencv"]["resolution"]["height"]) == 2160) { echo "selected"; } ?>>2160p</option>
+                                <option value="7680x4320" <?php if (intval($instance_config["dashcam"]["capture"]["opencv"]["resolution"]["height"]) == 4320) { echo "selected"; } ?>>4320p</option>
                             </select><br><br>
-                            <label for="dashcam>capture>opencv>framerate" title="The framerate at which the videos recorded will be played back.">Frame Rate: </label><input type="number" class="compactinput" id="dashcam>capture>opencv>framerate" name="dashcam>capture>opencv>framerate" step="0.1" min="0" max="240" value="<?php echo $instance_config["dashcam"]["capture"]["opencv"]["framerate"]; ?>"> fps<br><br>
                             <label for="dashcam>capture>opencv>segment_length" title="The length of a video segment, in seconds, before another segment is started.">Segment Length: </label><input type="number" class="compactinput" id="dashcam>capture>opencv>segment_length" name="dashcam>capture>opencv>segment_length" step="1" min="0" max="3600" value="<?php echo $instance_config["dashcam"]["capture"]["opencv"]["segment_length"]; ?>"> seconds
                         </div>
                         <h4>Overlays</h4>

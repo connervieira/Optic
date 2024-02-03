@@ -58,3 +58,12 @@ January 15th, 2024
     - Multiple dashcam videos can now be downloaded concurrently.
     - Fixed an issue where the "Saved Storage" page would download dashcam videos from the unsaved directory. This would lead to download failures if the original dashcam video file had been deleted.
 - Updated `.htaccess` to disallow listing all files in the Optic directory.
+
+
+## Version 1.5
+
+*Release date to be determined*
+
+- Updated instance configuration page.
+    - Removed the frame-rate configuration option to reflect Predator's updated configuration layout.
+    - Added more resolution options.
