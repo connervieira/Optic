@@ -67,3 +67,4 @@ January 15th, 2024
 - Updated instance configuration page.
     - Removed the frame-rate configuration option to reflect Predator's updated configuration layout.
     - Added more resolution options.
+- Updated the storage page to be compatible with Predator V10.0.

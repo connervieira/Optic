@@ -20,7 +20,7 @@ foreach ($directory_files as $file) { // Iterate through each file in the workin
         $processed_videos[$file]["segment"] = intval(explode("_", $file)[4]);
 
         $time_since_previous = $processed_videos[$file]["time"] - $last_video_time; // Calculate the time difference between this segment's timestamp and the last segment's timestamp.
-        if ($time_since_previous > $instance_config["dashcam"]["capture"]["opencv"]["segment_length"] + 5) { // Check to see if this segment is immediately after the previous segment, plus a 5 second margin of error.
+        if ($time_since_previous > $instance_config["dashcam"]["capture"]["segment_length"] + 5) { // Check to see if this segment is immediately after the previous segment, plus a 5 second margin of error.
             $current_video = $processed_videos[$file]["time"]; // Make this segment the start of a new video set.
         }
         $processed_videos[$file]["video"] = $current_video; // Set this segment to be part of the current video set.
