@@ -7,8 +7,8 @@ include "./authentication.php";
 
 
 $instance_config = load_instance_config($config);
-if (isset($instance_config["dashcam"]["capture"]["segment_length"])) { // This is for compatibility with Predator V10.
-    $segment_length = $instance_config["dashcam"]["capture"]["segment_length"];
+if (isset($instance_config["dashcam"]["saving"]["segment_length"])) { // This is for compatibility with Predator V10.
+    $segment_length = $instance_config["dashcam"]["saving"]["segment_length"];
 } else if (isset($instance_config["dashcam"]["capture"]["opencv"]["segment_length"])) { // This is for compatibility with pre-release versions of Predator V10.
     $segment_length = $instance_config["dashcam"]["capture"]["opencv"]["segment_length"];
 }

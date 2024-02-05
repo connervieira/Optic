@@ -68,9 +68,11 @@ include "./utils.php";
             if ($error_age < 60 * 1) { // Check to see if this error is less than one minute old before adding it to the list of messages to display.
                 if ($error_age < 10) { // If the error is recent enough, display it in a prominent style.
                     if ($error["type"] == "error") { // Check to see if this message is an error.
-                        array_push($messages_to_display, "<p style='color:red;'>" . $message . "</p>"); // Display the message in red colored font.
+                        array_push($messages_to_display, "<p style='color:red;'>" . $message . "</p>"); // Display the message in red font.
                     } else if ($error["type"] == "warn") { // Check to see if this message is a warning.
-                        array_push($messages_to_display, "<p style='color:orange;'>" . $message . "</p>"); // Display the message in orange colored font.
+                        array_push($messages_to_display, "<p style='color:orange;'>" . $message . "</p>"); // Display the message in orange font.
+                    } else if ($error["type"] == "notice") { // Check to see if this message is a notice.
+                        array_push($messages_to_display, "<p style='color:white;'>" . $message . "</p>"); // Display the message in white font.
                     }
                 } else { // If the error isn't recent, display it in a subtle style.
                     array_push($messages_to_display, "<p style='color:#888888;'>" . $message . "</p>");
