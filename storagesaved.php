@@ -7,6 +7,11 @@ include "./authentication.php";
 
 
 $instance_config = load_instance_config($config);
+if (isset($instance_config["dashcam"]["capture"]["segment_length"])) { // This is for compatibility with Predator V10.
+    $segment_length = $instance_config["dashcam"]["capture"]["segment_length"];
+} else if (isset($instance_config["dashcam"]["capture"]["opencv"]["segment_length"])) { // This is for compatibility with pre-release versions of Predator V10.
+    $segment_length = $instance_config["dashcam"]["capture"]["opencv"]["segment_length"];
+}
 $directory_files = scandir($instance_config["general"]["working_directory"] . "/" . $instance_config["dashcam"]["saving"]["directory"]); // Scan all files in the saved dashcam video directory.
 
 $processed_videos = array(); // This array will hold each video and its processed information.
@@ -18,9 +23,10 @@ foreach ($directory_files as $file) { // Iterate through each file in the workin
         $processed_videos[$file]["device"] = explode("_", $file)[3];
         $processed_videos[$file]["video"] = $processed_videos[$file]["time"];
         $processed_videos[$file]["segment"] = intval(explode("_", $file)[4]);
+        $processed_videos[$file]["mode"] = explode("_", $file)[5];
 
         $time_since_previous = $processed_videos[$file]["time"] - $last_video_time; // Calculate the time difference between this segment's timestamp and the last segment's timestamp.
-        if ($time_since_previous > $instance_config["dashcam"]["capture"]["segment_length"] + 5) { // Check to see if this segment is immediately after the previous segment, plus a 5 second margin of error.
+        if ($time_since_previous > $segment_length + 5) { // Check to see if this segment is immediately after the previous segment, plus a 5 second margin of error.
             $current_video = $processed_videos[$file]["time"]; // Make this segment the start of a new video set.
         }
         $processed_videos[$file]["video"] = $current_video; // Set this segment to be part of the current video set.

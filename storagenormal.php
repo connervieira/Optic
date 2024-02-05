@@ -7,20 +7,35 @@ include "./authentication.php";
 
 
 $instance_config = load_instance_config($config);
+if (isset($instance_config["dashcam"]["capture"]["segment_length"])) { // This is for compatibility with Predator V10.
+    $segment_length = $instance_config["dashcam"]["capture"]["segment_length"];
+} else if (isset($instance_config["dashcam"]["capture"]["opencv"]["segment_length"])) { // This is for compatibility with pre-release versions of Predator V10.
+    $segment_length = $instance_config["dashcam"]["capture"]["opencv"]["segment_length"];
+}
+
 $directory_files = scandir($instance_config["general"]["working_directory"]); // Scan all files in the Predator working directory.
 
 $processed_videos = array(); // This array will hold each video and its processed information.
 $current_video = 0; // This is a placeholder that will hold the starting time of the first video segment from each continuous video.
 foreach ($directory_files as $file) { // Iterate through each file in the working directory.
-    if (strpos($file, "predator_dashcam") !== false) { // Check to see if this file is a dashcam video.
+    if (strpos($file, "predator_dashcam") !== false and (substr($file, -3) == "mkv" or substr($file, -3) == "avi" or substr($file, -3) == "m4v" or substr($file, -3) == "mp4")) { // Check to see if this file is a dashcam video.
         $processed_videos[$file]["size"] = filesize($instance_config["general"]["working_directory"] . "/" . $file);
         $processed_videos[$file]["time"] = explode("_", $file)[2];
         $processed_videos[$file]["device"] = explode("_", $file)[3];
         $processed_videos[$file]["video"] = $processed_videos[$file]["time"];
         $processed_videos[$file]["segment"] = intval(explode("_", $file)[4]);
+        $processed_videos[$file]["mode"] = explode("_", $file)[5];
+
+        # Check to see if there is an audio file associated with this video file.
+        $base_filename = $instance_config["general"]["working_directory"] . "/" . substr($file, 0, -3);
+        if (file_exists($base_filename . "wav")) { $processed_videos[$file]["audio"] = substr($file, 0, -3) . "wav";
+        } else if (file_exists($base_filename . "mp3")) { $processed_videos[$file]["audio"] = substr($file, 0, -3) . "mp3";
+        } else if (file_exists($base_filename . "flac")) { $processed_videos[$file]["audio"] = substr($file, 0, -3) . "flac";
+        } else if (file_exists($base_filename . "ogg")) { $processed_videos[$file]["audio"] = substr($file, 0, -3) . "ogg";
+        }
 
         $time_since_previous = $processed_videos[$file]["time"] - $last_video_time; // Calculate the time difference between this segment's timestamp and the last segment's timestamp.
-        if ($time_since_previous > $instance_config["dashcam"]["capture"]["segment_length"] + 5) { // Check to see if this segment is immediately after the previous segment, plus a 5 second margin of error.
+        if ($time_since_previous > $segment_length + 5) { // Check to see if this segment is immediately after the previous segment, plus a 5 second margin of error.
             $current_video = $processed_videos[$file]["time"]; // Make this segment the start of a new video set.
         }
         $processed_videos[$file]["video"] = $current_video; // Set this segment to be part of the current video set.
@@ -78,7 +93,15 @@ foreach ($processed_videos as $filename => $video) {
                             foreach ($video as $time => $segment) {
                                 echo "<li>" . date("H:i:s", $time) . " -";
                                 foreach ($segment as $device) {
-                                    echo " <a href='./downloadnormal.php?video=" . $device["file"] . "'>" . $device["device"] .  "</a>";
+                                    if (isset($device["audio"])) {
+                                        echo " <span>" . $device["device"] . " (</span>";
+                                        echo "<a href='./downloadnormal.php?video=" . $device["file"] . "'>video</a>";
+                                        echo "<span>/</span>";
+                                        echo "<a href='./downloadnormal.php?video=" . $device["audio"] . "'>audio</a>";
+                                        echo "<span>)</span>";
+                                    } else {
+                                        echo " <a href='./downloadnormal.php?video=" . $device["file"] . "'>" . $device["device"] .  "</a>";
+                                    }
                                 }
                                 echo "</li>";
                             }
