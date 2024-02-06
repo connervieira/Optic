@@ -70,6 +70,6 @@ The Optic interface is designed to make the most of the available screen space, 
 
 Optic allows the user to customize both the Optic interface itself, as well as certain Predator configuration values to match their needs, all from the web interface.
 
-### Reversable
+### Reversible
 
 While Optic provides a graphical interface for Predator's dashcam functionality, it does not lock out or otherwise inhibit the ability to use Predator from the command line, as you normally would. In fact, it's even possible to start Predator from the command line for debugging purposes, then control it from the Optic web interface.

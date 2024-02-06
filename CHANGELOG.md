@@ -1,4 +1,4 @@
-# Changelog
+# Change-log
 
 This document contains a list of all the changes for each version of Optic.
 
