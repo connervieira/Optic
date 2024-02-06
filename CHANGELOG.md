@@ -76,3 +76,4 @@ January 15th, 2024
     - Optic now recognizes separate audio files and displays them next to their associated video file.
     - Segments that are shorter than the expected segment length are now considered to be the end of a video section.
         - This causes Predator restarts to be shown as the start of a new section of video.
+- Optic no longer displays a warning when the interface directory is missing, since Predator should automatically create it when it first starts.
