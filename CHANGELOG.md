@@ -73,3 +73,5 @@ January 15th, 2024
 - Updated the storage page to be compatible with Predator V10.0.
     - Optic is now compatible with the new Predator configuration layout.
     - Optic now recognizes separate audio files and displays them next to their associated video file.
+    - Segments that are shorter than the expected segment length are now considered to be the end of a video section.
+        - This causes Predator restarts to be shown as the start of a new section of video.
