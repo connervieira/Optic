@@ -46,6 +46,8 @@ include "./utils.php";
             // Load the values from the input form.
 
             $input_values = array();
+            $input_values["general"]["working_directory"] = $_POST["general>working_directory"];
+            $input_values["general"]["interface_directory"] = $_POST["general>interface_directory"];
             $input_values["dashcam"]["saving"]["unsaved_history_length"] = intval($_POST["dashcam>saving>unsaved_history_length"]);
             $input_values["dashcam"]["saving"]["segment_length"] = floatval($_POST["dashcam>saving>segment_length"]);
             $input_values["dashcam"]["parked"]["enabled"] = $_POST["dashcam>parked>enabled"];
@@ -76,6 +78,7 @@ include "./utils.php";
 
 
 
+
                 $original_device_count = sizeof($instance_config["dashcam"]["capture"]["video"]["devices"]); // Count the number of capture devices already in the instance configuration.
                 $instance_config["dashcam"]["capture"]["video"]["devices"] = array(); // Reset the list of devices in the loaded instance configuration.
                 for ($i = 0; $i <= $original_device_count + 1; $i++) { // Run once for each device in the configuration, plus one to account for the new entry.
@@ -96,6 +99,9 @@ include "./utils.php";
                     }
                 }
 
+
+
+                if (!is_dir($input_values["general"]["working_directory"])) { echo "<p class='error'>The <b>general>working_directory</b> does not point to a valid directory.</p>"; $valid = false; } // Validate that the general>working_directory points to an existing directory.
 
 
                 if ($input_values["dashcam"]["saving"]["unsaved_history_length"] < 2) { echo "<p class='error'>The <b>dashcam>saving>unsaved_history_length</b> value is invalid.</p>"; $valid = false; } // Validate that the dashcam>saving>unsaved_history_length is within the expected range.
@@ -139,6 +145,8 @@ include "./utils.php";
 
                 // Update the instance configuration file.
                 if ($valid == true) { // Check to see if all configuration values were validated.
+                    $instance_config["general"]["working_directory"] = $input_values["general"]["working_directory"];
+                    $instance_config["general"]["interface_directory"] = $input_values["general"]["interface_directory"];
                     $instance_config["dashcam"]["saving"]["unsaved_history_length"] = intval($input_values["dashcam"]["saving"]["unsaved_history_length"]);
                     $instance_config["dashcam"]["saving"]["segment_length"] = $input_values["dashcam"]["saving"]["segment_length"];
                     $instance_config["dashcam"]["parked"]["enabled"] = $input_values["dashcam"]["parked"]["enabled"];
@@ -181,11 +189,6 @@ include "./utils.php";
 
             ?>
             <form method="post">
-                <div class="buffer">
-                    <h3>Saving</h3>
-                    <label for="dashcam>saving>segment_length" title="The length of a video segment, in seconds, before another segment is started.">Segment Length: </label><input type="number" class="compactinput" id="dashcam>saving>segment_length" name="dashcam>saving>segment_length" step="1" min="0" max="3600" value="<?php echo $instance_config["dashcam"]["saving"]["segment_length"]; ?>"> seconds<br><br>
-                    <label for="dashcam>saving>unsaved_history_length" title="The number of segments that can be recorded before unsaved segments start to be overwritten.">History Length: </label><input type="number" class="compactinput" id="dashcam>saving>unsaved_history_length" name="dashcam>saving>unsaved_history_length" step="1" min="2" max="10000" value="<?php echo $instance_config["dashcam"]["saving"]["unsaved_history_length"]; ?>"> segments
-                </div>
                 <div class="buffer">
                     <h3>Capture</h3>
                     <div class="buffer">
@@ -271,15 +274,15 @@ include "./utils.php";
                         <h4>GPS</h4>
                         <div class="buffer">
                             <h5>Location</h5>
-                            <label for="dashcam>stamps>gps>location>enabled">Enabled: </label><input type="checkbox" id="dashcam>stamps>gps>location>enabled" name="dashcam>stamps>gps>location>enabled" <?php if ($instance_config["dashcam"]["stamps"]["gps"]["location"]["enabled"] == true) { echo "checked"; } ?>>
+                            <label for="dashcam>stamps>gps>location>enabled" title="Determines if the current coordinates will be displayed in dashcam videos.">Enabled: </label><input type="checkbox" id="dashcam>stamps>gps>location>enabled" name="dashcam>stamps>gps>location>enabled" <?php if ($instance_config["dashcam"]["stamps"]["gps"]["location"]["enabled"] == true) { echo "checked"; } ?>>
                         </div>
                         <div class="buffer">
                             <h5>Altitude</h5>
-                            <label for="dashcam>stamps>gps>altitude>enabled">Enabled: </label><input type="checkbox" id="dashcam>stamps>gps>altitude>enabled" name="dashcam>stamps>gps>altitude>enabled" <?php if ($instance_config["dashcam"]["stamps"]["gps"]["altitude"]["enabled"] == true) { echo "checked"; } ?>>
+                            <label for="dashcam>stamps>gps>altitude>enabled" title="Determines if the current GPS altitude will be displayed in dashcam videos.">Enabled: </label><input type="checkbox" id="dashcam>stamps>gps>altitude>enabled" name="dashcam>stamps>gps>altitude>enabled" <?php if ($instance_config["dashcam"]["stamps"]["gps"]["altitude"]["enabled"] == true) { echo "checked"; } ?>>
                         </div>
                         <div class="buffer">
                             <h5>Speed</h5>
-                            <label for="dashcam>stamps>gps>speed>enabled">Enabled: </label><input type="checkbox" id="dashcam>stamps>gps>speed>enabled" name="dashcam>stamps>gps>speed>enabled" <?php if ($instance_config["dashcam"]["stamps"]["gps"]["speed"]["enabled"] == true) { echo "checked"; } ?>><br><br>
+                            <label for="dashcam>stamps>gps>speed>enabled" title="Determines if the current GPS speed will be displayed in dashcam videos.">Enabled: </label><input type="checkbox" id="dashcam>stamps>gps>speed>enabled" name="dashcam>stamps>gps>speed>enabled" <?php if ($instance_config["dashcam"]["stamps"]["gps"]["speed"]["enabled"] == true) { echo "checked"; } ?>><br><br>
                             <label for="dashcam>stamps>gps>speed>unit" title="The unit the speed stamp is displayed in.">Units:</label>
                             <select id="dashcam>stamps>gps>speed>unit" name="dashcam>stamps>gps>speed>unit">
                                 <option value="mph" <?php if ($instance_config["dashcam"]["stamps"]["gps"]["speed"]["unit"] == "mph") { echo "selected"; } ?>>miles per hour</option>
@@ -290,6 +293,16 @@ include "./utils.php";
                             </select>
                         </div>
                     </div>
+                </div>
+                <div class="buffer">
+                    <h3>Saving</h3>
+                    <label for="dashcam>saving>segment_length" title="The length of a video segment, in seconds, before another segment is started.">Segment Length: </label><input type="number" class="compactinput" id="dashcam>saving>segment_length" name="dashcam>saving>segment_length" step="1" min="0" max="3600" value="<?php echo $instance_config["dashcam"]["saving"]["segment_length"]; ?>"> seconds<br><br>
+                    <label for="dashcam>saving>unsaved_history_length" title="The number of segments that can be recorded before unsaved segments start to be overwritten.">History Length: </label><input type="number" class="compactinput" id="dashcam>saving>unsaved_history_length" name="dashcam>saving>unsaved_history_length" step="1" min="2" max="10000" value="<?php echo $instance_config["dashcam"]["saving"]["unsaved_history_length"]; ?>"> segments
+                </div>
+                <div class="buffer">
+                    <h3>System</h3>
+                    <label for="general>working_directory" title="The directory where Predator will store all semi-permanent files, including dashcam videos.">Working Directory: </label><input type="text" id="general>working_directory" name="general>working_directory" pattern="[a-zA-Z0-9-_ /]{0,300}" value="<?php echo $instance_config["general"]["working_directory"]; ?>"><br><br>
+                    <label for="general>interface_directory" title="The directory where Predator places temporary files for communicating with Optic.">Interface Directory: </label><input type="text" id="general>interface_directory" name="general>interface_directory" pattern="[a-zA-Z0-9-_ /]{0,300}" value="<?php echo $instance_config["general"]["interface_directory"]; ?>"><br><br>
                 </div>
 
                 <br><br><input type="submit" id="submit" name="submit" class="button" value="Submit">

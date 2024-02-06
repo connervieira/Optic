@@ -125,7 +125,7 @@ function verify_permissions($config) {
 
     $instance_config = load_instance_config($config);
     if (is_dir($instance_config["general"]["interface_directory"]) == false) { // Check to make sure the specified interface directory exists.
-        echo "<p class=\"warning\">The interface directory doesn't exist. Please verify that the correct interface directory is configured in the settings.</p>";
+        //echo "<p class=\"warning\">The interface directory doesn't exist. Please verify that the correct interface directory is configured in the settings.</p>";
     } else if (is_writable($instance_config["general"]["interface_directory"]) == false) { // Check to see if the interface directory is writable.
         echo "<p class=\"warning\">The interface directory isn't writable. Please verify that the interface directory at " . $instance_config["general"]["interface_directory"] . " has the correct permissions.</p>";
     }
