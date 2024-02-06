@@ -1,6 +1,6 @@
 # Documentation
 
-This document exlains how to install, setup, and use Optic and Optic Pro.
+This document explains how to install, setup, and use Optic and Optic Pro.
 
 
 ## Support
@@ -27,7 +27,7 @@ Optic and Predator form a somewhat complex link, and it's important to understan
 Optic is primarily intended to be installed on a system dedicated to the usage of Predator. As such, the following instructions often involve granting permissions without regard for the security of other applications. If you plan to install Optic on a system running multiple services, use caution when granting very relaxed permissions.
 
 Additionally, Optic is not designed to be exposed to the internet. While the interface does support authentication, someone with direct network access to Optic may be able to do things you wouldn't want them to do. As with all other services, you should take care to avoid unnecessary risk. If you plan to expose Optic to the internet regardless, here are some things to consider:
-- The 'config.txt' file is a plain text file that contains important configuration values including the interface password, and full directory paths. You should configure your webserver to deny access to this file over the network. The Optic directory contains a '.htaccess' file that restricts access to this file when using Apache, but this will only work if overrides are enabled in your Apache configuration.
+- The 'config.txt' file is a plain text file that contains important configuration values including the interface password, and full directory paths. You should configure your web-server to deny access to this file over the network. The Optic directory contains a '.htaccess' file that restricts access to this file when using Apache, but this will only work if overrides are enabled in your Apache configuration.
 - The 'downloadnormal.php' and 'downloadsaved.php' pages allow [Optic Pro](https://v0lttech.com/opticpro.php) users to copy a desired video file to a directory accessible over the network so it can be downloaded. While the ability to select a file to copy requires that a user be authenticated, viewing a file that has already been copied does not. As such, you should be aware that someone with direct network access to Optic can download recently viewed video files if they know the exact file name.
 
 
@@ -106,8 +106,8 @@ The "Interface Settings" section contains settings relating to the graphical Opt
         - This option depends on JavaScript being supported and enabled by your browser.
     - The "Off" option disables the auto-refresh altogether.
         - This option may cause unexpected behavior, since Optic is likely to show outdated information unless manually refreshed regularly.
-- The "Photosensitive Mode" toggle allows the user to disable visual effects that could be harmful to individuals with photosensitivity problems.
-    - When photosensitivity mode is enabled, rapid flashing effects are disabled.
+- The "Photosensitive Mode" toggle allows the user to disable visual effects that could be harmful to individuals with photo-sensitivity problems.
+    - When photo-sensitivity mode is enabled, rapid flashing effects are disabled.
     - When photosensitive mode is disabled, rapid flashing effects are enabled.
 - The "Heartbeat Threshold" setting determines how many seconds the Predator instance needs to stop responding for before Optic considers it to be inactive.
     - On slower devices, this value should be raised to prevent long processing times from causing Optic to mistakenly believe the instance isn't running.
@@ -186,11 +186,11 @@ The SystemD page allows you to manage Predator's dashcam recording functionality
 
 ### Normal Storage Management Page
 
-The normal storage management page allows you to manage unsaved dashcam video segments recorded by Predator. This page can be reached from the main interface by clicking the "Stoage" button in the top right.
+The normal storage management page allows you to manage unsaved dashcam video segments recorded by Predator. This page can be reached from the main interface by clicking the "Storage" button in the top right.
 
 ### Saved Storage Management Page
 
-The saved storage management page allows you to manage video segments recorded by Predator that have been saved. This page can be reached from the main interface by clicking the "Stoage" button in the top right, then the "Saved" in the top right.
+The saved storage management page allows you to manage video segments recorded by Predator that have been saved. This page can be reached from the main interface by clicking the "Storage" button in the top right, then the "Saved" in the top right.
 
 
 ## Audio
