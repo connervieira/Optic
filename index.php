@@ -39,7 +39,7 @@ $instance_config = load_instance_config($config);
                 file_put_contents("./start.sh", ""); // Create the start script.
             }
             if (is_writable("./start.sh")) {
-                file_put_contents("./start.sh", "export XDG_RUNTIME_DIR=/run/user/1000; python3 " . $config["instance_directory"] . "/main.py 3 > predatorlog.txt"); // Update the start script.
+                file_put_contents("./start.sh", "export XDG_RUNTIME_DIR=/run/user/1000; python3 " . $config["instance_directory"] . "/main.py 3"); // Update the start script.
             } else {
                 echo "<p class=\"error\">The start.sh script is not writable.</p>";
                 exit();
