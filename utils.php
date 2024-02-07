@@ -109,6 +109,7 @@ function verify_permissions($config) {
     }
 
     $instance_configuration_file = $config["instance_directory"] . "/config.json"; // This is the path to the instance configuration file.
+    shell_exec("timeout 1 sudo chmod 777 '" . $instance_configuration_file . "'"); // Attempt to set the permissions on the Predator configuration file.
     if (is_dir($config["instance_directory"]) == false) { // Check to see if the root Predator instance directory exists.
         echo "<p class=\"error\">The instance directory doesn't appear to exist. Please adjust the controller configuration.</p>";
         $valid = false;

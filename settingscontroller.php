@@ -33,6 +33,9 @@ if ($_POST["theme"] == "dark"  or $_POST["theme"] == "light") { // Make sure the
             if (isset($_POST["interface_password"])) { // Check to see if the form has been submitted.
                 if (preg_match("/^[A-Za-z0-9]*$/", $_POST["interface_password"])) { // Check to see if all of the characters in the submitted password are alphanumeric.
                     if (strlen($_POST["interface_password"]) <= 100) { // Check to make sure the submitted password is not an excessive length.
+                        if (strlen($_POST["interface_password"]) == 0 and strlen($config["interface_password"]) != 0) { // Check to see if the interface password was changed to be blank.
+                            echo "<p class='warning'>The interface password was left blank. This will completely disable authentication. Anyone with network access to this instance will be able to start/stop video capture, download/erase files, and re-configure the system.</p>";
+                        }
                         $config["interface_password"] = $_POST["interface_password"]; // Save the submitted interface password to the configuration array.
                     } else {
                         echo "<p class='error'>The interface password can only be 100 characters or less.</p>";

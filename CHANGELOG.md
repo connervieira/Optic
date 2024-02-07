@@ -77,3 +77,5 @@ January 15th, 2024
     - Segments that are shorter than the expected segment length are now considered to be the end of a video section.
         - This causes Predator restarts to be shown as the start of a new section of video.
 - Optic no longer displays a warning when the interface directory is missing, since Predator should automatically create it when it first starts.
+- Optic now attempts to set the correct permissions on the Predator configuration file before running the permissions check.
+- It is now possible to set an empty interface password in the configuration to disable authentication.

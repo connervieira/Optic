@@ -4,6 +4,14 @@ include "./config.php";
 $force_login_redirect = false;
 include "./authentication.php";
 
+if (strlen($config["interface_password"]) == 0) { // Check to see if the configured interface password is blank.
+    $_SESSION['authid'] = "optic";
+    $_SESSION['username'] = "admin";
+
+    header("Location: ./index.php");
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,7 +45,7 @@ include "./authentication.php";
             <form method="post">
                 <label for="password">Password: </label> <input type="password" placeholder="Password" name="password" id="password">
                 <br><br>
-                <input type="submit">
+                <input type="submit" value="Submit" class="button" role="button">
             </form>
         </main>
     </body>
