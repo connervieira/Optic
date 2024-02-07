@@ -91,7 +91,7 @@ foreach ($processed_videos as $filename => $video) {
         </div>
         <h1><?php echo $config["product_name"]; ?></h1>
         <h2>Storage - Normal</h2>
-        <p>This page allows you to manage all normally captured dashcam video.</p>
+        <p>This page allows you to manage all unlocked dashcam video.</p>
         <br><a class="button" role="button" style="background:#ff4444;color:black;" href="./erasenormal.php">Erase</a><br><br>
         <?php
         if ($instance_config["dashcam"]["parked"]["enabled"] == true) { // Check to see if parking mode is enabled before showing the filter options.
