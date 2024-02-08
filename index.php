@@ -53,7 +53,7 @@ $instance_config = load_instance_config($config);
                 echo "<p class=\"error\">The program could not be started.</p>";
             }
         } else if ($action == "stop") {
-            shell_exec("sudo killall python3; sudo killall arecord"); // Kill all Python processes.
+            shell_exec("sudo killall python3; sudo killall arecord"); // Kill all Predator related processes.
             header("Location: ."); // Reload the page to remove any arguments from the URL.
         }
 
@@ -72,7 +72,7 @@ $instance_config = load_instance_config($config);
                     $start_button = '<a class="button" role="button" id="startbutton" style="color:#ffffff" role="button" href="?action=start">Restart</a>';
                     $stop_button = '<a class="button" role="button" id="stopbutton" style="color:#ffffff" role="button" href="?action=stop">Stop</a>';
                 } else {
-                    $lock_button = '<a class="lockbutton" role="button" id="lockbutton" style="color:#aaaaaa;background:#773333;" role="button" href="#">Lock</a><br><br><br><br>';
+                    $lock_button = '<a class="lockbutton" role="button" id="lockbutton" style="color:#aaaaaa;background:#775555;" role="button" href="#">Lock</a><br><br><br><br>';
                     $start_button = '<a class="button" role="button" id="startbutton" style="color:#ffffff" role="button" href="?action=start">Start</a>';
                     $stop_button = '<a class="button" role="button" id="stopbutton" style="color:#aaaaaa" role="button" href="#">Stop</a>';
                 }
@@ -134,7 +134,7 @@ $instance_config = load_instance_config($config);
                 document.getElementById("stopbutton").href = "?action=stop";
             } else {
                 document.getElementById("lockbutton").style.color = "#aaaaaa";
-                document.getElementById("lockbutton").style.background = "#773333";
+                document.getElementById("lockbutton").style.background = "#775555";
                 document.getElementById("lockbutton").href = "#";
                 document.getElementById("startbutton").style.color = "#ffffff";
                 document.getElementById("startbutton").href = "?action=start";
