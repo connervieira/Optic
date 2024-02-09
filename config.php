@@ -13,7 +13,7 @@ if (file_exists($optic_config_database_name) == false) { // Check to see if the 
 
     $config["interface_password"] = "predator";
     $config["product_name"] = "Optic";
-    $config["instance_directory"] = "/home/pi/Software/Predator/"; // This defines where the Predator Fabric directory can be found.
+    $config["instance_directory"] = "/home/pi/Software/Predator/"; // This defines where the Predator directory can be found.
     $config["heartbeat_threshold"] = 2; // This is the number of seconds old the last heartbeat has to be before the system is considered to be offline.
     $config["auto_refresh"] = "client"; // This determines whether displays will automatically refresh.
     $config["auth"] = false;

@@ -125,7 +125,7 @@ if ($_POST["theme"] == "dark"  or $_POST["theme"] == "light") { // Make sure the
 
                 <h3>Connection Settings</h3>
                 <label for="exec_user" title="This determines the user on the system that will be used to start the Predator process.">Execution User:</label> <input type="text" id="exec_user" name="exec_user" placeholder="Username" pattern="[a-zA-Z0-9]{1,100}" value="<?php echo $config["exec_user"]; ?>"><br><br>
-                <label for="instance_directory" title="This is the Predator directory, containing main.py and the other support files.">Instance Directory:</label> <input type="text" id="instance_directory" name="instance_directory" placeholder="/home/predator/PredatorFabric/" value="<?php echo $config["instance_directory"]; ?>"><br><br>
+                <label for="instance_directory" title="This is the Predator directory, containing main.py and the other support files.">Instance Directory:</label> <input type="text" id="instance_directory" name="instance_directory" placeholder="/home/pi/Software/Predator/" value="<?php echo $config["instance_directory"]; ?>"><br><br>
 
                 <br><br><input type="submit" class="button" value="Submit">
             </form>
