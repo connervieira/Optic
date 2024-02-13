@@ -18,7 +18,7 @@ include "./utils.php";
     </head>
     <body>
         <div class="navbar" role="navigation">
-            <a class="button" role="button" href="./settings.php">Back</a>
+            <a class="button" role="button" href="./management.php">Back</a>
         </div>
         <h1><?php echo $config["product_name"]; ?></h1>
         <h2>Service</h2>

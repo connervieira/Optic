@@ -182,7 +182,7 @@ The advanced instance settings page allows you to modify the Predator configurat
 
 ### SystemD Service Page
 
-The SystemD page allows you to manage Predator's dashcam recording functionality as a SystemD service so that it starts automatically when the system boots. This page can be reached from the main interface by clicking the "Settings" button in the top left, then the "Service" button in top right.
+The SystemD page allows you to manage Predator's dashcam recording functionality as a SystemD service so that it starts automatically when the system boots. This page can be reached from the main interface by clicking the "Settings" button in the top left, then the "Management" button on the top right, then the "Service" button.
 
 ### Normal Storage Management Page
 
