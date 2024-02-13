@@ -5,3 +5,4 @@ This is an informal to-do list for Optic. It is not a comprehensive change-log, 
 - [X] Improve the handling of audio files in the storage interface.
 - [X] Add the ability to recognize 'notice' messages in the interface directory.
 - [X] Add more configuration values to the instance configuration interface.
+- [ ] Add automatic update utility.
