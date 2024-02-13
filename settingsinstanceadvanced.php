@@ -7,6 +7,11 @@ include "./authentication.php";
 
 include "./utils.php";
 
+if ($config["advanced"] == false) {
+    echo "<p>This tool is only available when advanced mode is enabled.</p>";
+    exit();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -77,8 +77,12 @@ January 15th, 2024
     - Segments that are shorter than the expected segment length are now considered to be the end of a video section.
         - This causes Predator restarts to be shown as the start of a new section of video.
 - Optic no longer displays a warning when the interface directory is missing, since Predator should automatically create it when it first starts.
-- Optic now attempts to set the correct permissions on the Predator configuration file before running the permissions check.
+- Updated the way Optic handles permissions
+    - Optic now attempts to set the correct permissions on the Predator configuration file before running the permissions check.
+    - The permissions check on the `start.sh` script now only runs if the file exists.
+        - This prevents Optic from returning errors if the start script hasn't yet been created.
 - It is now possible to set an empty interface password in the configuration to disable authentication.
 - Changed the colors of the "Lock" button on the main dashboard to better differentiate when Predator is not active.
-- The permissions check on the `start.sh` script now only runs if the file exists.
-    - This prevents Optic from returning errors if the start script hasn't yet been created.
+- Updated Optic's management utilities.
+    - The SystemD service page is now reached from a dedicated "management" utilities page.
+    - Added an "advanced mode" configuration value to enable and disable potentially destructive administration tools.

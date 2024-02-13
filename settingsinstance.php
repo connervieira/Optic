@@ -18,7 +18,11 @@ include "./utils.php";
     <body>
         <div class="navbar">
             <a class="button" role="button" href="./settings.php">Back</a>
-            <a class="button" role="button" href="./settingsinstanceadvanced.php">Advanced</a>
+            <?php
+            if ($config["advanced"] == true) {
+                echo '<a class="button" role="button" href="./settingsinstanceadvanced.php">Advanced</a>';
+            }
+            ?>
         </div>
         <h1><?php echo $config["product_name"]; ?></h1>
         <h2>Instance Settings</h2>

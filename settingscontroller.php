@@ -53,11 +53,8 @@ if ($_POST["theme"] == "dark"  or $_POST["theme"] == "light") { // Make sure the
                     $valid = false; // Indicate that the configuration is not valid, and shouldn't be saved.
                 }
 
-                if (strtolower($_POST["photosensitive"]) == "on") {
-                    $config["photosensitive"] = true;
-                } else {
-                    $config["photosensitive"] = false;
-                }
+                if (strtolower($_POST["photosensitive"]) == "on") { $config["photosensitive"] = true;
+                } else { $config["photosensitive"] = false; }
 
                 if ($_POST["heartbeat_threshold"] >= 1 and $_POST["heartbeat_threshold"] <= 60) { // Make sure the heartbeat threshold input is within reasonably expected bounds.
                     $config["heartbeat_threshold"] = intval($_POST["heartbeat_threshold"]); // Save the submitted heartbeat threshold option to the configuration array.
@@ -72,6 +69,11 @@ if ($_POST["theme"] == "dark"  or $_POST["theme"] == "light") { // Make sure the
                     echo "<p class='error'>The theme option is not an expected option.</p>";
                     $valid = false; // Indicate that the configuration is not valid, and shouldn't be saved.
                 }
+
+                if (strtolower($_POST["advanced"]) == "on") { $config["advanced"] = true;
+                } else { $config["advanced"] = false; }
+
+
 
                 if (preg_match("/^[A-Za-z0-9]*$/", $_POST["exec_user"])) { // Check to see if all of the characters in the submitted execution user are alphanumeric.
                     if (strlen($_POST["exec_user"]) <= 100) { // Check to make sure the submitted execution user is not an excessive length.
@@ -122,10 +124,12 @@ if ($_POST["theme"] == "dark"  or $_POST["theme"] == "light") { // Make sure the
                     <option value="dark" <?php if ($config["theme"] == "dark") { echo "selected"; } ?>>Dark</option>
                     <option value="light" <?php if ($config["theme"] == "light") { echo "selected"; } ?>>Light</option>
                 </select><br><br>
+                <label for="advanced" title="When enabled, potentially destructive tools for advanced users are enabled.">Advanced Mode:</label> <input type="checkbox" id="advanced" name="advanced" <?php if ($config["advanced"]) { echo "checked"; }; ?>><br><br>
 
-                <h3>Connection Settings</h3>
+                <br><br><h3>Connection Settings</h3>
                 <label for="exec_user" title="This determines the user on the system that will be used to start the Predator process.">Execution User:</label> <input type="text" id="exec_user" name="exec_user" placeholder="Username" pattern="[a-zA-Z0-9]{1,100}" value="<?php echo $config["exec_user"]; ?>"><br><br>
                 <label for="instance_directory" title="This is the Predator directory, containing main.py and the other support files.">Instance Directory:</label> <input type="text" id="instance_directory" name="instance_directory" placeholder="/home/pi/Software/Predator/" value="<?php echo $config["instance_directory"]; ?>"><br><br>
+
 
                 <br><br><input type="submit" class="button" value="Submit">
             </form>
