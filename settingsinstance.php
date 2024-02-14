@@ -52,7 +52,10 @@ include "./utils.php";
             $input_values = array();
             $input_values["general"]["working_directory"] = $_POST["general>working_directory"];
             $input_values["general"]["interface_directory"] = $_POST["general>interface_directory"];
-            $input_values["dashcam"]["saving"]["unsaved_history_length"] = intval($_POST["dashcam>saving>unsaved_history_length"]);
+            $input_values["dashcam"]["saving"]["looped_recording"]["mode"] = $_POST["dashcam>saving>looped_recording>mode"];
+            $input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["minimum_free_percentage"] = floatval($_POST["dashcam>saving>looped_recording>automatic>minimum_free_percentage"]);
+            $input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["max_deletions_per_round"] = intval($_POST["dashcam>saving>looped_recording>automatic>max_deletions_per_round"]);
+            $input_values["dashcam"]["saving"]["looped_recording"]["manual"]["history_length"] = intval($_POST["dashcam>saving>looped_recording>manual>history_length"]);
             $input_values["dashcam"]["saving"]["segment_length"] = floatval($_POST["dashcam>saving>segment_length"]);
             $input_values["dashcam"]["parked"]["enabled"] = $_POST["dashcam>parked>enabled"];
             $input_values["dashcam"]["parked"]["conditions"]["speed"] = intval($_POST["dashcam>parked>conditions>speed"]);
@@ -108,7 +111,10 @@ include "./utils.php";
                 if (!is_dir($input_values["general"]["working_directory"])) { echo "<p class='error'>The <b>general>working_directory</b> does not point to a valid directory.</p>"; $valid = false; } // Validate that the general>working_directory points to an existing directory.
 
 
-                if ($input_values["dashcam"]["saving"]["unsaved_history_length"] < 2) { echo "<p class='error'>The <b>dashcam>saving>unsaved_history_length</b> value is invalid.</p>"; $valid = false; } // Validate that the dashcam>saving>unsaved_history_length is within the expected range.
+                if ($input_values["dashcam"]["saving"]["looped_recording"]["mode"] !== "automatic" and $input_values["dashcam"]["saving"]["looped_recording"]["mode"] !== "manual" and $input_values["dashcam"]["saving"]["looped_recording"]["mode"] !== "disabled") { echo "<p class='error'>The <b>dashcam>saving>looped_recording>mode</b> is not an expected value.</p>"; $valid = false; }
+                if ($input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["minimum_free_percentage"] <= 0 or $input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["minimum_free_percentage"] >= 1) { echo "<p class='error'>The <b>dashcam>saving>looped_recording>automatic>minimum_free_percentage</b> value is invalid.</p>"; $valid = false; } // Validate that the dashcam>saving>looped_recording>automatic>minimum_free_percentage is within the expected range.
+                if ($input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["max_deletions_per_round"] <= 0 or $input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["max_deletions_per_round"] >= 1000) { echo "<p class='error'>The <b>dashcam>saving>looped_recording>automatic>max_deletions_per_round</b> value is invalid.</p>"; $valid = false; } // Validate that the dashcam>saving>looped_recording>automatic>max_deletions_per_round is within the expected range.
+                if ($input_values["dashcam"]["saving"]["looped_recording"]["manual"]["history_length"] < 2) { echo "<p class='error'>The <b>dashcam>saving>looped_recording>manual>history_length</b> value is invalid.</p>"; $valid = false; } // Validate that the dashcam>saving>looped_recording>manual>history_length is within the expected range.
 
 
                 if (strtolower($input_values["dashcam"]["parked"]["enabled"]) == "on") { $input_values["dashcam"]["parked"]["enabled"] = true; } else { $input_values["dashcam"]["parked"]["enabled"] = false; } // Convert the dashcam>parked>enabled value to a boolean.
@@ -151,7 +157,10 @@ include "./utils.php";
                 if ($valid == true) { // Check to see if all configuration values were validated.
                     $instance_config["general"]["working_directory"] = $input_values["general"]["working_directory"];
                     $instance_config["general"]["interface_directory"] = $input_values["general"]["interface_directory"];
-                    $instance_config["dashcam"]["saving"]["unsaved_history_length"] = intval($input_values["dashcam"]["saving"]["unsaved_history_length"]);
+                    $instance_config["dashcam"]["saving"]["looped_recording"]["mode"] = $input_values["dashcam"]["saving"]["looped_recording"]["mode"];
+                    $instance_config["dashcam"]["saving"]["looped_recording"]["automatic"]["minimum_free_percentage"] = floatval($input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["minimum_free_percentage"]);
+                    $instance_config["dashcam"]["saving"]["looped_recording"]["automatic"]["max_deletions_per_round"] = intval($input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["max_deletions_per_round"]);
+                    $instance_config["dashcam"]["saving"]["looped_recording"]["manual"]["history_length"] = intval($input_values["dashcam"]["saving"]["looped_recording"]["manual"]["history_length"]);
                     $instance_config["dashcam"]["saving"]["segment_length"] = $input_values["dashcam"]["saving"]["segment_length"];
                     $instance_config["dashcam"]["parked"]["enabled"] = $input_values["dashcam"]["parked"]["enabled"];
                     $instance_config["dashcam"]["parked"]["conditions"]["speed"] = floatval($input_values["dashcam"]["parked"]["conditions"]["speed"]);
@@ -301,7 +310,24 @@ include "./utils.php";
                 <div class="buffer">
                     <h3>Saving</h3>
                     <label for="dashcam>saving>segment_length" title="The length of a video segment, in seconds, before another segment is started.">Segment Length: </label><input type="number" class="compactinput" id="dashcam>saving>segment_length" name="dashcam>saving>segment_length" step="1" min="0" max="3600" value="<?php echo $instance_config["dashcam"]["saving"]["segment_length"]; ?>"> seconds<br><br>
-                    <label for="dashcam>saving>unsaved_history_length" title="The number of segments that can be recorded before unsaved segments start to be overwritten.">History Length: </label><input type="number" class="compactinput" id="dashcam>saving>unsaved_history_length" name="dashcam>saving>unsaved_history_length" step="1" min="2" max="10000" value="<?php echo $instance_config["dashcam"]["saving"]["unsaved_history_length"]; ?>"> segments
+                    <div class="buffer">
+                        <h4>Looped Recording</h4>
+                        <label for="dashcam>saving>looped_recording>mode" title="The method by which Predator decides when to delete old dashcam segments">Mode:</label>
+                        <select id="dashcam>saving>looped_recording>mode" name="dashcam>saving>looped_recording>mode">
+                            <option value="automatic" <?php if ($instance_config["dashcam"]["saving"]["looped_recording"]["mode"] == "automatic") { echo "selected"; } ?>>Automatic</option>
+                            <option value="manual" <?php if ($instance_config["dashcam"]["saving"]["looped_recording"]["mode"] == "manual") { echo "selected"; } ?>>Manual</option>
+                            <option value="disabled" <?php if ($instance_config["dashcam"]["saving"]["looped_recording"]["mode"] == "disabled") { echo "selected"; } ?>>Disabled</option>
+                        </select><br><br>
+                        <div class="buffer">
+                            <h5>Automatic</h5>
+                            <label for="dashcam>saving>looped_recording>automatic>minimum_free_percentage" title="The minimum free disk space before Predator starts erasing old video segments.">Minimum Free Disk: </label><input type="number" class="compactinput" id="dashcam>saving>looped_recording>automatic>minimum_free_percentage" name="dashcam>saving>looped_recording>automatic>minimum_free_percentage" step="0.01" min="0.2" max="0.9" value="<?php echo $instance_config["dashcam"]["saving"]["looped_recording"]["automatic"]["minimum_free_percentage"]; ?>"><br><br>
+                            <label for="dashcam>saving>looped_recording>automatic>max_deletions_per_round" title="The maximum number of dashcam segments that Predator can erase at one time.">Max Deletions Per Round: </label><input type="number" class="compactinput" id="dashcam>saving>looped_recording>automatic>max_deletions_per_round" name="dashcam>saving>looped_recording>automatic>max_deletions_per_round" step="1" min="2" max="100" value="<?php echo $instance_config["dashcam"]["saving"]["looped_recording"]["automatic"]["max_deletions_per_round"]; ?>">
+                        </div>
+                        <div class="buffer">
+                            <h5>Manual</h5>
+                            <label for="dashcam>saving>looped_recording>manual>history_length" title="The number of segments that can be recorded before unsaved segments start to be overwritten.">History Length: </label><input type="number" class="compactinput" id="dashcam>saving>looped_recording>manual>history_length" name="dashcam>saving>looped_recording>manual>history_length" step="1" min="2" max="10000" value="<?php echo $instance_config["dashcam"]["saving"]["looped_recording"]["manual"]["history_length"]; ?>"> segments
+                        </div>
+                    </div>
                 </div>
                 <div class="buffer">
                     <h3>System</h3>

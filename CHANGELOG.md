@@ -54,13 +54,13 @@ December 15th, 2023
 January 15th, 2024
 
 - Updated dashcam video downloading.
-    - Downloaded dashcam videos are now named after their timestamp, rather than just being called"transfer".
+    - Downloaded dashcam videos are now named after their timestamp, rather than just being called "transfer".
     - Multiple dashcam videos can now be downloaded concurrently.
     - Fixed an issue where the "Saved Storage" page would download dashcam videos from the unsaved directory. This would lead to download failures if the original dashcam video file had been deleted.
 - Updated `.htaccess` to disallow listing all files in the Optic directory.
 
 
-## Version 1.5
+## Version 2.0
 
 *Release date to be determined*
 
@@ -71,6 +71,7 @@ January 15th, 2024
     - Added parking mode configuration options.
     - Added the ability to add, remove, and modify capture devices.
     - Added the ability to configure both the working directory and interface directory.
+    - Added in-depth segment saving configuration options.
 - Updated the storage page to be compatible with Predator V10.0.
     - Optic is now compatible with the new Predator configuration layout.
     - Optic now recognizes separate audio files and displays them next to their associated video file.
