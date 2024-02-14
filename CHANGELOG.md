@@ -72,6 +72,7 @@ January 15th, 2024
     - Added the ability to add, remove, and modify capture devices.
     - Added the ability to configure both the working directory and interface directory.
     - Added in-depth segment saving configuration options.
+    - Added GPS toggle.
 - Updated the storage page to be compatible with Predator V10.0.
     - Optic is now compatible with the new Predator configuration layout.
     - Optic now recognizes separate audio files and displays them next to their associated video file.

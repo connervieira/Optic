@@ -52,6 +52,7 @@ include "./utils.php";
             $input_values = array();
             $input_values["general"]["working_directory"] = $_POST["general>working_directory"];
             $input_values["general"]["interface_directory"] = $_POST["general>interface_directory"];
+            $input_values["general"]["gps"]["enabled"] = $_POST["general>gps>enabled"];
             $input_values["dashcam"]["saving"]["looped_recording"]["mode"] = $_POST["dashcam>saving>looped_recording>mode"];
             $input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["minimum_free_percentage"] = floatval($_POST["dashcam>saving>looped_recording>automatic>minimum_free_percentage"]);
             $input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["max_deletions_per_round"] = intval($_POST["dashcam>saving>looped_recording>automatic>max_deletions_per_round"]);
@@ -109,6 +110,7 @@ include "./utils.php";
 
 
                 if (!is_dir($input_values["general"]["working_directory"])) { echo "<p class='error'>The <b>general>working_directory</b> does not point to a valid directory.</p>"; $valid = false; } // Validate that the general>working_directory points to an existing directory.
+                if (strtolower($input_values["general"]["gps"]["enabled"]) == "on") { $input_values["general"]["gps"]["enabled"] = true; } else { $input_values["general"]["gps"]["enabled"] = false; } // Convert the general>gps>enabled value to a boolean.
 
 
                 if ($input_values["dashcam"]["saving"]["looped_recording"]["mode"] !== "automatic" and $input_values["dashcam"]["saving"]["looped_recording"]["mode"] !== "manual" and $input_values["dashcam"]["saving"]["looped_recording"]["mode"] !== "disabled") { echo "<p class='error'>The <b>dashcam>saving>looped_recording>mode</b> is not an expected value.</p>"; $valid = false; }
@@ -157,6 +159,7 @@ include "./utils.php";
                 if ($valid == true) { // Check to see if all configuration values were validated.
                     $instance_config["general"]["working_directory"] = $input_values["general"]["working_directory"];
                     $instance_config["general"]["interface_directory"] = $input_values["general"]["interface_directory"];
+                    $instance_config["general"]["gps"]["enabled"] = $input_values["general"]["gps"]["enabled"];
                     $instance_config["dashcam"]["saving"]["looped_recording"]["mode"] = $input_values["dashcam"]["saving"]["looped_recording"]["mode"];
                     $instance_config["dashcam"]["saving"]["looped_recording"]["automatic"]["minimum_free_percentage"] = floatval($input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["minimum_free_percentage"]);
                     $instance_config["dashcam"]["saving"]["looped_recording"]["automatic"]["max_deletions_per_round"] = intval($input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["max_deletions_per_round"]);
@@ -333,6 +336,7 @@ include "./utils.php";
                     <h3>System</h3>
                     <label for="general>working_directory" title="The directory where Predator will store all semi-permanent files, including dashcam videos.">Working Directory: </label><input type="text" id="general>working_directory" name="general>working_directory" pattern="[a-zA-Z0-9-_ /]{0,300}" value="<?php echo $instance_config["general"]["working_directory"]; ?>"><br><br>
                     <label for="general>interface_directory" title="The directory where Predator places temporary files for communicating with Optic.">Interface Directory: </label><input type="text" id="general>interface_directory" name="general>interface_directory" pattern="[a-zA-Z0-9-_ /]{0,300}" value="<?php echo $instance_config["general"]["interface_directory"]; ?>"><br><br>
+                    <label for="general>gps>enabled" title="Determines globally whether GPS features are enabled.">GPS Enabled: </label><input type="checkbox" id="general>gps>enabled" name="general>gps>enabled" <?php if ($instance_config["general"]["gps"]["enabled"]) { echo "checked"; } ?>><br><br>
                 </div>
 
                 <br><br><input type="submit" id="submit" name="submit" class="button" value="Submit">
