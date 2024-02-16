@@ -53,6 +53,8 @@ include "./utils.php";
             $input_values["general"]["working_directory"] = $_POST["general>working_directory"];
             $input_values["general"]["interface_directory"] = $_POST["general>interface_directory"];
             $input_values["general"]["gps"]["enabled"] = $_POST["general>gps>enabled"];
+            $input_values["general"]["gps"]["time_correction"]["enabled"] = $_POST["general>gps>time_correction>enabled"];
+            $input_values["general"]["gps"]["time_correction"]["threshold"] = floatval($_POST["general>gps>time_correction>threshold"]);
             $input_values["dashcam"]["saving"]["looped_recording"]["mode"] = $_POST["dashcam>saving>looped_recording>mode"];
             $input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["minimum_free_percentage"] = floatval($_POST["dashcam>saving>looped_recording>automatic>minimum_free_percentage"]);
             $input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["max_deletions_per_round"] = intval($_POST["dashcam>saving>looped_recording>automatic>max_deletions_per_round"]);
@@ -111,6 +113,8 @@ include "./utils.php";
 
                 if (!is_dir($input_values["general"]["working_directory"])) { echo "<p class='error'>The <b>general>working_directory</b> does not point to a valid directory.</p>"; $valid = false; } // Validate that the general>working_directory points to an existing directory.
                 if (strtolower($input_values["general"]["gps"]["enabled"]) == "on") { $input_values["general"]["gps"]["enabled"] = true; } else { $input_values["general"]["gps"]["enabled"] = false; } // Convert the general>gps>enabled value to a boolean.
+                if (strtolower($input_values["general"]["gps"]["time_correction"]["enabled"]) == "on") { $input_values["general"]["gps"]["time_correction"]["enabled"] = true; } else { $input_values["general"]["gps"]["time_correction"]["enabled"] = false; } // Convert the general>gps>time_correction>enabled value to a boolean.
+                if ($input_values["general"]["gps"]["time_correction"]["threshold"] < 0.2) { echo "<p class='error'>The <b>general>gps>time_correction>threshold</b> value is invalid.</p>"; $valid = false; } // Validate that the general>gps>time_correction>threshold is within the expected range.
 
 
                 if ($input_values["dashcam"]["saving"]["looped_recording"]["mode"] !== "automatic" and $input_values["dashcam"]["saving"]["looped_recording"]["mode"] !== "manual" and $input_values["dashcam"]["saving"]["looped_recording"]["mode"] !== "disabled") { echo "<p class='error'>The <b>dashcam>saving>looped_recording>mode</b> is not an expected value.</p>"; $valid = false; }
@@ -160,6 +164,8 @@ include "./utils.php";
                     $instance_config["general"]["working_directory"] = $input_values["general"]["working_directory"];
                     $instance_config["general"]["interface_directory"] = $input_values["general"]["interface_directory"];
                     $instance_config["general"]["gps"]["enabled"] = $input_values["general"]["gps"]["enabled"];
+                    $instance_config["general"]["gps"]["time_correction"]["enabled"] = $input_values["general"]["gps"]["time_correction"]["enabled"];
+                    $instance_config["general"]["gps"]["time_correction"]["threshold"] = floatval($input_values["general"]["gps"]["time_correction"]["threshold"]);
                     $instance_config["dashcam"]["saving"]["looped_recording"]["mode"] = $input_values["dashcam"]["saving"]["looped_recording"]["mode"];
                     $instance_config["dashcam"]["saving"]["looped_recording"]["automatic"]["minimum_free_percentage"] = floatval($input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["minimum_free_percentage"]);
                     $instance_config["dashcam"]["saving"]["looped_recording"]["automatic"]["max_deletions_per_round"] = intval($input_values["dashcam"]["saving"]["looped_recording"]["automatic"]["max_deletions_per_round"]);
@@ -273,7 +279,7 @@ include "./utils.php";
                         <h4>Main</h4>
                         <label for="dashcam>stamps>main>date>enabled">Date: </label><input type="checkbox" id="dashcam>stamps>main>date>enabled" name="dashcam>stamps>main>date>enabled" <?php if ($instance_config["dashcam"]["stamps"]["main"]["date"]["enabled"] == true) { echo "checked"; } ?>><br><br>
                         <label for="dashcam>stamps>main>time>enabled">Time: </label><input type="checkbox" id="dashcam>stamps>main>time>enabled" name="dashcam>stamps>main>time>enabled" <?php if ($instance_config["dashcam"]["stamps"]["main"]["time"]["enabled"] == true) { echo "checked"; } ?>><br><br>
-                        <label for="dashcam>stamps>main>message_1">License Plate: </label><input type="text" id="dashcam>stamps>main>message_1" name="dashcam>stamps>main>message_1" pattern="[a-zA-Z0-9-_ ]{0,12}" value="<?php echo $instance_config["dashcam"]["stamps"]["main"]["message_1"]; ?>"><br><br>
+                        <label for="dashcam>stamps>main>message_1">License Plate: </label><input type="text" id="dashcam>stamps>main>message_1" name="dashcam>stamps>main>message_1" pattern="[a-zA-Z0-9-_ ]{0,8}" value="<?php echo $instance_config["dashcam"]["stamps"]["main"]["message_1"]; ?>"><br><br>
                         <?php
                         if (pro_flat()) {
                             if ($config["\160\x72\157\x64\165\143\x74\137\156\141\x6d\145"] == "\117\x70\164\151\143\40\x50\x72\x6f") {
@@ -323,7 +329,7 @@ include "./utils.php";
                         </select><br><br>
                         <div class="buffer">
                             <h5>Automatic</h5>
-                            <label for="dashcam>saving>looped_recording>automatic>minimum_free_percentage" title="The minimum free disk space before Predator starts erasing old video segments.">Minimum Free Disk: </label><input type="number" class="compactinput" id="dashcam>saving>looped_recording>automatic>minimum_free_percentage" name="dashcam>saving>looped_recording>automatic>minimum_free_percentage" step="0.01" min="0.2" max="0.9" value="<?php echo $instance_config["dashcam"]["saving"]["looped_recording"]["automatic"]["minimum_free_percentage"]; ?>"><br><br>
+                            <label for="dashcam>saving>looped_recording>automatic>minimum_free_percentage" title="The minimum free disk space before Predator starts erasing old video segments.">Minimum Free Disk: </label><input type="number" class="compactinput" id="dashcam>saving>looped_recording>automatic>minimum_free_percentage" name="dashcam>saving>looped_recording>automatic>minimum_free_percentage" step="0.01" min="0.05" max="0.9" value="<?php echo $instance_config["dashcam"]["saving"]["looped_recording"]["automatic"]["minimum_free_percentage"]; ?>"><br><br>
                             <label for="dashcam>saving>looped_recording>automatic>max_deletions_per_round" title="The maximum number of dashcam segments that Predator can erase at one time.">Max Deletions Per Round: </label><input type="number" class="compactinput" id="dashcam>saving>looped_recording>automatic>max_deletions_per_round" name="dashcam>saving>looped_recording>automatic>max_deletions_per_round" step="1" min="2" max="100" value="<?php echo $instance_config["dashcam"]["saving"]["looped_recording"]["automatic"]["max_deletions_per_round"]; ?>">
                         </div>
                         <div class="buffer">
@@ -336,7 +342,15 @@ include "./utils.php";
                     <h3>System</h3>
                     <label for="general>working_directory" title="The directory where Predator will store all semi-permanent files, including dashcam videos.">Working Directory: </label><input type="text" id="general>working_directory" name="general>working_directory" pattern="[a-zA-Z0-9-_ /]{0,300}" value="<?php echo $instance_config["general"]["working_directory"]; ?>"><br><br>
                     <label for="general>interface_directory" title="The directory where Predator places temporary files for communicating with Optic.">Interface Directory: </label><input type="text" id="general>interface_directory" name="general>interface_directory" pattern="[a-zA-Z0-9-_ /]{0,300}" value="<?php echo $instance_config["general"]["interface_directory"]; ?>"><br><br>
-                    <label for="general>gps>enabled" title="Determines globally whether GPS features are enabled.">GPS Enabled: </label><input type="checkbox" id="general>gps>enabled" name="general>gps>enabled" <?php if ($instance_config["general"]["gps"]["enabled"]) { echo "checked"; } ?>><br><br>
+                    <div class="buffer">
+                        <h4>GPS</h4>
+                        <label for="general>gps>enabled" title="Determines globally whether GPS features are enabled.">Enabled: </label><input type="checkbox" id="general>gps>enabled" name="general>gps>enabled" <?php if ($instance_config["general"]["gps"]["enabled"]) { echo "checked"; } ?>><br><br>
+                        <div class="buffer">
+                            <h5>Time Correction</h5>
+                            <label for="general>gps>time_correction>enabled" title="Determines if Predator will apply a time offset to match the GPS time if the threshold is exceeded.">Enabled: </label><input type="checkbox" id="general>gps>time_correction>enabled" name="general>gps>time_correction>enabled" <?php if ($instance_config["general"]["gps"]["time_correction"]["enabled"]) { echo "checked"; } ?>><br><br>
+                            <label for="general>gps>time_correction>threshold" title="The minimum difference between the system time and GPS time before Predator consider the system to clock to have drifted.">Threshold: </label><input type="number" class="compactinput" id="general>gps>time_correction>threshold" name="general>gps>time_correction>threshold" step="1" min="1" max="3600" value="<?php echo $instance_config["general"]["gps"]["time_correction"]["threshold"]; ?>"> seconds<br><br>
+                        </div>
+                    </div>
                 </div>
 
                 <br><br><input type="submit" id="submit" name="submit" class="button" value="Submit">
