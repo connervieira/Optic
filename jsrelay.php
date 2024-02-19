@@ -10,7 +10,8 @@ include "./authentication.php";
 $info["is_alive"] = is_alive($config);
 $info["latest_error"] = latest_error($config);
 $info["disk_usage"] = disk_usage($config);
+$info["state"] = predator_state($config);
 
-echo json_encode($info);
+echo json_encode($info, JSON_UNESCAPED_SLASHES);
 
 ?>

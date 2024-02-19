@@ -114,3 +114,10 @@ hr {
 }
 .error { color: #ff0000; }
 .warning { color: #ddbb00; }
+
+.statusicon {
+    height: 30px;
+    border-radius: 10px;
+    padding: 5px;
+    background-color: #111111;
+}

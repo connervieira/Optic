@@ -88,3 +88,4 @@ January 15th, 2024
 - Updated Optic's management utilities.
     - The SystemD service page is now reached from a dedicated "management" utilities page.
     - Added an "advanced mode" configuration value to enable and disable potentially destructive administration tools.
+- Added Predator state indicator icons to dashboard.

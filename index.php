@@ -67,6 +67,13 @@ $instance_config = load_instance_config($config);
         <main>
             <div class="display">
                 <?php
+                if ($config["auto_refresh"] == "client") {
+                    echo '<div style="height:90px;">
+                        <img class="statusicon" id="statusgps" title="GPS Status" src="./assets/image/icons/gps.svg">
+                        <img class="statusicon" id="statuscamera" title="Camera Status" src="./assets/image/icons/camera.svg"><br>
+                    </div>';
+                }
+                
                 if (is_alive($config) == true) {
                     $lock_button = '<a class="lockbutton" role="button" id="lockbutton" style="color:#ffffff;background:#770000;" role="button" href="?action=lock">Lock</a><br><br><br><br>';
                     $start_button = '<a class="button" role="button" id="startbutton" style="color:#ffffff" role="button" href="?action=start">Restart</a>';
@@ -142,6 +149,35 @@ $instance_config = load_instance_config($config);
                 document.getElementById("stopbutton").style.color = "#aaaaaa";
                 document.getElementById("stopbutton").href = "?action=stop";
             }
+
+
+            if (result.is_alive) {
+                if (result.state.gps == 3) {
+                    document.getElementById("statusgps").style.background = "#559955";
+                } else if (result.state.gps == 2) {
+                    document.getElementById("statusgps").style.background = "#bb9933";
+                } else if (result.state.gps == 1) {
+                    document.getElementById("statusgps").style.background = "#995555";
+                } else {
+                    document.getElementById("statusgps").style.background = "#444444";
+                }
+
+                if (result.state.mode == "dashcam/normal") {
+                    document.getElementById("statuscamera").style.background = "#559955";
+                } else if (result.state.mode == "dashcam/parked_active") {
+                    document.getElementById("statuscamera").style.background = "#bb9933";
+                } else if (result.state.mode == "dashcam/parked_dormant") {
+                    document.getElementById("statuscamera").style.background = "#4444cc";
+                } else {
+                    document.getElementById("statuscamera").style.background = "#444444";
+                }
+            } else {
+                document.getElementById("statuscamera").style.background = "#111111";
+                document.getElementById("statusgps").style.background = "#111111";
+            }
+
+
+
 
             if (result.latest_error !== null) { // Check to see if there is a recent error.
                 if (result.latest_error[0] != previous_latest_error) { // Check to see if this error is new.

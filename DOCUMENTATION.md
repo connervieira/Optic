@@ -157,6 +157,21 @@ Just below the page header are two lines that indicate disk usage. These lines t
 [saved dashcam video] / [total working directory size]
 [total disk free] / [total disk size]
 
+### State
+
+Predator's current state is indicated using colored icons just above the controls, and just below the disk usage display. These images show the following information about Predator's current state:
+
+- GPS
+    - Green: The GPS is online, and has a 3D fix.
+    - Yellow: The GPS is online, and has a 2D fix.
+    - Red: The GPS is online, but does not have a fix.
+    - Gray: The GPS is offline.
+- Camera:
+    - Green: Dash-cam recording is active.
+    - Blue: Predator is in parked mode, and is dormant.
+    - Yellow: Predator is in parked mode, and is actively recording an event.
+    - Gray: Dash-cam recording is offline.
+
 ### Controls
 
 Below the disk usage section are the control buttons. These buttons are explained in the "Controlling" section above.

@@ -178,4 +178,20 @@ function character_whitelist($input_string, $whitelist) {
     }
 }
 
+function predator_state($config) {
+    $instance_config = load_instance_config($config);
+    $state_file_path = $instance_config["general"]["interface_directory"] . "/state.json";
+    if (is_dir($instance_config["general"]["interface_directory"]) == true) { // Check to make sure the specified interface directory exists.
+        if (file_exists($state_file_path)) { // Check to see if the heartbeat file exists.
+            $state = json_decode(file_get_contents($state_file_path), true); // Load the heartbeat file from JSON data.
+        } else { // If the heartbeat file doesn't exist, then load a blank placeholder instead.
+            $state = json_decode('{"mode": "", "gps": 0}'); // Set the system state to placeholder.
+        }
+    } else { // If the heartbeat file doesn't exist, then load a blank placeholder instead.
+        $state = json_decode('{"mode": "", "gps": 0}'); // Set the system state to placeholder.
+    }
+
+    return $state;
+}
+
 ?>
