@@ -126,7 +126,7 @@ function verify_permissions($config) {
 
 
     $instance_config = load_instance_config($config);
-    if ($instance_config["interface_directory"] == "") {
+    if ($instance_config["general"]["interface_directory"] == "") {
         echo "<p class=\"warning\">The interface directory is disabled in Predator's configuration. Predator needs the interface directory to be enabled in order for the control interface to communicate with it.</p>";
     } else if (is_dir($instance_config["general"]["interface_directory"]) == false) { // Check to make sure the specified interface directory exists.
         //echo "<p class=\"warning\">The interface directory doesn't exist. Please verify that the correct interface directory is configured in the settings.</p>";
