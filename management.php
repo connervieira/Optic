@@ -28,7 +28,8 @@ include "./utils.php";
             <a class="button" role="button" href="service.php">Service</a><br><br><br>
             <?php
             if ($config["advanced"] == true) {
-                echo '<a class="button" role="button" href="update.php">Update</a>';
+                echo '<a class="button" role="button" href="update.php">Update</a><br><br><br>';
+                echo '<a class="button" role="button" href="files.php">Files</a><br><br><br>';
             }
             ?>
         </main>
