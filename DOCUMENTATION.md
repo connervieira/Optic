@@ -159,7 +159,7 @@ Just below the page header are two lines that indicate disk usage. These lines t
 
 ### State
 
-Predator's current state is indicated using colored icons just above the controls, and just below the disk usage display. These images show the following information about Predator's current state:
+Predator's current state is indicated using colored icons just above the controls, and just below the disk usage display. This feature is only available when the auto-refresh mode is set to "client" in the Optic configuration. These images show the following information about Predator's current state:
 
 - GPS
     - Green: The GPS is online, and has a 3D fix.
