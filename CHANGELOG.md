@@ -83,6 +83,7 @@ January 15th, 2024
     - Optic now attempts to set the correct permissions on the Predator configuration file before running the permissions check.
     - The permissions check on the `start.sh` script now only runs if the file exists.
         - This prevents Optic from returning errors if the start script hasn't yet been created.
+    - Optic now checks to see if Predator's interface directory is disabled in its configuration.
 - It is now possible to set an empty interface password in the configuration to disable authentication.
 - Changed the colors of the "Lock" button on the main dashboard to better differentiate when Predator is not active.
 - Updated Optic's management utilities.
