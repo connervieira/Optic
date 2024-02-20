@@ -31,8 +31,56 @@ if ($config["advanced"] == false) {
         <p>This page allows you to forcefully update <?php echo $config["product_name"]; ?> or the instance it controls.</p>
         <br>
         <main>
-            <a class="button" role="button" href="update.php?component=predator">Update Predator</a><br><br><br>
-            <a class="button" role="button" href="update.php?component=optic">Update Optic</a>
+            <?php
+            $optic_directory = dirname(__FILE__);
+            if ($_GET["confirm"] == "true") {
+                if ($_GET["component"] == "predator") {
+                    $backup_command = "sudo -u " . $config["exec_user"] . " rm -rf '/dev/shm/predator_backup'; sudo -u " . $config["exec_user"] . " cp -rf '" . $config["instance_directory"] . "' '/dev/shm/predator_backup'";
+                    exec($backup_command, $output, $return);
+                    if ($return == 0) { // Check to make sure the backup was successful before updating Predator.
+                        $update_command = "sudo -u cvieira git -C '" . $config["instance_directory"] . "' reset --hard HEAD; sudo -u " . $config["exec_user"] . " git -C '" . $config["instance_directory"] . "' pull";
+                        exec($update_command, $output, $return);
+
+                        echo "<p>Update process output:</p>";
+                        echo "<div style='opacity:0.7;'>";
+                        foreach ($output as $line) {
+                            echo "<p>" . $line . "</p>";
+                        }
+                        echo "</div>";
+                    } else {
+                        echo "<p>Predator could not be backed up before updating. The update has been cancelled to avoid data loss.</p>";
+                    }
+                    echo '<a class="button" role="button" href="update.php?confirm=true">Back</a><br><br><br>';
+                } else if ($_GET["component"] == "optic") {
+                    $backup_command = "cp -r '" . $optic_directory . "' '" . $optic_directory . "/tmp/optic_backup'";
+                    exec($backup_command, $output, $return);
+
+                    if ($return == 0) { // Check to make sure the backup was successful before updating Optic
+                        $update_command = "sudo -u cvieira git -C '" . $optic_directory . "' reset --hard HEAD; git -C '" . $optic_directory . "' pull";
+                        exec($update_command, $output, $return);
+
+                        echo "<p>Update process exit code: " . $return . "</p>";
+                        echo "<div style='opacity:0.7;'>";
+                        foreach ($output as $line) {
+                            echo "<p>" . $line . "</p>";
+                        }
+                        echo "</div>";
+                    } else {
+                        echo "<p>Optic could not be backed up before updating. The update has been cancelled to avoid data loss.</p>";
+                    }
+                    echo '<a class="button" role="button" href="update.php?confirm=true">Back</a><br><br><br>';
+                } else {
+                    echo '
+                    <a class="button" role="button" href="update.php?confirm=true&component=predator">Update Predator</a><br><br><br>
+                    <a class="button" role="button" href="update.php?confirm=true&component=optic">Update Optic</a>
+                    ';
+                }
+            } else {
+                echo "<p>This tool is only intended to be used by advanced users who understand how it works. Under normal circumstances, you should update Predator and Optic manually from the command line. This process will forcefully overwrite files, while often includes configuration files. In other words, you should expect to have to manually reconfigure everything from scratch. Additionally, this will take you off of the latest stable release, and move you to the most recent unstable development version.</p>";
+                echo "<p>If you understand the caveats of using this tool, you can acknowledge this warning and continue.</p>";
+                echo '<a class="button" role="button" href="update.php?confirm=true">Acknowledge</a>';
+            }
+            ?>
         </main>
     </body>
 </html>
