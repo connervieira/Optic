@@ -76,8 +76,8 @@ if ($config["advanced"] == false) {
                     ';
                 }
             } else {
-                echo "<p>This tool is only intended to be used by advanced users who understand how it works. Under normal circumstances, you should update Predator and Optic manually from the command line. This process will forcefully overwrite files, while often includes configuration files. In other words, you should expect to have to manually reconfigure everything from scratch. Additionally, this will take you off of the latest stable release, and move you to the most recent unstable development version.</p>";
-                echo "<p>If you understand the caveats of using this tool, you can acknowledge this warning and continue.</p>";
+                echo "<p>This tool allows developers and advanced users to overwrite the local installation of the selected component with the latest development version. This process will likely reset the configuration, which will require you to reconfigure everything from scratch. Under normal circumstances you should use the command line to manually update to the latest stable release to avoid unexpected behavior.</p>";
+                echo "<p>If you understand the caveats of using this tool, you can acknowledge this warning and access the rest of this page.</p>";
                 echo '<a class="button" role="button" href="update.php?confirm=true">Acknowledge</a>';
             }
             ?>
