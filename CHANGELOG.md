@@ -91,3 +91,4 @@ January 15th, 2024
     - Added an "advanced mode" configuration value to enable and disable potentially destructive administration tools.
 - Added Predator state indicator icons to dashboard.
 - Added working directory and interface directory file viewer.
+- Added update tool to force update Predator and Optic from the web interface.

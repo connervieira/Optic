@@ -38,15 +38,15 @@ if ($config["advanced"] == false) {
                     $backup_command = "sudo -u " . $config["exec_user"] . " rm -rf '/dev/shm/predator_backup'; sudo -u " . $config["exec_user"] . " cp -rf '" . $config["instance_directory"] . "' '/dev/shm/predator_backup'";
                     exec($backup_command, $output, $return);
                     if ($return == 0) { // Check to make sure the backup was successful before updating Predator.
+                        echo "<p>The old Predator install has been temporarily backed up to '/dev/shm/predator_backup/'.</p>";
                         $update_command = "sudo -u cvieira git -C '" . $config["instance_directory"] . "' reset --hard HEAD; sudo -u " . $config["exec_user"] . " git -C '" . $config["instance_directory"] . "' pull";
                         exec($update_command, $output, $return);
 
-                        echo "<p>Update process output:</p>";
-                        echo "<div style='opacity:0.7;'>";
+                        echo "<p>Update process output: <span style='opacity:0.6;'>";
                         foreach ($output as $line) {
-                            echo "<p>" . $line . "</p>";
+                            echo $line;
                         }
-                        echo "</div>";
+                        echo "</span></p>";
                     } else {
                         echo "<p>Predator could not be backed up before updating. The update has been cancelled to avoid data loss.</p>";
                     }
@@ -56,15 +56,15 @@ if ($config["advanced"] == false) {
                     exec($backup_command, $output, $return);
 
                     if ($return == 0) { // Check to make sure the backup was successful before updating Optic
+                        echo "<p>The old Optic install has been temporarily backed up to '/dev/shm/optic_backup/'.</p>";
                         $update_command = "sudo -u cvieira git -C '" . $optic_directory . "' reset --hard HEAD; git -C '" . $optic_directory . "' pull";
                         exec($update_command, $output, $return);
 
-                        echo "<p>Update process output:</p>";
-                        echo "<div style='opacity:0.7;'>";
+                        echo "<p>Update process output: <span style='opacity:0.6;'>";
                         foreach ($output as $line) {
-                            echo "<p>" . $line . "</p>";
+                            echo $line;
                         }
-                        echo "</div>";
+                        echo "</span></p>";
                     } else {
                         echo "<p>Optic could not be backed up before updating. The update has been cancelled to avoid data loss.</p>";
                     }
