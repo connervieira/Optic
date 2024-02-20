@@ -52,7 +52,7 @@ if ($config["advanced"] == false) {
                     }
                     echo '<a class="button" role="button" href="update.php?confirm=true">Back</a><br><br><br>';
                 } else if ($_GET["component"] == "optic") {
-                    $backup_command = "cp -r '" . $optic_directory . "' '" . $optic_directory . "/tmp/optic_backup'";
+                    $backup_command = "sudo -u " . $config["exec_user"] . " rm -rf '/dev/shm/optic_backup'; sudo -u " . $config["exec_user"] . " cp -rf '" . $optic_directory . "' '/dev/shm/optic_backup'";
                     exec($backup_command, $output, $return);
 
                     if ($return == 0) { // Check to make sure the backup was successful before updating Optic
