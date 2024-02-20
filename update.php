@@ -59,7 +59,7 @@ if ($config["advanced"] == false) {
                         $update_command = "sudo -u cvieira git -C '" . $optic_directory . "' reset --hard HEAD; git -C '" . $optic_directory . "' pull";
                         exec($update_command, $output, $return);
 
-                        echo "<p>Update process exit code: " . $return . "</p>";
+                        echo "<p>Update process output:</p>";
                         echo "<div style='opacity:0.7;'>";
                         foreach ($output as $line) {
                             echo "<p>" . $line . "</p>";
