@@ -154,22 +154,30 @@ $instance_config = load_instance_config($config);
             if (result.is_alive) {
                 if (result.state.gps == 3) {
                     document.getElementById("statusgps").style.background = "#559955";
+                    document.getElementById("statusgps").title = "GPS Status (3D fix)";
                 } else if (result.state.gps == 2) {
                     document.getElementById("statusgps").style.background = "#bb9933";
+                    document.getElementById("statusgps").title = "GPS Status (2D fix)";
                 } else if (result.state.gps == 1) {
                     document.getElementById("statusgps").style.background = "#995555";
+                    document.getElementById("statusgps").title = "GPS Status (no fix)";
                 } else {
                     document.getElementById("statusgps").style.background = "#444444";
+                    document.getElementById("statusgps").title = "GPS Status (offline)";
                 }
 
                 if (result.state.mode == "dashcam/normal") {
                     document.getElementById("statuscamera").style.background = "#559955";
+                    document.getElementById("statuscamera").title = "Camera Status (normal)";
                 } else if (result.state.mode == "dashcam/parked_active") {
                     document.getElementById("statuscamera").style.background = "#bb9933";
+                    document.getElementById("statuscamera").title = "Camera Status (parked, active)";
                 } else if (result.state.mode == "dashcam/parked_dormant") {
                     document.getElementById("statuscamera").style.background = "#4444cc";
+                    document.getElementById("statuscamera").title = "Camera Status (parked, dormant)";
                 } else {
                     document.getElementById("statuscamera").style.background = "#444444";
+                    document.getElementById("statuscamera").title = "Camera Status (offline)";
                 }
             } else {
                 document.getElementById("statuscamera").style.background = "#111111";
