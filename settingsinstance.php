@@ -94,6 +94,7 @@ include "./utils.php";
                 for ($i = 0; $i <= $original_device_count + 1; $i++) { // Run once for each device in the configuration, plus one to account for the new entry.
                     $device_name = $_POST["dashcam>capture>video>devices>" . $i . ">name"]; // This will be the key for the capture device.
                     $device_index = intval($_POST["dashcam>capture>video>devices>" . $i . ">index"]); // This is the index ID of the capture device.
+                    $device_codec = $_POST["dashcam>capture>video>devices>" . $i . ">codec"]; // This is the codec used to decode the capture device.
                     if ($_POST["dashcam>capture>video>devices>" . $i . ">flip"] == "on") { $device_flipped = true;
                     } else { $device_flipped = false; }
                     if (strlen($device_name) > 0) { // Check to see if the device name is set.
@@ -101,6 +102,7 @@ include "./utils.php";
                             if (!in_array($device_index, $instance_config["dashcam"]["capture"]["video"]["devices"])) { // Check to make sure there is no capture device that already uses this device index.
                                 $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["index"] = $device_index;
                                 $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["flip"] = $device_flipped;
+                                $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["codec"] = $device_codec;
                             } else {
                                 echo "<p class='error'>The index for <b>dashcam>capture>video>devices>" . $device_name . "</b> value is already used by another capture device.</p>";
                                 $valid = false;
@@ -239,7 +241,13 @@ include "./utils.php";
                                 echo '    <h5>Device "' . $key . '"</h5>';
                                 echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>name" title="The name that will be used as this capture device\'s ID.">Name: </label><input type="text" class="compactinput" id="dashcam>capture>video>devices>' . $displayed_cameras . '>name" name="dashcam>capture>video>devices>' . $displayed_cameras . '>name" min="0" max="10" value="' . $key . '"><br><br>';
                                 echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>index" title="The index number of the capture device on the system.">Index: </label><input type="number" class="compactinput" id="dashcam>capture>video>devices>' . $displayed_cameras . '>index" name="dashcam>capture>video>devices>' . $displayed_cameras . '>index" step="1" min="0" max="10" value="' . $instance_config["dashcam"]["capture"]["video"]["devices"][$key]["index"] . '"><br><br>';
-                                echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>flip" title="Determines if this camera\'s video output will be flipped 180 degrees..">Flip: </label><input type="checkbox" id="dashcam>capture>video>devices>' . $displayed_cameras . '>flip" name="dashcam>capture>video>devices>' . $displayed_cameras . '>flip" '; if ($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["flip"] == true) { echo "checked"; } echo '>';
+                                echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>flip" title="Determines if this camera\'s video output will be flipped 180 degrees..">Flip: </label><input type="checkbox" id="dashcam>capture>video>devices>' . $displayed_cameras . '>flip" name="dashcam>capture>video>devices>' . $displayed_cameras . '>flip" '; if ($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["flip"] == true) { echo "checked"; } echo '><br><br>';
+                                echo '<label for="dashcam>capture>video>devices>' . $displayed_cameras . 'codec" title="The codec that will be used to capture from this device.">Codec: </label>';
+                                echo '<select id="dashcam>capture>video>devices>' . $displayed_cameras . '>codec" name="dashcam>capture>video>devices>' . $displayed_cameras . '>codec">
+                                    <option value="MJPG" '; if ($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["codec"] == "MJPG") { echo "selected"; } echo '>MJPG</option>
+                                    <option value="H264"'; if ($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["codec"] == "H264") { echo "selected"; } echo '>H.264</option>
+                                    <option value="H265"'; if ($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["codec"] == "H265") { echo "selected"; }echo '>H.265</option>
+                                </select>';
                                 echo '</div>';
                                 $displayed_cameras++;
                             }
@@ -248,7 +256,13 @@ include "./utils.php";
                                 <h5>New Device</h5>
                                 <label for="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>name" title="The name that will be used as this capture device's ID.">Name: </label><input type="text" class="compactinput" id="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>name" name="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>name" max="10"><br><br>
                                 <label for="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>index" title="The index number of the capture device on the system.">Index: </label><input type="text" class="compactinput" id="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>index" name="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>index" step="1" min="0" max="10"><br><br>
-                                <label for="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>flip" title="Determines if this camera\'s video output will be flipped 180 degrees.">Flip: </label><input type="checkbox" id="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>flip" name="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>flip">
+                                <label for="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>flip" title="Determines if this camera\'s video output will be flipped 180 degrees.">Flip: </label><input type="checkbox" id="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>flip" name="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>flip"><br><br>
+                                <label for="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>codec" title="The codec that will be used to capture from this device.">Codec: </label>
+                                <select id="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>codec" name="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>codec">
+                                    <option value="MJPG">MJPG</option>
+                                    <option value="H264">H.264</option>
+                                    <option value="H265">H.265</option>
+                                </select>
                             </div>
                         </div>
                     </div>
