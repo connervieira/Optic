@@ -92,3 +92,11 @@ March 5th, 2024
     - Added update tool to force update Predator and Optic from the web interface.
 - Added Predator state indicator icons to the dashboard.
 - Added working directory and interface directory file viewer.
+
+
+## Version 2.0
+
+*Release date to be determined*
+
+- Updated instance configuration page.
+    - Added support for per-device frame-rate configuration.

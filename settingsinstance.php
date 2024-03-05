@@ -95,6 +95,8 @@ include "./utils.php";
                     $device_name = $_POST["dashcam>capture>video>devices>" . $i . ">name"]; // This will be the key for the capture device.
                     $device_index = intval($_POST["dashcam>capture>video>devices>" . $i . ">index"]); // This is the index ID of the capture device.
                     $device_codec = $_POST["dashcam>capture>video>devices>" . $i . ">codec"]; // This is the codec used to decode the capture device.
+                    $framerate_max = $_POST["dashcam>capture>video>devices>" . $i . ">framerate>max"]; // This is the maximum framerate this device will be allowed to run at.
+                    $framerate_min = $_POST["dashcam>capture>video>devices>" . $i . ">framerate>min"]; // This is the minimum framerate this device is expected run at.
                     if ($_POST["dashcam>capture>video>devices>" . $i . ">flip"] == "on") { $device_flipped = true;
                     } else { $device_flipped = false; }
                     if (strlen($device_name) > 0) { // Check to see if the device name is set.
@@ -103,6 +105,8 @@ include "./utils.php";
                                 $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["index"] = $device_index;
                                 $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["flip"] = $device_flipped;
                                 $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["codec"] = $device_codec;
+                                $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["framerate"]["max"] = $framerate_max;
+                                $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["framerate"]["min"] = $framerate_min;
                             } else {
                                 echo "<p class='error'>The index for <b>dashcam>capture>video>devices>" . $device_name . "</b> value is already used by another capture device.</p>";
                                 $valid = false;
@@ -247,7 +251,12 @@ include "./utils.php";
                                     <option value="MJPG" '; if ($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["codec"] == "MJPG") { echo "selected"; } echo '>MJPG</option>
                                     <option value="H264"'; if ($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["codec"] == "H264") { echo "selected"; } echo '>H.264</option>
                                     <option value="H265"'; if ($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["codec"] == "H265") { echo "selected"; }echo '>H.265</option>
-                                </select>';
+                                </select><br><br>';
+                                echo "<div class='buffer'>";
+                                echo "<h6>Frame Rate</h6>";
+                                echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>min" title="The minimum frame-rate that this camera is expected to run at.">Minimum: </label><input type="number" class="compactinput" id="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>min" name="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>min" step="1" min="0" max="240" value="' . $instance_config["dashcam"]["capture"]["video"]["devices"][$key]["framerate"]["min"] . '"><br><br>';
+                                echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>max" title="The maximum frame-rate that this camera will be allowed run at.">Maximum: </label><input type="number" class="compactinput" id="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>max" name="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>max" step="1" min="0" max="240" value="' . $instance_config["dashcam"]["capture"]["video"]["devices"][$key]["framerate"]["max"] . '"><br><br>';
+                                echo '</div>';
                                 echo '</div>';
                                 $displayed_cameras++;
                             }
@@ -262,7 +271,12 @@ include "./utils.php";
                                     <option value="MJPG">MJPG</option>
                                     <option value="H264">H.264</option>
                                     <option value="H265">H.265</option>
-                                </select>
+                                </select><br><br>
+                                <div class='buffer'>
+                                    <h6>Frame Rate</h6>
+                                    <label for="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>framerate>min" title="The minimum frame-rate that this camera is expected to run at.">Minimum: </label><input type="number" class="compactinput" id="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>cameras . '>framerate>min" name="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>framerate>min" step="1" min="0" max="240" value="10"><br><br>
+                                    <label for="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>framerate>max" title="The maximum frame-rate that this camera is allowed to run at.">Maximum: </label><input type="number" class="compactinput" id="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>cameras . '>framerate>max" name="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>framerate>max" step="1" min="0" max="240" value="60"><br><br>
+                                </div>
                             </div>
                         </div>
                     </div>

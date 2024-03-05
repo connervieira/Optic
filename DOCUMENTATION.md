@@ -52,7 +52,7 @@ There are a few dependencies that need to be installed for Optic to function.
     - Example: `sudo apt install php8.1; sudo a2enmod php8.1`
 3. Restart your web-server host.
     - Example: `sudo apache2ctl restart`
-4. Install Predator (Version 10.0)
+4. Install Predator (Version 10.1)
     - Downloads and documentation can be found at <https://v0lttech.com/predator.php>
 
 ### Installation
