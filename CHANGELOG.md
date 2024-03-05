@@ -62,7 +62,7 @@ January 15th, 2024
 
 ## Version 2.0
 
-*Release date to be determined*
+March 5th, 2024
 
 - Updated instance configuration page.
     - Updated the configuration interface to reflect Predator V10's configuration layout.
