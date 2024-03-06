@@ -105,8 +105,8 @@ include "./utils.php";
                                 $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["index"] = $device_index;
                                 $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["flip"] = $device_flipped;
                                 $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["codec"] = $device_codec;
-                                $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["framerate"]["max"] = $framerate_max;
-                                $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["framerate"]["min"] = $framerate_min;
+                                $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["framerate"]["max"] = floatval($framerate_max);
+                                $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["framerate"]["min"] = floatval($framerate_min);
                             } else {
                                 echo "<p class='error'>The index for <b>dashcam>capture>video>devices>" . $device_name . "</b> value is already used by another capture device.</p>";
                                 $valid = false;
