@@ -37,7 +37,7 @@ include "./utils.php";
                             if (pro_flat()) {
                                 if (file_exists("/etc/systemd/system/predatordashcam.service")) { shell_exec('timeout 2 sudo rm -f /etc/systemd/system/predatordashcam.service'); } // Remove the existing Predator dashcam service file, if it exists.
                                 shell_exec('timeout 2 sudo echo -e "[Unit]\nDescription=V0LT Predator Dashcam Daemon\nAfter=multi-user.target\n\n[Service]\nEnvironment=\"XDG_RUNTIME_DIR=/run/user/1000\"\nUser=' . $config["exec_user"] . '\nWorkingDirectory=' . str_replace("//", "/", $config["instance_directory"]) . '\nExecStart=python3 ' . str_replace("//", "/", $config["instance_directory"] . "/main.py") . ' 3\n\n[Install]\nWantedBy=multi-user.target" | sudo tee -a /etc/systemd/system/predatordashcam.service');
-                                shell_exec("timeout 2 sudo systemctl daemon-reload")
+                                shell_exec("timeout 2 sudo systemctl daemon-reload");
                                 if (file_exists("/etc/systemd/system/predatordashcam.service")) {
                                     echo "<p class='success'>Successfully created Predator dashcam SystemD service file.</p>";
                                 } else {
