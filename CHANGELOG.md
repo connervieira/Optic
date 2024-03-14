@@ -94,9 +94,10 @@ March 5th, 2024
 - Added working directory and interface directory file viewer.
 
 
-## Version 2.0
+## Version 2.1
 
 *Release date to be determined*
 
 - Updated instance configuration page.
     - Added support for per-device frame-rate configuration.
+- Fixed SystemD service by running with the correct working directory.
