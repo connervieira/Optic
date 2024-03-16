@@ -26,7 +26,7 @@ foreach ($directory_files as $file) { // Iterate through each file in the workin
         $processed_videos[$file]["mode"] = explode("_", $file)[5];
 
         $time_since_previous = $processed_videos[$file]["time"] - $last_video_time; // Calculate the time difference between this segment's timestamp and the last segment's timestamp.
-        if ($time_since_previous > $segment_length + 3 or $time_since_previous < $segment_length - 3) { // Check to see if this segment is immediately after the previous segment, plus a margin of error.
+        if (($time_since_previous > $segment_length + 3 or $time_since_previous < $segment_length - 3) and $time_since_previous !== 0) { // Check to see if this segment is immediately after the previous segment, plus a margin of error.
             $current_video = $processed_videos[$file]["time"]; // Make this segment the start of a new video set.
         }
         $processed_videos[$file]["video"] = $current_video; // Set this segment to be part of the current video set.

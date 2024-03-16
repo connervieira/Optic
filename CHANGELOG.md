@@ -102,3 +102,4 @@ March 5th, 2024
     - Added support for per-device frame-rate configuration.
 - Fixed SystemD service by running with the correct working directory.
 - The Predator dash-cam SystemD service file created by Optic now starts Predator in headless mode.
+- Fixed an issue where continuously recorded segments would be displayed as separate video sections if multiple channels were present.
