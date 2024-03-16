@@ -101,3 +101,4 @@ March 5th, 2024
 - Updated instance configuration page.
     - Added support for per-device frame-rate configuration.
 - Fixed SystemD service by running with the correct working directory.
+- The Predator dash-cam SystemD service file created by Optic now starts Predator in headless mode.
