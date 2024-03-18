@@ -29,7 +29,7 @@ $instance_config = load_instance_config($config);
             pro();
             if ($config["\160\x72\157\x64\165\143\x74\137\156\141\x6d\145"] == "\117\x70\164\151\143\40\x50\x72\x6f") {
                 if (time() - $_GET["confirmation"] < 0) {
-                    echo "<p>The confirmation timestamp is in the future. If you clicked an external link to get here, it is possible someone is attempt to manipulate you into erasing your dashcam video. No videos were deleted.</p>";
+                    echo "<p>The confirmation timestamp is in the future. If you clicked an external link to get here, it is possible someone is attempting to manipulate you into erasing your dashcam video. No videos were deleted.</p>";
                 } else if (time() - $_GET["confirmation"] < 10) {
                     $erase_path = $instance_config["general"]["working_directory"] . "/" . "predator_dashcam*";
                     $erase_path = str_replace(" ", "\\ ", $erase_path);
