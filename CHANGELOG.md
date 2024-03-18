@@ -94,12 +94,21 @@ March 5th, 2024
 - Added working directory and interface directory file viewer.
 
 
+## Version 2.0.1
+
+March 17th, 2024
+
+- Fixed an issue where continuously recorded segments with multiple channels would be displayed as separate video sections.
+- Updated SystemD service registration.
+    - Fixed SystemD service by running with the correct working directory.
+    - The Predator dash-cam SystemD service file created by Optic now starts Predator in headless mode.
+- Fixed typos on the erase pages.
+
+
 ## Version 2.1
 
 *Release date to be determined*
 
 - Updated instance configuration page.
     - Added support for per-device frame-rate configuration.
-- Fixed SystemD service by running with the correct working directory.
-- The Predator dash-cam SystemD service file created by Optic now starts Predator in headless mode.
-- Fixed an issue where continuously recorded segments would be displayed as separate video sections if multiple channels were present.
+- Reduced the margin of error for detecting continuous video sections due to improved accuracy from Predator.
