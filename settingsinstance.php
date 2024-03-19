@@ -223,13 +223,14 @@ include "./utils.php";
                 <div class="buffer">
                     <h3>Capture</h3>
                     <div class="buffer">
+                        <h4>Video</h4>
                         <div class="buffer">
-                            <h4>Cameras</h4>
+                            <h5>Cameras</h5>
                             <?php
                             $displayed_cameras = 0;
                             foreach (array_keys($instance_config["dashcam"]["capture"]["video"]["devices"]) as $key) {
                                 echo '<div class="buffer">';
-                                echo '    <h5>Device "' . $key . '"</h5>';
+                                echo '    <h6>Device "' . $key . '"</h6>';
                                 echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>name" title="The name that will be used as this capture device\'s ID.">Name: </label><input type="text" class="compactinput" id="dashcam>capture>video>devices>' . $displayed_cameras . '>name" name="dashcam>capture>video>devices>' . $displayed_cameras . '>name" min="0" max="10" value="' . $key . '"><br><br>';
                                 echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>index" title="The index number of the capture device on the system.">Index: </label><input type="number" class="compactinput" id="dashcam>capture>video>devices>' . $displayed_cameras . '>index" name="dashcam>capture>video>devices>' . $displayed_cameras . '>index" step="1" min="0" max="10" value="' . $instance_config["dashcam"]["capture"]["video"]["devices"][$key]["index"] . '"><br><br>';
                                 echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>flip" title="Determines if this camera\'s video output will be flipped 180 degrees..">Flip: </label><input type="checkbox" id="dashcam>capture>video>devices>' . $displayed_cameras . '>flip" name="dashcam>capture>video>devices>' . $displayed_cameras . '>flip" '; if ($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["flip"] == true) { echo "checked"; } echo '><br><br>';
@@ -239,11 +240,7 @@ include "./utils.php";
                                     <option value="H264"'; if ($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["codec"] == "H264") { echo "selected"; } echo '>H.264</option>
                                     <option value="H265"'; if ($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["codec"] == "H265") { echo "selected"; }echo '>H.265</option>
                                 </select><br><br>';
-                                echo "<div class='buffer'>";
-                                echo "<h6>Frame Rate</h6>";
-                                echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>min" title="The minimum frame-rate that this camera is expected to run at.">Minimum: </label><input type="number" class="compactinput" id="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>min" name="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>min" step="1" min="0" max="240" value="' . $instance_config["dashcam"]["capture"]["video"]["devices"][$key]["framerate"]["min"] . '"><br><br>';
-                                echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>max" title="The maximum frame-rate that this camera will be allowed run at.">Maximum: </label><input type="number" class="compactinput" id="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>max" name="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>max" step="1" min="0" max="240" value="' . $instance_config["dashcam"]["capture"]["video"]["devices"][$key]["framerate"]["max"] . '"><br><br>';
-                                echo '<label for="dashcam>capture>video>resolution" title="The resolution at which Predator should capture video on this device.">Resolution:</label>';
+                                echo '<label for="dashcam>capture>video>devices>' . $displayed_cameras . '>resolution" title="The resolution at which Predator should capture video on this device.">Resolution:</label>';
                                 echo '<select id="dashcam>capture>video>devices>' . $displayed_cameras . '>resolution" name="dashcam>capture>video>devices>' . $displayed_cameras . '>resolution">';
                                 echo '    <option value="426x240" '; if (intval($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["resolution"]["height"]) == 240) { echo "selected"; } echo '>240p</option>';
                                 echo '    <option value="640x360" '; if (intval($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["resolution"]["height"]) == 360) { echo "selected"; } echo '>360p</option>';
@@ -255,13 +252,17 @@ include "./utils.php";
                                 echo '    <option value="3840x2160" '; if (intval($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["resolution"]["height"]) == 2160) { echo "selected"; } echo '>2160p</option>';
                                 echo '    <option value="7680x4320" '; if (intval($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["resolution"]["height"]) == 4320) { echo "selected"; } echo '>4320p</option>';
                                 echo '</select><br><br>';
+                                echo "<div class='buffer'>";
+                                echo "<h6>Frame Rate</h6>";
+                                echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>min" title="The minimum frame-rate that this camera is expected to run at.">Minimum: </label><input type="number" class="compactinput" id="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>min" name="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>min" step="1" min="0" max="240" value="' . $instance_config["dashcam"]["capture"]["video"]["devices"][$key]["framerate"]["min"] . '"><br><br>';
+                                echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>max" title="The maximum frame-rate that this camera will be allowed run at.">Maximum: </label><input type="number" class="compactinput" id="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>max" name="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>max" step="1" min="0" max="240" value="' . $instance_config["dashcam"]["capture"]["video"]["devices"][$key]["framerate"]["max"] . '"><br><br>';
                                 echo '</div>';
                                 echo '</div>';
                                 $displayed_cameras++;
                             }
                             ?>
                             <div class="buffer">
-                                <h5>New Device</h5>
+                                <h6>New Device</h6>
                                 <label for="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>name" title="The name that will be used as this capture device's ID.">Name: </label><input type="text" class="compactinput" id="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>name" name="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>name" max="10"><br><br>
                                 <label for="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>index" title="The index number of the capture device on the system.">Index: </label><input type="text" class="compactinput" id="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>index" name="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>index" step="1" min="0" max="10"><br><br>
                                 <label for="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>flip" title="Determines if this camera\'s video output will be flipped 180 degrees.">Flip: </label><input type="checkbox" id="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>flip" name="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>flip"><br><br>
@@ -270,6 +271,18 @@ include "./utils.php";
                                     <option value="MJPG">MJPG</option>
                                     <option value="H264">H.264</option>
                                     <option value="H265">H.265</option>
+                                </select><br><br>
+                                <label for="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>resolution" title="The resolution at which Predator should capture video on this device.">Resolution:</label>
+                                <select id="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>resolution" name="dashcam>capture>video>devices><?php echo $displayed_cameras; ?>>resolution">
+                                    <option value="426x240">240p</option>
+                                    <option value="640x360">360p</option>
+                                    <option value="640x480">480p</option>
+                                    <option value="960x540">540p</option>
+                                    <option value="1280x720" selected>720p</option>
+                                    <option value="1920x1080">1080p</option>
+                                    <option value="2560x1440">1440p</option>
+                                    <option value="3840x2160">2160p</option>
+                                    <option value="7680x4320">4320p</option>
                                 </select><br><br>
                                 <div class='buffer'>
                                     <h6>Frame Rate</h6>
