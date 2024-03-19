@@ -67,7 +67,6 @@ include "./utils.php";
             $input_values["dashcam"]["parked"]["recording"]["highlight_motion"]["color"] = $_POST["dashcam>parked>recording>highlight_motion>color"];
             $input_values["dashcam"]["parked"]["recording"]["sensitivity"] = floatval($_POST["dashcam>parked>recording>sensitivity"]);
             $input_values["dashcam"]["parked"]["recording"]["timeout"] = floatval($_POST["dashcam>parked>recording>timeout"]);
-            $input_values["dashcam"]["capture"]["video"]["resolution"] = $_POST["dashcam>capture>video>resolution"];
             $input_values["dashcam"]["stamps"]["size"] = floatval($_POST["dashcam>stamps>size"]);
             $input_values["dashcam"]["stamps"]["main"]["date"]["enabled"] = $_POST["dashcam>stamps>main>date>enabled"];
             $input_values["dashcam"]["stamps"]["main"]["time"]["enabled"] = $_POST["dashcam>stamps>main>time>enabled"];
@@ -97,6 +96,7 @@ include "./utils.php";
                     $device_codec = $_POST["dashcam>capture>video>devices>" . $i . ">codec"]; // This is the codec used to decode the capture device.
                     $framerate_max = $_POST["dashcam>capture>video>devices>" . $i . ">framerate>max"]; // This is the maximum framerate this device will be allowed to run at.
                     $framerate_min = $_POST["dashcam>capture>video>devices>" . $i . ">framerate>min"]; // This is the minimum framerate this device is expected run at.
+                    $resolution = $_POST["dashcam>capture>video>devices>" . $i . ">resolution"]; // This is the resolution that this device will record at.
                     if ($_POST["dashcam>capture>video>devices>" . $i . ">flip"] == "on") { $device_flipped = true;
                     } else { $device_flipped = false; }
                     if (strlen($device_name) > 0) { // Check to see if the device name is set.
@@ -107,6 +107,9 @@ include "./utils.php";
                                 $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["codec"] = $device_codec;
                                 $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["framerate"]["max"] = floatval($framerate_max);
                                 $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["framerate"]["min"] = floatval($framerate_min);
+                                if ($resolution !== "426x240" and $resolution !== "640x360" and $resolution !== "640x480" and $resolution !== "960x540" and $resolution !== "1280x720" and $resolution !== "1920x1080" and $resolution !== "2560x1440" and $resolution !== "3840x2160" and $resolution !== "7680x4320") { echo "<p class='error'>The <b>dashcam>capture>video>devices>" . $device_name . ">resolution</b> value is not a recognized option.</p>"; $valid = false; } // Validate that the dashcam>capture>video>devices>device_id>resolution is an expected option.
+                                $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["resolution"]["width"] = floatval(explode("x", $resolution)[0]);
+                                $instance_config["dashcam"]["capture"]["video"]["devices"][$device_name]["resolution"]["height"] = floatval(explode("x", $resolution)[1]);
                             } else {
                                 echo "<p class='error'>The index for <b>dashcam>capture>video>devices>" . $device_name . "</b> value is already used by another capture device.</p>";
                                 $valid = false;
@@ -141,7 +144,6 @@ include "./utils.php";
                 if ($input_values["dashcam"]["parked"]["recording"]["timeout"] < 0 or $input_values["dashcam"]["parked"]["recording"]["timeout"] > 60) { echo "<p class='error'>The <b>dashcam>parked>recording>timeout</b> value is invalid.</p>"; $valid = false; } // Validate that the dashcam>parked>recording>timeout is within the expected range.
 
 
-                if ($input_values["dashcam"]["capture"]["video"]["resolution"] !== "426x240" and $input_values["dashcam"]["capture"]["video"]["resolution"] !== "640x360" and $input_values["dashcam"]["capture"]["video"]["resolution"] !== "640x480" and $input_values["dashcam"]["capture"]["video"]["resolution"] !== "960x540" and $input_values["dashcam"]["capture"]["video"]["resolution"] !== "1280x720" and $input_values["dashcam"]["capture"]["video"]["resolution"] !== "1920x1080" and $input_values["dashcam"]["capture"]["video"]["resolution"] !== "2560x1440" and $input_values["dashcam"]["capture"]["video"]["resolution"] !== "3840x2160" and $input_values["dashcam"]["capture"]["video"]["resolution"] !== "7680x4320") { echo "<p class='error'>The <b>dashcam>capture>video>resolution</b> value is not a recognized option.</p>"; $valid = false; } // Validate that the dashcam>capture>video>resolution is an expected option.
 
                 if ($input_values["dashcam"]["saving"]["segment_length"] < 0 or $input_values["dashcam"]["saving"]["segment_length"] > 360) { echo "<p class='error'>The <b>dashcam>saving>segment_length</b> value is invalid.</p>"; $valid = false; } // Validate that the dashcam>saving>segment_length value is within the expected range.
 
@@ -187,8 +189,6 @@ include "./utils.php";
                     $instance_config["dashcam"]["parked"]["recording"]["highlight_motion"]["color"] = $input_values["dashcam"]["parked"]["recording"]["highlight_motion"]["color"];
                     $instance_config["dashcam"]["parked"]["recording"]["sensitivity"] = floatval($input_values["dashcam"]["parked"]["recording"]["sensitivity"]);
                     $instance_config["dashcam"]["parked"]["recording"]["timeout"] = floatval($input_values["dashcam"]["parked"]["recording"]["timeout"]);
-                    $instance_config["dashcam"]["capture"]["video"]["resolution"]["width"] = floatval(explode("x", $input_values["dashcam"]["capture"]["video"]["resolution"])[0]);
-                    $instance_config["dashcam"]["capture"]["video"]["resolution"]["height"] = floatval(explode("x", $input_values["dashcam"]["capture"]["video"]["resolution"])[1]);
                     $instance_config["dashcam"]["stamps"]["size"] = $input_values["dashcam"]["stamps"]["size"];
                     $instance_config["dashcam"]["stamps"]["main"]["date"]["enabled"] = $input_values["dashcam"]["stamps"]["main"]["date"]["enabled"];
                     $instance_config["dashcam"]["stamps"]["main"]["time"]["enabled"] = $input_values["dashcam"]["stamps"]["main"]["time"]["enabled"];
@@ -223,19 +223,6 @@ include "./utils.php";
                 <div class="buffer">
                     <h3>Capture</h3>
                     <div class="buffer">
-                        <h4>Video</h4>
-                        <label for="dashcam>capture>video>resolution" title="The resolution at which Predator should capture video.">Resolution:</label>
-                        <select id="dashcam>capture>video>resolution" name="dashcam>capture>video>resolution">
-                            <option value="426x240" <?php if (intval($instance_config["dashcam"]["capture"]["video"]["resolution"]["height"]) == 240) { echo "selected"; } ?>>240p</option>
-                            <option value="640x360" <?php if (intval($instance_config["dashcam"]["capture"]["video"]["resolution"]["height"]) == 360) { echo "selected"; } ?>>360p</option>
-                            <option value="640x480" <?php if (intval($instance_config["dashcam"]["capture"]["video"]["resolution"]["height"]) == 480) { echo "selected"; } ?>>480p</option>
-                            <option value="960x540" <?php if (intval($instance_config["dashcam"]["capture"]["video"]["resolution"]["height"]) == 540) { echo "selected"; } ?>>540p</option>
-                            <option value="1280x720" <?php if (intval($instance_config["dashcam"]["capture"]["video"]["resolution"]["height"]) == 720) { echo "selected"; } ?>>720p</option>
-                            <option value="1920x1080" <?php if (intval($instance_config["dashcam"]["capture"]["video"]["resolution"]["height"]) == 1080) { echo "selected"; } ?>>1080p</option>
-                            <option value="2560x1440" <?php if (intval($instance_config["dashcam"]["capture"]["video"]["resolution"]["height"]) == 1440) { echo "selected"; } ?>>1440p</option>
-                            <option value="3840x2160" <?php if (intval($instance_config["dashcam"]["capture"]["video"]["resolution"]["height"]) == 2160) { echo "selected"; } ?>>2160p</option>
-                            <option value="7680x4320" <?php if (intval($instance_config["dashcam"]["capture"]["video"]["resolution"]["height"]) == 4320) { echo "selected"; } ?>>4320p</option>
-                        </select><br><br>
                         <div class="buffer">
                             <h4>Cameras</h4>
                             <?php
@@ -256,6 +243,18 @@ include "./utils.php";
                                 echo "<h6>Frame Rate</h6>";
                                 echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>min" title="The minimum frame-rate that this camera is expected to run at.">Minimum: </label><input type="number" class="compactinput" id="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>min" name="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>min" step="1" min="0" max="240" value="' . $instance_config["dashcam"]["capture"]["video"]["devices"][$key]["framerate"]["min"] . '"><br><br>';
                                 echo '    <label for="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>max" title="The maximum frame-rate that this camera will be allowed run at.">Maximum: </label><input type="number" class="compactinput" id="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>max" name="dashcam>capture>video>devices>' . $displayed_cameras . '>framerate>max" step="1" min="0" max="240" value="' . $instance_config["dashcam"]["capture"]["video"]["devices"][$key]["framerate"]["max"] . '"><br><br>';
+                                echo '<label for="dashcam>capture>video>resolution" title="The resolution at which Predator should capture video on this device.">Resolution:</label>';
+                                echo '<select id="dashcam>capture>video>devices>' . $displayed_cameras . '>resolution" name="dashcam>capture>video>devices>' . $displayed_cameras . '>resolution">';
+                                echo '    <option value="426x240" '; if (intval($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["resolution"]["height"]) == 240) { echo "selected"; } echo '>240p</option>';
+                                echo '    <option value="640x360" '; if (intval($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["resolution"]["height"]) == 360) { echo "selected"; } echo '>360p</option>';
+                                echo '    <option value="640x480" '; if (intval($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["resolution"]["height"]) == 480) { echo "selected"; } echo '>480p</option>';
+                                echo '    <option value="960x540" '; if (intval($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["resolution"]["height"]) == 540) { echo "selected"; } echo '>540p</option>';
+                                echo '    <option value="1280x720" '; if (intval($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["resolution"]["height"]) == 720) { echo "selected"; } echo '>720p</option>';
+                                echo '    <option value="1920x1080" '; if (intval($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["resolution"]["height"]) == 1080) { echo "selected"; } echo '>1080p</option>';
+                                echo '    <option value="2560x1440" '; if (intval($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["resolution"]["height"]) == 1440) { echo "selected"; } echo '>1440p</option>';
+                                echo '    <option value="3840x2160" '; if (intval($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["resolution"]["height"]) == 2160) { echo "selected"; } echo '>2160p</option>';
+                                echo '    <option value="7680x4320" '; if (intval($instance_config["dashcam"]["capture"]["video"]["devices"][$key]["resolution"]["height"]) == 4320) { echo "selected"; } echo '>4320p</option>';
+                                echo '</select><br><br>';
                                 echo '</div>';
                                 echo '</div>';
                                 $displayed_cameras++;

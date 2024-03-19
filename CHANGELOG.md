@@ -111,4 +111,5 @@ March 17th, 2024
 
 - Updated instance configuration page.
     - Added support for per-device frame-rate configuration.
-- Reduced the margin of error for detecting continuous video sections due to improved accuracy from Predator.
+    - Added support for per-device resolution configuration.
+- Reduced the margin of error for detecting continuous video sections due to improved accuracy in Predator's video segmentation.
