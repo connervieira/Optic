@@ -113,3 +113,7 @@ March 17th, 2024
     - Added support for per-device frame-rate configuration.
     - Added support for per-device resolution configuration.
 - Reduced the margin of error for detecting continuous video sections due to improved accuracy in Predator's video segmentation.
+- Updated the management page.
+    - Added a tool for forcefully updating file permissions.
+    - Re-ordered the advanced tools.
+    - Added a notice explaining how to enabled advanced tools.
