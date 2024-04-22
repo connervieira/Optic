@@ -117,3 +117,4 @@ March 17th, 2024
     - Added a tool for forcefully updating file permissions.
     - Re-ordered the advanced tools.
     - Added a notice explaining how to enabled advanced tools.
+- Added video timestamp offset configuration option.
