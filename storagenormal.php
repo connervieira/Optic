@@ -109,10 +109,10 @@ foreach ($processed_videos as $filename => $video) {
                     if (sizeof($indexed_videos) > 0) {
                         foreach ($indexed_videos as $timestamp => $video) {
                             echo "<hr>";
-                            echo "<h4>" . date("Y-m-d H:i:s", $timestamp) . "</h4>";
+                            echo "<h4>" . date("Y-m-d H:i:s", $timestamp + (3600*$config["timestamp_offset"])) . "</h4>";
                             echo "<ul>";
                             foreach ($video as $time => $segment) {
-                                echo "<li>" . date("H:i:s", $time) . " -";
+                                echo "<li>" . date("H:i:s", $time + (3600*$config["timestamp_offset"])) . " -";
                                 foreach ($segment as $device) {
                                     if (isset($device["audio"])) {
                                         echo " <span>" . $device["device"] . " (</span>";
