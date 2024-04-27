@@ -73,6 +73,13 @@ if ($_POST["theme"] == "dark"  or $_POST["theme"] == "light") { // Make sure the
                 if (strtolower($_POST["advanced"]) == "on") { $config["advanced"] = true;
                 } else { $config["advanced"] = false; }
 
+                $config["timestamp_offset"] = intval($_POST["timestamp_offset"]); // Convert the timestamp offset to an integer number.
+                if ($config["timestamp_offset"] < -12 or $config["timestamp_offset"] > 12) {
+                    echo "<p class='error'>The timestamp offset is invalid.</p>";
+                    $valid = false; // Indicate that the configuration is not valid, and shouldn't be saved.
+                }
+
+
 
 
                 if (preg_match("/^[A-Za-z0-9]*$/", $_POST["exec_user"])) { // Check to see if all of the characters in the submitted execution user are alphanumeric.
@@ -125,6 +132,17 @@ if ($_POST["theme"] == "dark"  or $_POST["theme"] == "light") { // Make sure the
                     <option value="light" <?php if ($config["theme"] == "light") { echo "selected"; } ?>>Light</option>
                 </select><br><br>
                 <label for="advanced" title="When enabled, potentially destructive tools for advanced users are enabled.">Advanced Mode:</label> <input type="checkbox" id="advanced" name="advanced" <?php if ($config["advanced"]) { echo "checked"; }; ?>><br><br>
+                <label for="timestamp_offset" title="Set an offset to apply to video segment timestamps in the storage manager.">Timestamp Offset:</label>
+                <select id="timestamp_offset" name="timestamp_offset">
+                    <?php 
+                    for ($x = -12; $x <= 12; $x++) {
+                        echo "<option value='$x'";
+                        if ($config["timestamp_offset"] == $x) { echo " selected";
+                        } else if (!isset($config["timestamp_offset"]) and $x == 0) { echo " selected"; }
+                        echo ">$x Hours</option>";
+                    }
+                    ?>
+                </select>
 
                 <br><br><h3>Connection Settings</h3>
                 <label for="exec_user" title="This determines the user on the system that will be used to start the Predator process.">Execution User:</label> <input type="text" id="exec_user" name="exec_user" placeholder="Username" pattern="[a-zA-Z0-9]{1,100}" value="<?php echo $config["exec_user"]; ?>"><br><br>
