@@ -112,6 +112,7 @@ March 17th, 2024
 - Updated instance configuration page.
     - Added support for per-device frame-rate configuration.
     - Added support for per-device resolution configuration.
+    - Added support for individually enabling or disabling devices.
 - Reduced the margin of error for detecting continuous video sections due to improved accuracy in Predator's video segmentation.
 - Updated the management page.
     - Added a tool for forcefully updating file permissions.
