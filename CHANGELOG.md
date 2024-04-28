@@ -119,3 +119,4 @@ March 17th, 2024
     - Re-ordered the advanced tools.
     - Added a notice explaining how to enabled advanced tools.
 - Added video timestamp offset configuration option.
+- Downloaded videos now contain the name of the capture device they were recorded on.
