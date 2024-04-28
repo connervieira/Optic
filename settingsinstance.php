@@ -93,7 +93,7 @@ include "./utils.php";
                 for ($i = 0; $i <= $original_device_count + 1; $i++) { // Run once for each device in the configuration, plus one to account for the new entry.
                     $device_name = $_POST["dashcam>capture>video>devices>" . $i . ">name"]; // This will be the key for the capture device.
                     $device_index = intval($_POST["dashcam>capture>video>devices>" . $i . ">index"]); // This is the index ID of the capture device.
-                    $device_enabled = intval($_POST["dashcam>capture>video>devices>" . $i . ">enabled"]); // This determines if the capture device is enabled.
+                    $device_enabled = strtolower($_POST["dashcam>capture>video>devices>" . $i . ">enabled"]); // This determines if the capture device is enabled.
                     $device_codec = $_POST["dashcam>capture>video>devices>" . $i . ">codec"]; // This is the codec used to decode the capture device.
                     $framerate_max = $_POST["dashcam>capture>video>devices>" . $i . ">framerate>max"]; // This is the maximum framerate this device will be allowed to run at.
                     $framerate_min = $_POST["dashcam>capture>video>devices>" . $i . ">framerate>min"]; // This is the minimum framerate this device is expected run at.
