@@ -120,3 +120,4 @@ March 17th, 2024
     - Added a notice explaining how to enabled advanced tools.
 - Added video timestamp offset configuration option.
 - Downloaded videos now contain the name of the capture device they were recorded on.
+- Optic now attempts to correct permissions on the interface directory if it is not writable.

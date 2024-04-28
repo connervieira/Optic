@@ -131,7 +131,10 @@ function verify_permissions($config) {
     } else if (is_dir($instance_config["general"]["interface_directory"]) == false) { // Check to make sure the specified interface directory exists.
         //echo "<p class=\"warning\">The interface directory doesn't exist. Please verify that the correct interface directory is configured in the settings.</p>";
     } else if (is_writable($instance_config["general"]["interface_directory"]) == false) { // Check to see if the interface directory is writable.
-        echo "<p class=\"warning\">The interface directory isn't writable. Please verify that the interface directory at " . $instance_config["general"]["interface_directory"] . " has the correct permissions.</p>";
+        shell_exec("timeout 1 sudo chmod 777 '" . $instance_config["general"]["interface_directory"] . "'"); // Attempt to set the permissions on the Predator interface directory.
+        if (is_writable($instance_config["general"]["interface_directory"]) == false) { // Check to see if the interface directory is writable.
+            echo "<p class=\"warning\">The interface directory isn't writable. Please verify that the interface directory at " . $instance_config["general"]["interface_directory"] . " has the correct permissions.</p>";
+        }
     }
 
     if ($valid == false) {
