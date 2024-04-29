@@ -33,7 +33,7 @@ include "./utils.php";
                 $allowed_extensions = array("csv", "txt", "json"); // These are the extensions that can be shown by this utility.
 
                 $selected_directory = $_GET["dir"];
-                $selected_file = $_GET["file"];
+                $selected_file = preg_replace("/[^A-Za-z0-9 _.\-]/", '', $_GET["file"]);
                 if (isset($selected_directory) == true) { // Check to see if the user has selected a directory.
                     $instance_config = load_instance_config($config);
 
