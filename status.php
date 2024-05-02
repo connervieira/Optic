@@ -72,7 +72,11 @@ include "./utils.php";
                     } else if ($error["type"] == "warn") { // Check to see if this message is a warning.
                         array_push($messages_to_display, "<p style='color:orange;'>" . $message . "</p>"); // Display the message in orange font.
                     } else if ($error["type"] == "notice") { // Check to see if this message is a notice.
-                        array_push($messages_to_display, "<p style='color:white;'>" . $message . "</p>"); // Display the message in white font.
+                        if ($config["theme"] == "dark") {
+                            array_push($messages_to_display, "<p style='color:white;'>" . $message . "</p>"); // Display the message in white font.
+                        } else {
+                            array_push($messages_to_display, "<p style='color:black;'>" . $message . "</p>"); // Display the message in white font.
+                        }
                     }
                 } else { // If the error isn't recent, display it in a subtle style.
                     array_push($messages_to_display, "<p style='color:#888888;'>" . $message . "</p>");
