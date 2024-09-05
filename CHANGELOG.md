@@ -121,5 +121,7 @@ March 17th, 2024
 - Added video timestamp offset configuration option.
 - Downloaded videos now contain the name of the capture device they were recorded on.
 - Optic now attempts to correct permissions on the interface directory if it is not writable.
-- Fixed a bug that allowed users to remotely view files outside of the intended directories using the "files" tool.
+- Updated the "Files" tool.
+    - Fixed a bug that allowed users to remotely view files outside of the intended directories.
+    - Fixed an issue where the tool would break after selecting a directory.
 - Fixed an issue where standard notices would be displayed as white text on a white background while using light mode.

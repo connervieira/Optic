@@ -41,7 +41,7 @@ include "./utils.php";
                     } else if ($selected_directory == "interface") { $directory_path = $instance_config["general"]["interface_directory"];
                     } else { echo "<p class='warning'>Unknown directory selected.</p>"; $directory_path = ""; }
 
-                    if (isset($selected_file) == true) { // Check to see if the user has selected a file.
+                    if (strlen($selected_file) > 0) { // Check to see if the user has selected a file.
                         $full_file_path = $directory_path . "/" . $selected_file;
                         if (file_exists($full_file_path)) { // Check to see if the selected file exists.
                             $file_contents = file_get_contents($full_file_path);
