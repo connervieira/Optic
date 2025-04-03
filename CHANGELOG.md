@@ -105,7 +105,7 @@ March 17th, 2024
 - Fixed typos on the erase pages.
 
 
-## Version 2.1
+## Version 3.0
 
 *Release date to be determined*
 
@@ -125,4 +125,7 @@ March 17th, 2024
     - Fixed a bug that allowed users to remotely view files outside of the intended directories.
     - Fixed an issue where the tool would break after selecting a directory.
 - Fixed an issue where standard notices would be displayed as white text on a white background while using light mode.
+- Improved the accuracy of the base file-name detection on the storage page.
+    - Previously, the base file name assumed the extension was 3 characters, and would fail with other lengths.
+- Added support for Predator V12.
 - Improved the reliability of last heartbeat detection.
