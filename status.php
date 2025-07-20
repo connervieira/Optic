@@ -30,9 +30,16 @@ include "./utils.php";
                 $heartbeat_log = array(); // Set the heartbeat log to an empty array.
             }
         }
-        $last_heartbeat = time() - floatval(end($heartbeat_log)); // Calculate how many seconds ago the last heartbeat was.
-        if ($last_heartbeat < 0) { // If the last heartbeat was negative seconds ago, assume 0 seconds, since slight variations in clocks can cause negative numbers.
+        if (is_array($heartbeat_log) == false) { // Check to see if the heartbeat log is not a valid array.
+            $heartbeat_log = array(); // Set the heartbeat log to an empty array.
+        }
+        if (sizeof($heartbeat_log) == 0) {
             $last_heartbeat = 0;
+        } else {
+            $last_heartbeat = time() - floatval(end($heartbeat_log)); // Calculate how many seconds ago the last heartbeat was.
+            if ($last_heartbeat < 0) { // If the last heartbeat was negative seconds ago, assume 0 seconds, since slight variations in clocks can cause negative numbers.
+                $last_heartbeat = 0;
+            }
         }
 
 

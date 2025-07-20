@@ -128,3 +128,4 @@ March 17th, 2024
 - Improved the accuracy of the base file-name detection on the storage page.
     - Previously, the base file name assumed the extension was 3 characters, and would fail with other lengths.
 - Added support for Predator V12.
+- Improved the reliability of last heartbeat detection.
