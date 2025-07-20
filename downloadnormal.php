@@ -12,8 +12,8 @@ if ($config["\160\x72\157\x64\165\143\x74\137\156\141\x6d\145"] == "\117\x70\164
 
     $file_to_transfer = $instance_config["general"]["working_directory"] . "/" . $_GET["video"];
     $file_extension = pathinfo($file_to_transfer, PATHINFO_EXTENSION); // Get the file extension of the video to copy.
-    $video_timestamp = date("Y-m-d His", explode("_", $_GET["video"])[2] + (3600*$config["timestamp_offset"])); // Generate a human-readable timestamp for the video to copy.
-    $destination_name = "./transfers/" . strval($video_timestamp) . " " . explode("_", $_GET["video"])[3] . "." . $file_extension; // Determine the destination for the video to copy.
+    $video_timestamp = explode(" ", $_GET["video"])[0] . " " . explode(" ", $_GET["video"])[1];
+    $destination_name = "./transfers/" . strval($video_timestamp) . " " . explode(" ", $_GET["video"])[3] . "." . $file_extension; // Determine the destination for the video to copy.
 
     $existing_transferred_files = array_diff(scandir("./transfers/"), array('..', '.')); // List the files that already exist in the transfers directory.
     foreach ($existing_transferred_files as $file) { // Iterate through each file in the working directory.
