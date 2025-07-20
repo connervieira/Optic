@@ -34,7 +34,7 @@ $instance_config = load_instance_config($config);
                     if (time() - $_GET["confirmation2"] < 0) {
                         echo "<p>The confirmation timestamp is in the future. If you clicked an external link to get here, it is possible someone is attempting to manipulate you into erasing your dashcam video. No videos were deleted.</p>";
                     } else if (time() - $_GET["confirmation2"] < 20) {
-                        $erase_path = $instance_config["general"]["working_directory"] . "/" . $instance_config["dashcam"]["saving"]["directory"] . "/" . "predator_dashcam*";
+                        $erase_path = $instance_config["general"]["working_directory"] . "/" . $instance_config["dashcam"]["saving"]["directory"] . "/" . "* Predator *";
                         $erase_path = str_replace(" ", "\\ ", $erase_path);
                         $erase_path = str_replace("'", "\\'", $erase_path);
                         $erase_path = str_replace('"', '\\"', $erase_path);
