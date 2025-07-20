@@ -65,8 +65,8 @@ include "./utils.php";
             $input_values["dashcam"]["parked"]["conditions"]["time"] = intval($_POST["dashcam>parked>conditions>time"]);
             $input_values["dashcam"]["parked"]["recording"]["highlight_motion"]["enabled"] = floatval($_POST["dashcam>parked>recording>highlight_motion>enabled"]);
             $input_values["dashcam"]["parked"]["recording"]["highlight_motion"]["color"] = $_POST["dashcam>parked>recording>highlight_motion>color"];
-            $input_values["dashcam"]["parked"]["recording"]["sensitivity"] = floatval($_POST["dashcam>parked>recording>sensitivity"]);
-            $input_values["dashcam"]["parked"]["recording"]["timeout"] = floatval($_POST["dashcam>parked>recording>timeout"]);
+            $input_values["dashcam"]["parked"]["event"]["trigger_motion"]["sensitivity"] = floatval($_POST["dashcam>parked>event>trigger_motion>sensitivity"]);
+            $input_values["dashcam"]["parked"]["event"]["timeout"] = floatval($_POST["dashcam>parked>event>timeout"]);
             $input_values["dashcam"]["stamps"]["size"] = floatval($_POST["dashcam>stamps>size"]);
             $input_values["dashcam"]["stamps"]["main"]["date"]["enabled"] = $_POST["dashcam>stamps>main>date>enabled"];
             $input_values["dashcam"]["stamps"]["main"]["time"]["enabled"] = $_POST["dashcam>stamps>main>time>enabled"];
@@ -143,8 +143,8 @@ include "./utils.php";
                 if ($input_values["dashcam"]["parked"]["conditions"]["time"] < 10 or $input_values["dashcam"]["parked"]["conditions"]["time"] > 600) { echo "<p class='error'>The <b>dashcam>parked>conditions>time</b> value is invalid.</p>"; $valid = false; } // Validate that the dashcam>parked>conditions>time is within the expected range.
                 if (strtolower($input_values["dashcam"]["parked"]["recording"]["highlight_motion"]["enabled"]) == "on") { $input_values["dashcam"]["parked"]["recording"]["highlight_motion"]["enabled"] = true; } else { $input_values["dashcam"]["parked"]["recording"]["highlight_motion"]["enabled"] = false; } // Convert the dashcam>parked>recording>highlight_motion>enabled value to a boolean.
                 $input_values["dashcam"]["parked"]["recording"]["highlight_motion"]["color"] = sscanf($input_values["dashcam"]["parked"]["recording"]["highlight_motion"]["color"], "#%02x%02x%02x");
-                if ($input_values["dashcam"]["parked"]["recording"]["sensitivity"] < 0.001 or $input_values["dashcam"]["parked"]["recording"]["sensitivity"] > 0.8) { echo "<p class='error'>The <b>dashcam>parked>recording>sensitivity</b> value is invalid.</p>"; $valid = false; } // Validate that the dashcam>parked>recording>sensitivity is within the expected range.
-                if ($input_values["dashcam"]["parked"]["recording"]["timeout"] < 0 or $input_values["dashcam"]["parked"]["recording"]["timeout"] > 60) { echo "<p class='error'>The <b>dashcam>parked>recording>timeout</b> value is invalid.</p>"; $valid = false; } // Validate that the dashcam>parked>recording>timeout is within the expected range.
+                if ($input_values["dashcam"]["parked"]["event"]["trigger_motion"]["sensitivity"] < 0.001 or $input_values["dashcam"]["parked"]["event"]["trigger_motion"]["sensitivity"] > 0.8) { echo "<p class='error'>The <b>dashcam>parked>event>trigger_motion>sensitivity</b> value is invalid.</p>"; $valid = false; } // Validate that the dashcam>parked>event>trigger_motion>sensitivity is within the expected range.
+                if ($input_values["dashcam"]["parked"]["event"]["timeout"] < 0 or $input_values["dashcam"]["parked"]["event"]["timeout"] > 60) { echo "<p class='error'>The <b>dashcam>parked>event>timeout</b> value is invalid.</p>"; $valid = false; } // Validate that the dashcam>parked>event>timeout is within the expected range.
 
 
 
@@ -190,8 +190,8 @@ include "./utils.php";
                     $instance_config["dashcam"]["parked"]["conditions"]["time"] = floatval($input_values["dashcam"]["parked"]["conditions"]["time"]);
                     $instance_config["dashcam"]["parked"]["recording"]["highlight_motion"]["enabled"] = $input_values["dashcam"]["parked"]["recording"]["highlight_motion"]["enabled"];
                     $instance_config["dashcam"]["parked"]["recording"]["highlight_motion"]["color"] = $input_values["dashcam"]["parked"]["recording"]["highlight_motion"]["color"];
-                    $instance_config["dashcam"]["parked"]["recording"]["sensitivity"] = floatval($input_values["dashcam"]["parked"]["recording"]["sensitivity"]);
-                    $instance_config["dashcam"]["parked"]["recording"]["timeout"] = floatval($input_values["dashcam"]["parked"]["recording"]["timeout"]);
+                    $instance_config["dashcam"]["parked"]["event"]["trigger_motion"]["sensitivity"] = floatval($input_values["dashcam"]["parked"]["event"]["trigger_motion"]["sensitivity"]);
+                    $instance_config["dashcam"]["parked"]["event"]["timeout"] = floatval($input_values["dashcam"]["parked"]["event"]["timeout"]);
                     $instance_config["dashcam"]["stamps"]["size"] = $input_values["dashcam"]["stamps"]["size"];
                     $instance_config["dashcam"]["stamps"]["main"]["date"]["enabled"] = $input_values["dashcam"]["stamps"]["main"]["date"]["enabled"];
                     $instance_config["dashcam"]["stamps"]["main"]["time"]["enabled"] = $input_values["dashcam"]["stamps"]["main"]["time"]["enabled"];
@@ -318,8 +318,8 @@ include "./utils.php";
                             <label for="dashcam>parked>recording>highlight_motion>enabled" title="Determines if bounding boxes will be drawn around detected movement while parked.">Enabled: </label><input type="checkbox" id="dashcam>parked>recording>highlight_motion>enabled" name="dashcam>parked>recording>highlight_motion>enabled" <?php if ($instance_config["dashcam"]["parked"]["recording"]["highlight_motion"]["enabled"] == true) { echo "checked"; } ?>><br><br>
                             <label for="dashcam>parked>recording>highlight_motion>color" title="The color that motion bounding boxes will be drawn in.">Color: </label><input type="color" id="dashcam>parked>recording>highlight_motion>color" name="dashcam>parked>recording>highlight_motion>color" value="<?php echo sprintf("#%02x%02x%02x", $instance_config["dashcam"]["parked"]["recording"]["highlight_motion"]["color"][0], $instance_config["dashcam"]["parked"]["recording"]["highlight_motion"]["color"][1], $instance_config["dashcam"]["parked"]["recording"]["highlight_motion"]["color"][2]) ?>">
                         </div>
-                        <label for="dashcam>parked>recording>sensitivity" title="The minimum fraction of the frame that needs to be in motion to trigger recording.">Sensitivity: </label><input type="number" class="compactinput" id="dashcam>parked>recording>sensitivity" name="dashcam>parked>recording>sensitivity" step="0.001" min="0.001" max="1" value="<?php echo $instance_config["dashcam"]["parked"]["recording"]["sensitivity"]; ?>"><br><br>
-                        <label for="dashcam>parked>recording>timeout" title="The length of time that video will be recorded after motion is last detected.">Timeout: </label><input type="number" class="compactinput" id="dashcam>parked>recording>timeout" name="dashcam>parked>recording>timeout" step="1" min="0" max="60" value="<?php echo $instance_config["dashcam"]["parked"]["recording"]["timeout"]; ?>"> seconds
+                        <label for="dashcam>parked>recording>sensitivity" title="The minimum fraction of the frame that needs to be in motion to trigger recording.">Sensitivity: </label><input type="number" class="compactinput" id="dashcam>parked>event>trigger_motion>sensitivity" name="dashcam>parked>event>trigger_motion>sensitivity" step="0.001" min="0.001" max="1" value="<?php echo $instance_config["dashcam"]["parked"]["event"]["trigger_motion"]["sensitivity"]; ?>"><br><br>
+                        <label for="dashcam>parked>event>timeout" title="The length of time that video will be recorded after motion is last detected.">Timeout: </label><input type="number" class="compactinput" id="dashcam>parked>event>timeout" name="dashcam>parked>event>timeout" step="1" min="0" max="60" value="<?php echo $instance_config["dashcam"]["parked"]["event"]["timeout"]; ?>"> seconds
                     </div>
                 </div>
                 <div class="buffer">
